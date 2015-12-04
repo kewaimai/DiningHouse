@@ -69,7 +69,7 @@ def modifyMyDetailInfo(request):
 
 # 下订单页面  点击去下单 返回的页面
 def gotoOrderPage(request):
-    return HttpResponse('success')
+    return render(request, 'DiningServer/shopping.html')
 
 # 创建订单 创建完成后自动跳转到支付页面
 def createOrder(request):
