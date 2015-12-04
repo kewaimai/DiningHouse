@@ -69,7 +69,7 @@
       <div class="section" id="st{{ forloop.counter }}">
       <!--  在这里填充section的内容  -->
         {% for meal in meal_list %}
-            <div class="prt-lt">
+                <div class="prt-lt" id="{{ meal.meals_id }}">
                 <!-- 酒吧图片 -->
                 {% if meal.avatar_url %}
                     <div class="lt-lt">

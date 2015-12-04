@@ -3,6 +3,8 @@ __author__ = '祥祥'
 from DiningServer.models import TblBill
 from DiningServer.models import TblBillMeal
 
+from DiningServer.interface import MyBill
+
 from DiningServer.common.time_format_util import SERVER_TIME_FORMAT
 from uuid import uuid4
 import time
@@ -63,10 +65,28 @@ def payOrder(bill_id):
             item.save()
     pass
 
+"""
+获取用户订单，根据用户输入的用户id和订单类型（未付款，派送中，待评价）返回用户订单列表
+"""
 def getOrders(user_id, orderType = 0):
-    #TODO 获取我的订单 订单状态
-
-    pass
+    myOrder = TblBill.objects.filter(user_id=user_id,bill_state=orderType)
+    myBill = MyBill()
+    for item in myOrder:
+        myBillIndex = myBill.createBill(
+            item.id,
+            item.user_id,
+            item.user_location,
+            item.bill_totalling,
+            item.add_time,
+            item.pay_time,
+            item.pay_time,
+            item.bill_content,
+            item.ensure_send_time
+        )
+        myMeals = TblBillMeal.objects.filter(bill_id=item.id)
+        for meal in myMeals:
+            myBill.addMeal(myBillIndex, meal.meal_in_house_id, meal.meal_name, meal.meal_url, meal.buy_count)
+    return myBill.toDict()
 
 # 确认送达 可有商户或者用户两方调用
 def ensureSend(bill_id):

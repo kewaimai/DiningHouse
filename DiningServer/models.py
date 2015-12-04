@@ -151,6 +151,8 @@ class TblBillMeal(models.Model):
     meal_in_house_id = models.CharField(max_length=36)
     buy_count = models.IntegerField()
     add_time = models.DateTimeField()
+    meal_name = models.CharField(max_length=300)
+    meal_url = models.CharField(max_length=300)
 
     class Meta:
         managed = False
