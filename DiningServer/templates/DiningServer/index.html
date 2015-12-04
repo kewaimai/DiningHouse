@@ -69,8 +69,8 @@
       <div class="section" id="st{{ forloop.counter }}">
       <!--  在这里填充section的内容  -->
         {% for meal in meal_list %}
-            <div class="prt-lt">
-                <!-- 酒吧图片 -->
+            <div class="prt-lt" id="{{ meal.meals_id }}">
+                <!-- 图片 -->
                 {% if meal.avatar_url %}
                     <div class="lt-lt">
                         <img src="{{ meal.avatar_url }}">
@@ -134,6 +134,10 @@ var swiper = new Swiper('.swiper-container', {
 $(function(){
 	$('#nav').onePageNav();
 });
+
+function ajax(url,){
+
+}
 
 </script>
 <script> 

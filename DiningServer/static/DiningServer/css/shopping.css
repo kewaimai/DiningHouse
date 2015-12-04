@@ -9,7 +9,7 @@
 .box-head a:nth-child(1){
 	width: 0.3rem;
 	height: 0.3rem;
-	background: url('../images/index/biao.png') no-repeat;
+	background: url('../images/shopping/biao.png') no-repeat;
 	display: block;
 	position: absolute;
 	top: 0.15rem;
@@ -47,7 +47,7 @@
 .box-head-bd{
 	width: 4rem;
 	height: 0.075rem;
-	background: url('../images/index/sp.png')
+	background: url('../images/shopping/sp.png')
 }
 
 /*信息*/
