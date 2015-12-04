@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'payOrder/$', views.payOrder, name='payOrder'),
     url(r'getOrder/$', views.getOrder, name='getOrder'),
 
+    # 测试修改
     # 支付接口
 
 
