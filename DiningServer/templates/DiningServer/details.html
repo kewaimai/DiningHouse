@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+     {% load staticfiles %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>订餐系统</title>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/swiper.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/index.css' %}">
+</head>
+
+<body>
+<div class="swiper-position">
+    <div class="positionleft">
+        <span class="position-img"></span>
+        <a href="javascript:;" class="position-text">北京</a>
+    </div>
+    <div class="positionright">
+        <input class="position-botton" type="button" value="咨询电话" />
+    </div>
+</div>
+<div id="container" class="container-box ">
+  <div class="section pd6" id="st0">
+  	<div class="prt-lt" style="width:100%; border:none;">
+    	<div class="lt-lt">
+			<img src="{% static 'DiningServer/images/index/prt_2.jpg' %}">
+			<a href="javascript:;" class="boxtext"><span>已有<strong>12</strong>人评价</span></a>
+		</div>
+        <div class="lt-ct">
+        	<p>商品1</p>
+            <p class="pr">¥<span class="price">60.00</span></p>
+			<p class="pr2">已售<span class="text">2</span>份</p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+  </div>
+</div>
+<div class="context">
+	<p class="context-text">商品详情</p>
+	<img class="context-img"src="{% static 'DiningServer/images/index/prt_9.jpg' %}" />
+	<div class="details">
+		<div class="details-button">柱侯牛腩套餐</div>
+		<div class="details-box">
+			<ul class="ul-box">
+				<li class="details-text">米饭：300g(选择正宗的东北五常大米)</li>
+				<li class="details-text">柱侯牛腩：150g</li>
+				<li class="details-text">红烧狮子头：100g</li>
+				<li class="details-text">清炒菜心：50g</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<br/>
+<footer>
+	<div class="ft-lt">
+        <p>合计:<span id="total" class="total">163.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
+    </div>
+    <div class="ft-rt">
+    	<p>去结算</p>
+    </div>
+</footer>
+<script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery.nav.js' %}"></script>
+<script type="text/javascript">
+<!--  餐厅的电话号码在这里  -->
+{% if house %}
+var phone = {{ house.phone }}
+{% else %}
+var phone = {{ house.phone }}
+{% endif %}
+var swiper = new Swiper('.swiper-container', {
+	pagination: '.swiper-pagination',
+	paginationClickable: true,
+	spaceBetween: 30,
+ centeredSlides: true,
+    autoplay: 1000,
+    autoplayDisableOnInteraction: false,
+    loop: true
+});
+$(function(){
+	$('#nav').onePageNav();
+});
+
+</script>
+<script> 
+$(function(){ 
+
+$(".add").click(function(){
+var t=$(this).parent().find('input[class*=result]'); 
+t.val(parseInt(t.val())+1);
+setTotal(); 
+})
+ 
+$(".minus").click(function(){ 
+var t=$(this).parent().find('input[class*=result]'); 
+t.val(parseInt(t.val())-1);
+if(parseInt(t.val())<0){ 
+t.val(0); 
+} 
+setTotal(); 
+
+
+})
+ 
+function setTotal(){ 
+var s=0;
+var v=0;
+var n=0;
+<!--计算总额--> 
+$(".lt-rt").each(function(){ 
+s+=parseInt($(this).find('input[class*=result]').val())*parseFloat($(this).siblings().find('span[class*=price]').text()); 
+
+});
+
+<!--计算菜种-->
+var nIn = $("li.current a").attr("href");
+$(nIn+" input[type='text']").each(function() {
+	if($(this).val()!=0){
+		n++;
+	}
+});
+
+<!--计算总份数-->
+$("input[type='text']").each(function(){
+	v += parseInt($(this).val());
+});
+if(n>0){
+	$(".current b").html(n).show();		
+	}else{
+	$(".current b").hide();		
+		}	
+$(".share").html(v);
+$("#total").html(s.toFixed(2)); 
+} 
+setTotal(); 
+
+}) 
+</script> 
+<script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
+</body>
+</html>

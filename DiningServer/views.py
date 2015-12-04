@@ -36,7 +36,8 @@ def index(request):
 
 # 获取商品详情界面
 def getMealDetail(request):
-    return HttpResponse(json.dumps(meal_service.getMealDetail('1')))
+    # return HttpResponse(json.dumps(meal_service.getMealDetail('1')))
+    return render(request, 'DiningServer/details.html')
 
 # 获取评价我的订单的界面
 def getJudgeMealPage(request):
