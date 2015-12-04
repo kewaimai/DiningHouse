@@ -83,8 +83,12 @@ def payOrder(request):
     return HttpResponse('success')
 
 # 获取用户的订单
-def getOrder(request):
-    order_service.getOrder(1)
+def getOrders(request):
+    order_service.getOrders(1)
     return HttpResponse('success')
 
-# 测试修改
+def ensureSend(request):
+    if order_service.ensureSend('1'):
+        return HttpResponse('success')
+    else:
+        return HttpResponse('error')

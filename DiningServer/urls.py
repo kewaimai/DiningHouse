@@ -38,7 +38,8 @@ urlpatterns = [
     url(r'gotoOrderPage/$', views.gotoOrderPage, name='gotoOrderPage'),
     url(r'createOrder/$', views.createOrder, name='createOrder'),
     url(r'payOrder/$', views.payOrder, name='payOrder'),
-    url(r'getOrder/$', views.getOrder, name='getOrder'),
+    url(r'getOrder/$', views.getOrders, name='getOrder'),
+    url(r'ensureSend/$', views.ensureSend),
 
     # 测试修改
     # 支付接口

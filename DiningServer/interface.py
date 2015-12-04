@@ -129,3 +129,31 @@ def getMealDetailDict(id, name, avatar_url, detail_url, detail_content, meal_pri
         'detail_content': detail_content,
         'meal_price': meal_price
         }
+
+# 用于构造我的订单页面的返回值
+class MyBill():
+
+    def __init__(self):
+        self._count = 0
+        self._context = {}
+        # bills 是一个账单列表  每个账单包含账单的信息 同时包含一个餐品列表
+        self._bills = []
+        self._context['meals'] = self._bills
+
+    def createBill(self, id, user_id, user_location, bill_totalling, add_time, pay_time, bill_state, bill_content, ensure_send_time):
+        bill = {
+            'id': id,
+            'user_id': user_id,
+            'user_locatin': user_location,
+            'bill_totalling': bill_totalling,
+            'add_time': add_time,
+            'pay_time': pay_time,
+            'bill_state': bill_state,
+            'bill_content': bill_content,
+            'ensure_send_time': ensure_send_time,
+            'meals': []
+        }
+        self._bills.append(bill)
+        pass
+
+    def addMeal(self, ):

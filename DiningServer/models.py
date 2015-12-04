@@ -132,12 +132,13 @@ class TblBanner(models.Model):
 class TblBill(models.Model):
     id = models.CharField(primary_key=True, max_length=36)
     user_id = models.CharField(max_length=36)
-    user_location_id = models.CharField(max_length=36, blank=True, null=True)
+    user_location = models.CharField(max_length=300, blank=True, null=True)
     bill_totalling = models.IntegerField()
     add_time = models.DateTimeField()
     pay_time = models.DateTimeField(blank=True, null=True)
     bill_state = models.IntegerField()
     bill_content = models.CharField(max_length=300, blank=True, null=True)
+    ensure_send_time = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
