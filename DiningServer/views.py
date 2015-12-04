@@ -84,8 +84,8 @@ def payOrder(request):
 
 # 获取用户的订单
 def getOrders(request):
-    order_service.getOrders(1)
-    return HttpResponse('success')
+
+    return HttpResponse(json.dumps(my_orders = order_service.getOrders('1',1), ensure_ascii=False))
 
 def ensureSend(request):
     if order_service.ensureSend('1'):

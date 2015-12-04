@@ -68,7 +68,7 @@ def getCategoryAndList():
         if item.category_id in category_list:
             index = category_list.index(item.category_id)
         category_and_meal.add_meals(
-            item.meal_id,
+            item.id,
             item.name,
             item.avatar_url,
             item.detail_content,

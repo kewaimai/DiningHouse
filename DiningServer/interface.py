@@ -134,11 +134,10 @@ def getMealDetailDict(id, name, avatar_url, detail_url, detail_content, meal_pri
 class MyBill():
 
     def __init__(self):
-        self._count = 0
         self._context = {}
         # bills 是一个账单列表  每个账单包含账单的信息 同时包含一个餐品列表
         self._bills = []
-        self._context['meals'] = self._bills
+        self._context['bills'] = self._bills
 
     def createBill(self, id, user_id, user_location, bill_totalling, add_time, pay_time, bill_state, bill_content, ensure_send_time):
         bill = {
@@ -154,6 +153,20 @@ class MyBill():
             'meals': []
         }
         self._bills.append(bill)
-        pass
+        return len(self._bills) - 1
 
-    # def addMeal(self, ):
+    def addMeal(self, bill_order, meal_id, meal_name, meal_url, meal_count):
+        meal = {
+            'meal_id' : meal_id,
+            'meal_name' : meal_name,
+            'meal_url' : meal_url,
+            'meal_count' : meal_count
+        }
+        try:
+            self._bills[bill_order]['meals'].append(meal)
+        except:
+            return None
+        return 'success'
+
+    def toDict(self):
+        return self._context
