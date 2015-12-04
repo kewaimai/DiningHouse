@@ -1,0 +1,113 @@
+
+1.首页获取的context 用于显示菜品、分类、商铺、广告banner
+最后的context的效果示例
+context = {
+    # banners
+    'banners':[
+        {
+            image_url: '这里是图片路径',
+            link: '点击后跳转的url'
+        },
+        {
+            image_url: '这里是图片路径',
+            link: '点击后跳转的url'
+        }
+    ]
+    # 分店内容  字典表示
+    house : {
+        'name': '分店名字',
+        'location': '分店位置'
+        'phone': '18810778887'
+    }
+    # 分类及菜品 数组
+    categorys: [
+        # 每一项的分类 字典表示
+        {
+            'category': '分类1',    # 分类名称
+            'category_id': 1,       # 分类id
+        },
+        {
+            'category': '分类2',    # 分类名称
+            'category_id': 2,       # 分类id
+        },
+        {
+            'category': '分类3',    # 分类名称
+            'category_id': 3,       # 分类id
+        },
+
+    ]
+    #分类中的菜品 数组表示
+    'meals': [
+        [
+        #菜品中的对象 字典表示
+        {
+            'meals_id': 1,      # meal id
+            'meals_name': '我是菜名',    # 名称
+            'avatar_url': '我是图片地址',    # avatar_ur 显示的小图
+            'content': '我是描述使用 DDD 分隔每一行的内容',
+            'sold_count': 10,            #售出量
+            'judge_count': 10,           #评价量
+            'meal_price':  10.0,         #单价 元
+            'last_count': 20,            #剩余量  0 表示卖完了
+        },
+        {
+            'meals_id': 1,      # meal id
+            'meals_name': '我是菜名',    # 名称
+            'avatar_url': '我是图片地址',    # avatar_ur 显示的小图
+            'content': '我是描述使用 DDD 分隔每一行的内容',
+            'sold_count': 10,            #售出量
+            'judge_count': 10,           #评价量
+            'meal_price':  10.0,         #单价 元
+            'last_count': 20,            #剩余量  0 表示卖完了
+        }
+        ],
+        [
+        #菜品中的对象 字典表示
+        {
+            'meals_id': 1,      # meal id
+            'meals_name': '我是菜名',    # 名称
+            'avatar_url': '我是图片地址',    # avatar_ur 显示的小图
+            'content': '我是描述使用 DDD 分隔每一行的内容',
+            'sold_count': 10,            #售出量
+            'judge_count': 10,           #评价量
+            'meal_price':  10.0,         #单价 元
+            'last_count': 20,            #剩余量  0 表示卖完了
+        },
+        {
+            'meals_id': 1,      # meal id
+            'meals_name': '我是菜名',    # 名称
+            'avatar_url': '我是图片地址',    # avatar_ur 显示的小图
+            'content': '我是描述使用 DDD 分隔每一行的内容',
+            'sold_count': 10,            #售出量
+            'judge_count': 10,           #评价量
+            'meal_price':  10.0,         #单价 元
+            'last_count': 20,            #剩余量  0 表示卖完了
+        }
+        ],
+        [
+        #菜品中的对象 字典表示
+        {
+            'meals_id': 1,      # meal id
+            'meals_name': '我是菜名',    # 名称
+            'avatar_url': '我是图片地址',    # avatar_ur 显示的小图
+            'content': '我是描述使用 DDD 分隔每一行的内容',
+            'sold_count': 10,            #售出量
+            'judge_count': 10,           #评价量
+            'meal_price':  10.0,         #单价 元
+            'last_count': 20,            #剩余量  0 表示卖完了
+        },
+        {
+            'meals_id': 1,      # meal id
+            'meals_name': '我是菜名',    # 名称
+            'avatar_url': '我是图片地址',    # avatar_ur 显示的小图
+            'content': '我是描述使用 DDD 分隔每一行的内容',
+            'sold_count': 10,            #售出量
+            'judge_count': 10,           #评价量
+            'meal_price':  10.0,         #单价 元
+            'last_count': 20,            #剩余量  0 表示卖完了
+        }
+        ]
+
+    ]
+}
+
