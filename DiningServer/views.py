@@ -4,10 +4,16 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from DiningServer.service import meal_service
 from DiningServer.service import user_service
+from DiningServer.service import order_service
 import json
 
 from django.views.decorators.http import require_POST
 from DiningServer.read_excel import startGenerator
+
+"""
+在这里郑重声明   order = bill =  订单
+"""
+
 
 # Create your views here.
 
@@ -59,4 +65,24 @@ def getMyDetailInfoPage(request):
 # 修改我的详细信息
 def modifyMyDetailInfo(request):
     user_service.modifyMyDetailInfo('abc','mingzi','女','1998-10-11','1212312','auisa@qq.com','中关村南大街')
+    return HttpResponse('success')
+
+# 下订单页面  点击去下单 返回的页面
+def gotoOrderPage(request):
+    return HttpResponse('success')
+
+# 创建订单 创建完成后自动跳转到支付页面
+def createOrder(request):
+    order_service.createOrder()
+    return HttpResponse('success')
+
+@require_POST
+# 支付订单
+def payOrder(request):
+    order_service.payOrder()
+    return HttpResponse('success')
+
+# 获取用户的订单
+def getOrder(request):
+    order_service.getOrder(1)
     return HttpResponse('success')

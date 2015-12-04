@@ -34,6 +34,11 @@ urlpatterns = [
     # 我的钱包
 
     # 下单
+    # 去下单页面
+    url(r'gotoOrderPage/$', views.gotoOrderPage, name='gotoOrderPage'),
+    url(r'createOrder/$', views.createOrder, name='createOrder'),
+    url(r'payOrder/$', views.payOrder, name='payOrder'),
+    url(r'getOrder/$', views.getOrder, name='getOrder'),
 
     # 支付接口
 
