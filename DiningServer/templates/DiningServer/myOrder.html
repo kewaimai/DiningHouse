@@ -39,14 +39,15 @@
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery.nav.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
-    <script>
-        $(document).ready(function(){
-            $("#order li").click(function(){
-                $("#order li").eq($(this).index()).addClass("on").siblings().removeClass('on');
-                $("#details li").hide().eq($(this).index()).show();
-             });
-        })
+<script>
+$(document).ready(function(){
+    $("#order li").click(function(){
+        $("#order li").eq($(this).index()).addClass("on").siblings().removeClass('on');
+        $("#details li").hide().eq($(this).index()).show();
+        <!--TODO @曼妮 添加ajax请求，url：DiningServer/getOrdersByType/ 参数示例：json：{‘type’：0}    0：全部 1：未付款 2：配送中 3：待评价    返回数据：下面需要显示的订单列表，直接嵌入到html中即可-->
+     });
+})
 
-    </script>
+</script>
 </body>
 </html>

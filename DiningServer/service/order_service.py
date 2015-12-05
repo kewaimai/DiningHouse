@@ -13,7 +13,8 @@ import time
 订单相关服务
 """
 
-# 1,未付款2，配送中3，待评价
+# 1,未付款    2，配送中    3，待评价
+BILL_STATE_ALL = 0
 BILL_STATE_UNPAY = 1
 BILL_STATE_SENDING = 2
 BILL_STATE_JUDGE = 3

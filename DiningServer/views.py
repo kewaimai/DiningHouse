@@ -97,11 +97,15 @@ def payOrder(request):
 
 # 获取用户的订单
 def getOrders(request):
-
-    return HttpResponse(json.dumps(my_orders = order_service.getOrders('1',1), ensure_ascii=False))
+    context = order_service.getOrders('abc',1)
+    print(context)
+    return render(request, 'DiningServer/myOrder.html', context)
 
 def ensureSend(request):
     if order_service.ensureSend('1'):
         return HttpResponse('success')
     else:
         return HttpResponse('error')
+
+def getOrdersByType(request):
+    return render(request, 'DiningServer/orders.html')

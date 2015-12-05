@@ -40,8 +40,9 @@ urlpatterns = [
     url(r'^createOrder/$', views.createOrder, name='createOrder'),
     # 支付订单接口
     url(r'^payOrder/$', views.payOrder, name='payOrder'),
-    url(r'^getOrder/$', views.getOrders, name='getOrder'),
+    url(r'^getOrders/$', views.getOrders, name='getOrder'),
     url(r'^ensureSend/$', views.ensureSend),
+    url(r'^getOrdersByType', views.getOrdersByType, name='ordersByType'),
 
     # 测试修改
     # 支付接口
