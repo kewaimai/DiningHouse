@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-     {% load staticfiles %}
+        {% load staticfiles %}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,187 +13,364 @@
 </head>
 
 <body>
-<div class="swiper-position">
-    <div class="positionleft">
-        <span class="position-img"></span>
-        {% if house %}
-            <a href="javascript:;" class="position-text">{{ house.name }}</a>
-        {% else %}
-            <a href="javascript:;" class="position-text">可外卖的东西</a>
-        {% endif %}
-        <!--<a href="javascript:;"><input class="position-text" type="text" name="海泰大厦站点" placeholder="海泰大厦站点" /></a> -->
-        <p class="position-paragraph">(点击更换站点)</p>
-    </div>
-    <div class="positionright">
-        <input class="position-botton" type="button" value="咨询电话" />
-    </div>
-</div>
+
 <div class="swiper-container">
     <div class="swiper-wrapper">
-
-        {% if banners %}
-            {% for banner in banners %}
-                {% if banner.image_url %}
-                    <div class="swiper-slide"><img src="{{ banner.image_url }}" href="{{ banner.link }}"></div>
-                {% else %}
-                    <div class="swiper-slide"><img src="{% static 'DiningServer/images/index/shop_1.jpg' %}"></div>
-                {% endif %}
-            {% endfor %}
-        {% else %}
         <div class="swiper-slide"><img src="{% static 'DiningServer/images/index/shop_1.jpg' %}"></div>
         <div class="swiper-slide"><img src="{% static 'DiningServer/images/index/shop_1.jpg' %}"></div>
         <div class="swiper-slide"><img src="{% static 'DiningServer/images/index/shop_1.jpg' %}"></div>
-        {% endif %}
     </div>
 </div>
 
 <div class="nav-lf">
-    <ul id="nav">
-        {% for category in categorys %}
-            {% if forloop.first %}
-                <li class="current"><a href="#st{{ forloop.counter}}" id="{{ category.category_id }}">{{ category.category }}</a><b></b></li>
-            {% else %}
-                <li><a href="#st{{ forloop.counter}}" id="{{ category.category_id }}">{{ category.category }}</a><b>1</b></li>
-            {% endif %}
-        {% empty %}
-            <li class="current"><a href="#st1">分类1</a><b>1</b></li>
-            <li><a href="#st2">分类2</a><b>1</b></li>
-            <li><a href="#st3">分类3</a><b>1</b></li>
-            <li><a href="#st4">分类4</a><b>1</b></li>
-        {% endfor %}
-
-    </ul>
+<ul id="nav">
+  <li class="current"><a href="#st1">营养套餐</a><b></b></li>
+  <li><a href="#st2">健康早餐</a><b>1</b></li>
+  <li><a href="#st3">水果饮品</a><b>3</b></li>
+  <li><a href="#st4">点ME商城</a><b>6</b></li>
+</ul>
 </div>
+
 <div id="container" class="container">
-      {% for meal_list in meals %}
-      <div class="section" id="st{{ forloop.counter }}">
-      <!--  在这里填充section的内容  -->
-        {% for meal in meal_list %}
-            <div class="prt-lt" id="{{ meal.meals_id }}">
-                <!-- 图片 -->
 
-                {% if meal.avatar_url %}
-                    <div class="lt-lt">
-                        <img src="{{ meal.avatar_url }}">
-                        <a href="javascript:;" class="boxtext"><span>已有<strong>12</strong>人评价</span></a>
-                    </div>
-                {% else %}
-                    <div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
-                    <div class="lt-lt">
-                        <img src="{% static 'DiningServer/images/index/prt_1.jpg' %}">
-                        <a href="javascript:;" class="boxtext"><span>已有<strong>12</strong>人评价</span></a>
-                    </div>
-                {% endif %}
+  <div class="section" id="st1">
+  	<div class="prt-lt" id="list-1">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品1</p>
+            <p class="pr">¥<span class="price">60.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+    
+  	<div class="prt-lt" id="list-2">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_2.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品1</p>
+            <p class="pr">¥<span class="price">60.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
 
-                <div class="lt-ct">
-                    <p>{{ meal.meals_name }}</p>
-                    <p class="pr">¥<span class="price">{{ meal.meal_price }}</span></p>
-                    <p class="pr2">已售<span class="text">{{ meal.sold_count }}</span>份</p>
-                </div>
-                <div class="lt-rt">
-                    <input type="button" class="minus"  value="-">
-                    <input type="text" class="result" value="0">
-                    <input type="button" class="add" value="+">
-                </div>
-            </div>
-          {% empty %}
-        {% endfor %}
-      </div>
-      {% endfor %}
+  	<div class="prt-lt" id="list-3">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_3.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品1</p>
+            <p class="pr">¥<span class="price">60.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
 
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_4.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品1</p>
+            <p class="pr">¥<span class="price">60.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_5.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品1</p>
+            <p class="pr">¥<span class="price">60.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+    
+  </div>
+    
+    
+
+  
+  <div class="section" id="st2">
+  
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品2</p>
+            <p class="pr">¥<span class="price">80.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+    
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品2</p>
+            <p class="pr">¥<span class="price">80.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品2</p>
+            <p class="pr">¥<span class="price">80.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品2</p>
+            <p class="pr">¥<span class="price">80.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品2</p>
+            <p class="pr">¥<span class="price">80.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+    
+  </div>
+  
+  <div class="section" id="st3">
+  
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品3</p>
+            <p class="pr">¥<span class="price">90.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+    
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品3</p>
+            <p class="pr">¥<span class="price">90.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品3</p>
+            <p class="pr">¥<span class="price">90.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品3</p>
+            <p class="pr">¥<span class="price">90.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品3</p>
+            <p class="pr">¥<span class="price">90.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+    
+  </div>
+  
+  <div class="section" id="st4">
+  
+  	<div class="prt-lt">
+    	<div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+        <div class="lt-ct">
+        	<p>商品4</p>
+            <p class="pr">¥<span class="price">30.00</span></p>
+        </div>
+        <div class="lt-rt">
+        	<input type="button" class="minus"  value="-">
+        	<input type="text" class="result" value="0">
+        	<input type="button" class="add" value="+">
+        </div>
+    </div>
+      
+  </div>
+  
 </div>
-<br/><br/><br/><br/><br/><br/>
+</div>
+</div>
 <footer>
 	<div class="ft-lt">
         <p>合计:<span id="total" class="total">163.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
     </div>
     <div class="ft-rt">
-    	<p>去结算</p>
+    	<p id="change-success">选好了</p>
     </div>
 </footer>
-
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery.nav.js' %}"></script>
 <script type="text/javascript">
-<!--  餐厅的电话号码在这里  -->
-{% if house %}
-var phone = {{ house.phone }}
-{% else %}
-var phone = {{ house.phone }}
-{% endif %}
 var swiper = new Swiper('.swiper-container', {
 	pagination: '.swiper-pagination',
 	paginationClickable: true,
 	spaceBetween: 30,
- centeredSlides: true,
+    centeredSlides: true,
     autoplay: 1000,
     autoplayDisableOnInteraction: false,
     loop: true
 });
+
 $(function(){
 	$('#nav').onePageNav();
 });
-
-function ajax(url,){
-
-}
 
 </script>
 <script> 
 $(function(){ 
 
-$(".add").click(function(){
-var t=$(this).parent().find('input[class*=result]'); 
-t.val(parseInt(t.val())+1);
-setTotal(); 
-})
+    //数据存储
+    var json = {};
+
+    $(".add").click(function(){
+        var t=$(this).parent().find('input[class*=result]'); 
+        t.val(parseInt(t.val())+1);
+        setTotal(); 
+        
+        //获取当前选择的菜
+        var _id = $(this).parents(".prt-lt").attr('id');
+        json[ _id ] = t.val();
+    });
+     
+    $(".minus").click(function(){ 
+        var t=$(this).parent().find('input[class*=result]'); 
+        t.val(parseInt(t.val())-1);
+        if(parseInt(t.val())<0){ 
+            t.val(0); 
+        } 
+        setTotal(); 
+
+        var _id = $(this).parents(".prt-lt").attr('id');
+        json[ _id ] = t.val();
+    })
+
+    var $changeBtn = $("#change-success")
+    ,   url = 'gotoOrderPage/$'
+    ;
+
+    //选好了提交
+    $changeBtn.on("click", function (){
+        $.post(url, json, function (data){
+            if (data.status) {
+                window.location.href = "DiningServer/shopping.html";
+            }
+        }, "html");
+    });
  
-$(".minus").click(function(){ 
-var t=$(this).parent().find('input[class*=result]'); 
-t.val(parseInt(t.val())-1);
-if(parseInt(t.val())<0){ 
-t.val(0); 
-} 
-setTotal(); 
+    function setTotal(){ 
+        var s=0;
+        var v=0;
+        var n=0;
 
+        //计算总额
+        $(".lt-rt").each(function(){ 
+            var t = $(this).find('input[class*=result]').val();
+            s+=parseInt(t)*parseFloat($(this).siblings().find('span[class*=price]').text());             
+        });
 
-})
- 
-function setTotal(){ 
-var s=0;
-var v=0;
-var n=0;
-<!--计算总额--> 
-$(".lt-rt").each(function(){ 
-s+=parseInt($(this).find('input[class*=result]').val())*parseFloat($(this).siblings().find('span[class*=price]').text()); 
+        //计算菜种
+        var nIn = $("li.current a").attr("href");
+        $(nIn+" input[type='text']").each(function() {
+            if($(this).val()!=0){
+                n++;
+            }
+        });
 
-});
+        <!--计算总份数-->
+        $("input[type='text']").each(function(){
+            v += parseInt($(this).val());
+        });
 
-<!--计算菜种-->
-var nIn = $("li.current a").attr("href");
-$(nIn+" input[type='text']").each(function() {
-	if($(this).val()!=0){
-		n++;
-	}
-});
+        if(n>0){
+            $(".current b").html(n).show();     
+        }else{
+            $(".current b").hide();     
+        }   
 
-<!--计算总份数-->
-$("input[type='text']").each(function(){
-	v += parseInt($(this).val());
-});
-if(n>0){
-	$(".current b").html(n).show();		
-	}else{
-	$(".current b").hide();		
-		}	
-$(".share").html(v);
-$("#total").html(s.toFixed(2)); 
-} 
-setTotal(); 
+        $(".share").html(v);
+        $("#total").html(s.toFixed(2)); 
 
-}) 
+        
+    } 
+
+    setTotal(); 
+
+}); 
+
 </script> 
 <script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
