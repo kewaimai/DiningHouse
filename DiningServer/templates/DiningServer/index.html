@@ -167,15 +167,23 @@ $(function() {
         json[ _id ] = t.val();
 
     });
-    var $changeBtn = $("#change-success")
-            , url = 'gotoOrderPage/$'
-            ;
-//选好了提交
-    $changeBtn.on("click", function () {
-        if (data.status) {
-            window.location.href = "DiningServer/shopping.html";
-        }
-    }, "html");
+{#    var $changeBtn = $("#change-success")#}
+{#            , url = 'gotoOrderPage/$'#}
+{#            ;#}
+{#//选好了提交#}
+{#    $changeBtn.on("click", function () {#}
+{#        if (data.status) {#}
+{#            window.location.href = "DiningServer/shopping.html";#}
+{#        }#}
+{#    }, "html");#}
+    $("#change-success").click(function(){
+        $.post("/DiningServer/gotoOrderPage",
+                json,
+                function(data,status){
+          alert("数据：" + data + "\n状态：" + status);
+        });
+    });
+
 
     function setTotal() {
         var sum = 0;

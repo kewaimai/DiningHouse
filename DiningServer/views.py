@@ -31,7 +31,6 @@ def index(request):
     #获取用户经纬度，默认使用最近的店面
 
     context = meal_service.getCategoryAndList()
-    print(context)
     return render(request, 'DiningServer/index.html', context)
 
 # 获取商品详情界面
@@ -71,10 +70,9 @@ def modifyMyDetailInfo(request):
     return render(request, 'DiningServer/userInfoPage.html', context)
 
 # 下订单页面  点击去下单 返回的页面
-@csrf_exempt
 @require_POST
 def gotoOrderPage(request):
-    context = ''
+    print('收到请求了')
     return render(request, 'DiningServer/shopping.html')
 
 # 创建订单 创建完成后自动跳转到支付页面
