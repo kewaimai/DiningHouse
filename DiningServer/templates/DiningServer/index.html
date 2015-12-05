@@ -172,10 +172,12 @@ $(function() {
             ;
 //选好了提交
     $changeBtn.on("click", function () {
-        if (data.status) {
-            window.location.href = "DiningServer/shopping.html";
-        }
-    }, "html");
+        $.post(url, json, function (data) {
+            if (data.status) {
+                window.location.href = "DiningServer/shopping.html";
+            } 
+        }, 'html')
+    });
 
     function setTotal() {
         var sum = 0;
