@@ -142,10 +142,17 @@ $(function(){
 <script> 
 $(function() {
 
+        //数据存储
+    var json = {};
+
     $(".add").click(function () {
         var t = $(this).parent().find('input[class*=result]');
         t.val(parseInt(t.val()) + 1);
         setTotal();
+
+        //获取当前选择的菜
+        var _id = $(this).parents(".prt-lt").attr('id');
+        json[ _id ] = t.val();
     });
 
     $(".minus").click(function () {
@@ -155,6 +162,10 @@ $(function() {
             t.val(0);
         }
         setTotal();
+
+        var _id = $(this).parents(".prt-lt").attr('id');
+        json[ _id ] = t.val();
+
     });
     var $changeBtn = $("#change-success")
             , url = 'gotoOrderPage/$'
