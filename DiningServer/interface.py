@@ -170,3 +170,28 @@ class MyBill():
 
     def toDict(self):
         return self._context
+
+"""
+餐品和它对应的数量
+"""
+class MealsAndCount():
+    def __init__(self):
+        self._context = {}
+        self._meals = []
+        self._context['meals'] = self._meals
+
+    def add_meals(self, meals_id, meals_name, avatar_url, content, sold_count, judge_count, meal_price, last_count, buy_count):
+        self._meals.append({
+            'meals_id': meals_id,
+            'meals_name': meals_name,
+            'avatar_url': avatar_url,
+            'content': content,
+            'sold_count': sold_count,
+            'judge_count': judge_count,
+            'meal_price': meal_price,
+            'last_count': last_count,
+            'buy_count' : buy_count,
+        })
+
+    def toDict(self):
+        return self._context

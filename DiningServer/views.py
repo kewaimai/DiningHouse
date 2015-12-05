@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.shortcuts import render_to_response
+from django.shortcuts import redirect
 from DiningServer.service import meal_service
 from DiningServer.service import user_service
 from DiningServer.service import order_service
@@ -70,9 +72,12 @@ def modifyMyDetailInfo(request):
     return render(request, 'DiningServer/userInfoPage.html', context)
 
 # 下订单页面  点击去下单 返回的页面
+@csrf_exempt
 @require_POST
 def gotoOrderPage(request):
-    print('收到请求了')
+    print(request.POST)
+    context = meal_service.getMealsAndCount(request.POST)
+    print(context)
     return render(request, 'DiningServer/shopping.html')
 
 # 创建订单 创建完成后自动跳转到支付页面
