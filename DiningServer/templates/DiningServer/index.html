@@ -95,6 +95,7 @@
                     <input type="text" class="result" value="0">
                     <input type="button" class="add" value="+">
                 </div>
+
             </div>
           {% empty %}
         {% endfor %}
@@ -187,19 +188,18 @@ $(function() {
         });
 
 
+        <!--计算菜种-->
+        var nIn = $("li.current a").attr("href");
+        $(nIn + " input[type='text']").each(function () {
+            if ($(this).val() != 0) {
+                category_count++;
+            }
+        });
 
-    <!--计算菜种-->
-    var nIn = $("li.current a").attr("href");
-    $(nIn + " input[type='text']").each(function () {
-        if ($(this).val() != 0) {
-            category_count++;
-        }
-    });
-
-    <!--计算总份数-->
-    $("input[type='text']").each(function () {
-        meal_count += parseInt($(this).val());
-
+        <!--计算总份数-->
+        $("input[type='text']").each(function () {
+            meal_count += parseInt($(this).val());
+        });
         if (category_count > 0) {
             $(".current b").html(category_count).show();
         } else {
@@ -207,10 +207,34 @@ $(function() {
         }
         $(".share").html(meal_count);
         $("#total").html(sum.toFixed(2));
-
-    });
     }
-})
+        setTotal();
+ });
+    // 延迟加载
+$.windowbox={
+    mshbox:function(ssclass){
+        $(ssclass).each(function(i){
+            var mshtop=$(this).offset().top;
+            var srcTop=$(window).scrollTop();
+            var docHei=$(window).height();
+            if(mshtop>(srcTop+docHei)){
+                $(this).css("display","none");
+            }
+            if(mshtop<=(srcTop+docHei-100))
+            {
+                $(this).css("display","block");
+                var src=$(this).find("img").attr("_src");
+                $(this).find("img").attr("src",src);
+            }
+            console.log(i);
+        });
+    }
+}
+$.windowbox.mshbox(".prt-lt");
+$(window).scroll(function(){
+    $.windowbox.mshbox(".prt-lt");
+});
+
 </script>
 <script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
