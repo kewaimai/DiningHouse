@@ -35,13 +35,13 @@ urlpatterns = [
 
     # 下单
     # 去下单页面
-    url(r'gotoOrderPage/$', views.gotoOrderPage, name='gotoOrderPage'),
+    url(r'^gotoOrderPage/$', views.gotoOrderPage, name='gotoOrderPage'),
     # 创建订单接口      返回创建订单成功并提示去支付  的界面
-    url(r'createOrder/$', views.createOrder, name='createOrder'),
+    url(r'^createOrder/$', views.createOrder, name='createOrder'),
     # 支付订单接口
-    url(r'payOrder/$', views.payOrder, name='payOrder'),
-    url(r'getOrder/$', views.getOrders, name='getOrder'),
-    url(r'ensureSend/$', views.ensureSend),
+    url(r'^payOrder/$', views.payOrder, name='payOrder'),
+    url(r'^getOrder/$', views.getOrders, name='getOrder'),
+    url(r'^ensureSend/$', views.ensureSend),
 
     # 测试修改
     # 支付接口

@@ -140,7 +140,7 @@ $(function(){
 
 
 </script>
-<script> 
+<script>
 $(function() {
 
         //数据存储
@@ -168,15 +168,31 @@ $(function() {
         json[ _id ] = t.val();
 
     });
+
     var $changeBtn = $("#change-success")
-            , url = 'gotoOrderPage/$'
+            , url = '/DiningServer/gotoOrderPage/'
             ;
 //选好了提交
     $changeBtn.on("click", function () {
-        if (data.status) {
-            window.location.href = "DiningServer/shopping.html";
-        }
-    }, "html");
+        StandardPost(url, json);
+    });
+
+    function StandardPost(url,args) {
+        var body = $(document.body),
+            form = $("<form method='post'></form>"),
+            input;
+        form.attr({"action":url});
+        $.each(args,function(key,value){
+            input = $("<input type='hidden'>");
+            input.attr({"name":key});
+            input.val(value);
+            form.append(input);
+        });
+
+        form.appendTo(document.body);
+        form.submit();
+        document.body.removeChild(form[0]);
+    }
 
     function setTotal() {
         var sum = 0;
@@ -187,7 +203,15 @@ $(function() {
             sum += parseInt($(this).find('input[class*=result]').val()) * parseFloat($(this).siblings().find('span[class*=price]').text());
         });
 
+        <!--计算菜种-->
+        var nIn = $("li.current a").attr("href");
+        $(nIn + " input[type='text']").each(function () {
+            if ($(this).val() != 0) {
+                category_count++;
+            }
+        });
 
+<<<<<<< HEAD
         <!--计算菜种-->
         var nIn = $("li.current a").attr("href");
         $(nIn + " input[type='text']").each(function () {
@@ -207,6 +231,21 @@ $(function() {
         }
         $(".share").html(meal_count);
         $("#total").html(sum.toFixed(2));
+=======
+        <!--计算总份数-->
+        $("input[type='text']").each(function () {
+            meal_count += parseInt($(this).val());
+
+            if (category_count > 0) {
+                $(".current b").html(category_count).show();
+            } else {
+                $(".current b").hide();
+            }
+            $(".share").html(meal_count);
+            $("#total").html(sum.toFixed(2));
+
+        });
+>>>>>>> origin/develop
     }
         setTotal();
  });

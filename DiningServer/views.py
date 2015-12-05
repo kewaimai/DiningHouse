@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.shortcuts import render_to_response
+from django.shortcuts import redirect
 from DiningServer.service import meal_service
 from DiningServer.service import user_service
 from DiningServer.service import order_service
@@ -31,7 +33,6 @@ def index(request):
     #获取用户经纬度，默认使用最近的店面
 
     context = meal_service.getCategoryAndList()
-    print(context)
     return render(request, 'DiningServer/index.html', context)
 
 # 获取商品详情界面
@@ -74,7 +75,9 @@ def modifyMyDetailInfo(request):
 @csrf_exempt
 @require_POST
 def gotoOrderPage(request):
-    context = ''
+    print(request.POST)
+    context = meal_service.getMealsAndCount(request.POST)
+    print(context)
     return render(request, 'DiningServer/shopping.html')
 
 # 创建订单 创建完成后自动跳转到支付页面

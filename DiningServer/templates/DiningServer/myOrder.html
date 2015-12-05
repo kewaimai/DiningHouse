@@ -1,10 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+<head>
+    {% load staticfiles %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>购物车结算</title>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/swiper.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/myOrder.css' %}">
 </head>
+
 <body>
-我的订单页面
+
+    <ul class="box-order" id="order">
+      <!--全部-->
+        <li class="on">全部<i></i></li>
+        <!--未付款-->
+        <li>未付款<i></i></li>
+        <!--配送中-->
+        <li>配送中<i></i></li>
+        <!--待评价-->
+        <li>待评价<i></i></li>
+    </ul>
+
+    <ol class="box-details" id="details">
+        <li class="active">抱歉，无可订单显示1</li>
+        <li>抱歉，无可订单显示2</li>
+        <li>抱歉，无可订单显示3</li>
+        <li>抱歉，无可订单显示4</li>
+    </ol>
+
+
+<script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery.nav.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $("#order li").click(function(){
+                $("#order li").eq($(this).index()).addClass("on").siblings().removeClass('on');
+                $("#details li").hide().eq($(this).index()).show();
+             });
+        })
+
+    </script>
 </body>
 </html>

@@ -153,3 +153,27 @@ def addMealByScript(category_id, category_order, name):
     item.sold_count = 120
     item.save()
     pass
+
+"""
+获取用户选的商品id的详情 并返回用户选择的数量
+"""
+def getMealsAndCount(post):
+    meals_and_count = interface.MealsAndCount()
+    for key in post:
+        print(key)
+        print(post[key])
+        tblMeal = TblMealInHouse.objects.filter(id=key)
+        for item in tblMeal:
+            meals_and_count.add_meals(
+                item.id
+                , item.name
+                , item.avatar_url
+                , item.detail_content
+                , item.sold_count
+                , item.judge_count
+                , item.meal_price
+                , item.last_count
+                , post[key]
+            )
+            break
+    return meals_and_count.toDict()
