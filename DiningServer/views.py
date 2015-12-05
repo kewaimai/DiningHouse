@@ -8,12 +8,12 @@ from DiningServer.service import order_service
 import json
 
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from DiningServer.read_excel import startGenerator
 
 """
 在这里郑重声明   order = bill =  订单
 """
-
 
 # Create your views here.
 
@@ -69,7 +69,10 @@ def modifyMyDetailInfo(request):
     return HttpResponse('success')
 
 # 下订单页面  点击去下单 返回的页面
+@csrf_exempt
+@require_POST
 def gotoOrderPage(request):
+    context = ''
     return render(request, 'DiningServer/shopping.html')
 
 # 创建订单 创建完成后自动跳转到支付页面
