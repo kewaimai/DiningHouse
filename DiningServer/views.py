@@ -55,18 +55,20 @@ def getMealJudge(request):
 
 # 获取我的订单
 def getMyBill(request):
-    return HttpResponse('')
+    return render(request, 'DiningServer/myOrder.html', {})
 
 # 获取我的详细信息页面
 def getMyDetailInfoPage(request):
     # 获取userid
     # 使用ensure_ascii = False   否则的话中文会只显示编码 不显示汉字
-    return HttpResponse(json.dumps(user_service.getMyDetailInfo('abc'), ensure_ascii=False))
+    context = user_service.getMyDetailInfo('abc')
+    return render(request, 'DiningServer/userInfoPage.html', context)
 
 # 修改我的详细信息
 def modifyMyDetailInfo(request):
     user_service.modifyMyDetailInfo('abc','mingzi','女','1998-10-11','1212312','auisa@qq.com','中关村南大街')
-    return HttpResponse('success')
+    context = user_service.getMyDetailInfo('abc')
+    return render(request, 'DiningServer/userInfoPage.html', context)
 
 # 下订单页面  点击去下单 返回的页面
 @csrf_exempt
