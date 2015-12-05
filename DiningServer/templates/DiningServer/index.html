@@ -105,10 +105,10 @@
 <br/><br/><br/><br/><br/><br/>
 <footer>
 	<div class="ft-lt">
-        <p>合计:<span id="total" class="total">163.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
+        <p>合计:<span id="total" class="total">0.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
     </div>
     <div class="ft-rt">
-    	<p>去结算</p>
+    	<p id="change-success">选好了</p>
     </div>
 </footer>
 
@@ -127,7 +127,7 @@ var swiper = new Swiper('.swiper-container', {
 	pagination: '.swiper-pagination',
 	paginationClickable: true,
 	spaceBetween: 30,
- centeredSlides: true,
+    centeredSlides: true,
     autoplay: 1000,
     autoplayDisableOnInteraction: false,
     loop: true
@@ -136,65 +136,71 @@ $(function(){
 	$('#nav').onePageNav();
 });
 
-function ajax(url,){
 
-}
 
 </script>
 <script> 
-$(function(){ 
+$(function() {
 
-$(".add").click(function(){
-var t=$(this).parent().find('input[class*=result]'); 
-t.val(parseInt(t.val())+1);
-setTotal(); 
+    $(".add").click(function () {
+        var t = $(this).parent().find('input[class*=result]');
+        t.val(parseInt(t.val()) + 1);
+        setTotal();
+    });
+
+    $(".minus").click(function () {
+        var t = $(this).parent().find('input[class*=result]');
+        t.val(parseInt(t.val()) - 1);
+        if (parseInt(t.val()) < 0) {
+            t.val(0);
+        }
+        setTotal();
+    });
+    var $changeBtn = $("#change-success")
+            , url = 'gotoOrderPage/$'
+            ;
+//选好了提交
+    $changeBtn.on("click", function () {
+        if (data.status) {
+            window.location.href = "DiningServer/shopping.html";
+        }
+    }, "html");
+
+    function setTotal() {
+        var sum = 0;
+        var meal_count = 0;
+        var category_count = 0;
+        <!--计算总额-->
+        $(".lt-rt").each(function () {
+            sum += parseInt($(this).find('input[class*=result]').val()) * parseFloat($(this).siblings().find('span[class*=price]').text());
+        });
+
+
+
+    <!--计算菜种-->
+    var nIn = $("li.current a").attr("href");
+    $(nIn + " input[type='text']").each(function () {
+        if ($(this).val() != 0) {
+            category_count++;
+        }
+    });
+
+    <!--计算总份数-->
+    $("input[type='text']").each(function () {
+        meal_count += parseInt($(this).val());
+
+        if (category_count > 0) {
+            $(".current b").html(category_count).show();
+        } else {
+            $(".current b").hide();
+        }
+        $(".share").html(meal_count);
+        $("#total").html(sum.toFixed(2));
+
+    });
+    }
 })
- 
-$(".minus").click(function(){ 
-var t=$(this).parent().find('input[class*=result]'); 
-t.val(parseInt(t.val())-1);
-if(parseInt(t.val())<0){ 
-t.val(0); 
-} 
-setTotal(); 
-
-
-})
- 
-function setTotal(){ 
-var s=0;
-var v=0;
-var n=0;
-<!--计算总额--> 
-$(".lt-rt").each(function(){ 
-s+=parseInt($(this).find('input[class*=result]').val())*parseFloat($(this).siblings().find('span[class*=price]').text()); 
-
-});
-
-<!--计算菜种-->
-var nIn = $("li.current a").attr("href");
-$(nIn+" input[type='text']").each(function() {
-	if($(this).val()!=0){
-		n++;
-	}
-});
-
-<!--计算总份数-->
-$("input[type='text']").each(function(){
-	v += parseInt($(this).val());
-});
-if(n>0){
-	$(".current b").html(n).show();		
-	}else{
-	$(".current b").hide();		
-		}	
-$(".share").html(v);
-$("#total").html(s.toFixed(2)); 
-} 
-setTotal(); 
-
-}) 
-</script> 
+</script>
 <script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
 </body>
