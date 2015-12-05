@@ -26,6 +26,24 @@
 <!--信息-->		
         <div class="box-im">
         	<h3>用户信息</h3>
+            {% if user %}
+                <div class="im-name">
+        		<p>联系姓名</p>
+        		<input type="text" placeholder="请输入姓名.." value="{{ user.username }}">
+        	</div>
+        	<div class="im-name">
+        		<p>联系电话</p>
+        		<input type="text" value="{{ user.phone }}">
+        	</div>
+        	<div class="im-name">
+        		<p>详细地址</p>
+        		<input type="text" placeholder="请输入详细地址.." class="im-add" value="{{ user.location }}">
+        	</div>
+        	<div class="im-name">
+        		<p>备注</p>
+        		<input type="text" class="im-ra">
+        	</div>
+            {% else %}
         	<div class="im-name">
         		<p>联系姓名</p>
         		<input type="text" placeholder="请输入姓名..">
@@ -46,16 +64,20 @@
         		<p>备注</p>
         		<input type="text" class="im-ra">
         	</div>
+            {% endif %}
         </div>
 
         <p class="box-ftbd"></p>
         <div class="box-footer">
         	<p>送货时间</p>
         	<select>
-        		<option>11:30</option>
-        		<option>11:40</option>
-        		<option>11:50</option>
-        		<option>12:00</option>
+            {% if times %}
+                {% for item in times %}
+                    <option>{{ item }}</option>
+                {% endfor %}
+            {% else %}
+                <option>立即送达</option>
+            {% endif %}
         	</select>
         </div>
 

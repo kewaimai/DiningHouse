@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from DiningServer.service import meal_service
 from DiningServer.service import user_service
 from DiningServer.service import order_service
+from DiningServer.service import time_service
 import json
 
 from django.views.decorators.http import require_POST
@@ -75,10 +76,13 @@ def modifyMyDetailInfo(request):
 @csrf_exempt
 @require_POST
 def gotoOrderPage(request):
-    print(request.POST)
-    context = meal_service.getMealsAndCount(request.POST)
+    #TODO 获取用户id
+    user = user_service.getMyDetailInfo('abc')
+    meals = meal_service.getMealsAndCount(request.POST)
+    times = time_service.getTimeOption()
+    context = {'meals':meals, 'user':user, 'times': times}
     print(context)
-    return render(request, 'DiningServer/shopping.html')
+    return render(request, 'DiningServer/shopping.html', context)
 
 # 创建订单 创建完成后自动跳转到支付页面
 def createOrder(request):
