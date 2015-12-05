@@ -211,15 +211,6 @@ $(function() {
             }
         });
 
-<<<<<<< HEAD
-        <!--计算菜种-->
-        var nIn = $("li.current a").attr("href");
-        $(nIn + " input[type='text']").each(function () {
-            if ($(this).val() != 0) {
-                category_count++;
-            }
-        });
-
         <!--计算总份数-->
         $("input[type='text']").each(function () {
             meal_count += parseInt($(this).val());
@@ -231,21 +222,6 @@ $(function() {
         }
         $(".share").html(meal_count);
         $("#total").html(sum.toFixed(2));
-=======
-        <!--计算总份数-->
-        $("input[type='text']").each(function () {
-            meal_count += parseInt($(this).val());
-
-            if (category_count > 0) {
-                $(".current b").html(category_count).show();
-            } else {
-                $(".current b").hide();
-            }
-            $(".share").html(meal_count);
-            $("#total").html(sum.toFixed(2));
-
-        });
->>>>>>> origin/develop
     }
         setTotal();
  });
