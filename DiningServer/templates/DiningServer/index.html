@@ -73,7 +73,7 @@
 
                 {% if meal.avatar_url %}
                     <div class="lt-lt">
-                        <a href="/DiningServer/{{ meal.meals_id }}/getMealDetail/"><img src="{{ meal.avatar_url }}"></a>
+                        <a href="/DiningServer/{{ meal.meals_id }}/getMealDetail/"><img src="{{ meal.avatar_url }}" /></a>
                         <a href="javascript:;" class="boxtext"><span>已有<strong>{{ meal.judge_count }}</strong>人评价</span></a>
                     </div>
                 {% else %}
@@ -117,7 +117,17 @@
 <script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery.nav.js' %}"></script>
 <script type="text/javascript">
-<!--  餐厅的电话号码在这里  -->
+//图片数组
+var src_list = {
+    {% for meal_list in meals %}
+        {% for item in meal_list %}
+            "{{ item.meals_id }}":"{{ item.avatar_url }}",
+        {% endfor %}
+    {% endfor %}
+};
+
+
+//餐厅的电话号码
 {% if house %}
 var phone = {{ house.phone }}
 {% else %}
