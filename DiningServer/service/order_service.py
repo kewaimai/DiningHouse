@@ -70,7 +70,10 @@ def payOrder(bill_id):
 获取用户订单，根据用户输入的用户id和订单类型（未付款，派送中，待评价）返回用户订单列表
 """
 def getOrders(user_id, orderType = 0):
-    myOrder = TblBill.objects.filter(user_id=user_id,bill_state=orderType)
+    if orderType:
+        myOrder = TblBill.objects.filter(user_id=user_id,bill_state=orderType)
+    else:
+        myOrder = TblBill.objects.filter(user_id=user_id)
     myBill = MyBill()
     for item in myOrder:
         myBillIndex = myBill.createBill(

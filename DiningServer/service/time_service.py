@@ -5,7 +5,7 @@ from DiningServer.common.time_format_util import HOUR_AND_MINUTE
 import time
 
 """
-获取时间选项 
+获取时间选项
 """
 def getTimeOption():
     time_list = []

@@ -98,9 +98,13 @@ def payOrder(request):
     order_service.payOrder()
     return HttpResponse('success')
 
-# 获取用户的订单
 def getOrders(request):
-    context = order_service.getOrders('abc',1)
+    """
+    获取用户订单页面
+    :param request:
+    :return: 返回”我的订单页面“
+    """
+    context = order_service.getOrders('abc')
     print(context)
     return render(request, 'DiningServer/myOrder.html', context)
 
@@ -110,5 +114,14 @@ def ensureSend(request):
     else:
         return HttpResponse('error')
 
+@csrf_exempt
+@require_POST
 def getOrdersByType(request):
-    return render(request, 'DiningServer/orders.html')
+    """
+    获取用户订单
+    :param request: httprequest
+    :return: 渲染后的订单列表
+    """
+    context = order_service.getOrders('abc',request.POST['type'])
+    print(context)
+    return render(request, 'DiningServer/orders.html', context)
