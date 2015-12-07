@@ -145,7 +145,7 @@ class MyBill():
         bill = {
             'id': id,
             'user_id': user_id,
-            'user_locatin': user_location,
+            'user_location': user_location,
             'bill_totalling': bill_totalling,
             'add_time': add_time,
             'pay_time': pay_time,
@@ -157,12 +157,13 @@ class MyBill():
         self._bills.append(bill)
         return len(self._bills) - 1
 
-    def addMeal(self, bill_order, meal_id, meal_name, meal_url, meal_count):
+    def addMeal(self, bill_order, meal_id, meal_name, meal_url, meal_count, meal_price):
         meal = {
             'meal_id' : meal_id,
             'meal_name' : meal_name,
             'meal_url' : meal_url,
-            'meal_count' : meal_count
+            'meal_count' : meal_count,
+            'meal_price' : meal_price
         }
         try:
             self._bills[bill_order]['meals'].append(meal)

@@ -153,6 +153,7 @@ class TblBillMeal(models.Model):
     add_time = models.DateTimeField()
     meal_name = models.CharField(max_length=300)
     meal_url = models.CharField(max_length=300)
+    meal_price = models.FloatField()
 
     class Meta:
         managed = False

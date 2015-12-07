@@ -5,6 +5,7 @@ from DiningServer.models import TblBillMeal
 
 from DiningServer.interface import MyBill
 
+from DiningServer.common.time_format_util import SERVER_TIME_FORMAT_WITHOUT_SECOND
 from DiningServer.common.time_format_util import SERVER_TIME_FORMAT
 from uuid import uuid4
 import time
@@ -14,6 +15,12 @@ import time
 """
 
 # 1,未付款    2，配送中    3，待评价
+bill_state = [
+    '全部',
+    '未付款',
+    '配送中',
+    '待评价'
+]
 BILL_STATE_ALL = 0
 BILL_STATE_UNPAY = 1
 BILL_STATE_SENDING = 2
@@ -43,6 +50,7 @@ def createOrder():
     # bill_meal.meal_in_house_id =
     # bill_meal.buy_count =
     bill_meal.save()
+    bill_meal.meal_price = 1.0
     pass
 
 """
@@ -76,20 +84,30 @@ def getOrders(user_id, orderType = 0):
         myOrder = TblBill.objects.filter(user_id=user_id)
     myBill = MyBill()
     for item in myOrder:
+        print(type(item.add_time))
+        add_time = ''
+        pay_time = ''
+        ensure_send_time = ''
+        if item.add_time:
+            add_time = item.add_time.strftime(SERVER_TIME_FORMAT_WITHOUT_SECOND)
+        if item.pay_time:
+            pay_time = item.pay_time.strftime(SERVER_TIME_FORMAT_WITHOUT_SECOND)
+        if item .ensure_send_time:
+            ensure_send_time = item.ensure_send_time.strftime(SERVER_TIME_FORMAT_WITHOUT_SECOND)
         myBillIndex = myBill.createBill(
             item.id,
             item.user_id,
             item.user_location,
             item.bill_totalling,
-            item.add_time,
-            item.pay_time,
-            item.pay_time,
+            add_time,
+            pay_time,
+            bill_state[item.bill_state],
             item.bill_content,
-            item.ensure_send_time
+            ensure_send_time
         )
         myMeals = TblBillMeal.objects.filter(bill_id=item.id)
         for meal in myMeals:
-            myBill.addMeal(myBillIndex, meal.meal_in_house_id, meal.meal_name, meal.meal_url, meal.buy_count)
+            myBill.addMeal(myBillIndex, meal.meal_in_house_id, meal.meal_name, meal.meal_url, meal.buy_count, meal.meal_price)
     return myBill.toDict()
 
 # 确认送达 可有商户或者用户两方调用

@@ -6,65 +6,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>购物车结算</title>
+<title>我的订单</title>
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/swiper.min.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/myOrder.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/dom.css' %}">
 </head>
 
 <body>
 
-    <ul class="box-order" id="order">
-      <!--全部-->
-        <li class="on">全部<i></i></li>
-        <!--未付款-->
-        <li>未付款<i></i></li>
-        <!--配送中-->
-        <li>配送中<i></i></li>
-        <!--待评价-->
-        <li>待评价<i></i></li>
-    </ul>
+    <div class="dom-box">
 
-    <ol class="box-details" id="details">
-        <li class="active">抱歉，无可订单显示1</li>
-        <li>抱歉，无可订单显示2</li>
-        <li>抱歉，无可订单显示3</li>
-        <li>抱歉，无可订单显示4</li>
-    </ol>
+
+<!--订单信息-->
+        <ul class="box-order" id="order">
+          <!--全部-->
+            <li class="on">全部<i></i></li>
+            <!--未付款-->
+            <li>未付款<i></i></li>
+            <!--配送中-->
+            <li>配送中<i></i></li>
+            <!--待评价-->
+            <li>待评价<i></i></li>
+        </ul>
+
+
+<!--详细 信息-->
+        <dl class="dom-order" id="dom">
+
+            <li class="active dom-one">
+                {% for bill in bills %}
+                    <div class="dom-tm" id="{{ bill.meal_id }}">
+                        <img src="{{ bill.meals.0.meal_url }}" class="dom-img">
+                        <div class="dom-dt">
+                            <p>下单时间：<span>{{ bill.add_time }}</span></p>
+                            <p>总价<span>￥{{ bill.bill_totalling }}</span></p>
+                            <p id="dom-color"><span>{{ bill.bill_state }}</span></p>
+                        </div>
+                    </div>
+
+
+                    <div class="dom-ma">
+                        {% for item in bill.meals %}
+                        <p>{{ item.meal_name }}<span>￥{{ item.meal_price }}</span><span>{{ item.meal_count }}</span></p>
+                        {% endfor %}
+                        <div class="dom-mad">合计<p class="dom-map">￥{{ bill.bill_totalling }}</p></div>
+                    </div>
+                {% empty %}
+                    <p style="font-size:0.1875rem; text-align: center; padding-bottom:15px;">抱歉，无可订单显示</p>
+                {% endfor %}
+
+            </li>
+
+            <li class="dom-one">
+            </li>
+
+            <li class="dom-one">
+            </li>
+
+            <li class="dom-one">
+            </li>
+
+
+
+        </dl>
+
+    </div>
 
 
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'DiningServer/js/jquery.nav.js' %}"></script>
-<script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
-<script>
-    /*查看订单*/
-$(document).ready(function(){
-    $("#order li").on("click",function(){
-        $("#order li").eq($(this).index()).addClass("on").siblings().removeClass('on');
-        $("#details li").hide().eq($(this).index()).show();
-
-        var index = $(this).index();
-        getData(index);
-     });
-
-     /*订单请求数据*/
-    function getData (iNow){
-        $.post('/DiningServer/getOrdersByType/', {'type': iNow}, function (data) {
-            if (data.status) {
-                //xxxx
-            }
-        }, 'json');
-    }
-
-    getData(0);
-});
-    /*数据存储*/
-     var json = {};
-
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#order li").on("click",function(){
+            $("#order li").eq($(this).index()).addClass("on").siblings().removeClass('on');
+            $("#dom li").hide().eq($(this).index()).show();
+        });
+    });
 </script>
 </body>
 </html>
