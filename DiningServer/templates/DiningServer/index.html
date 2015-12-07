@@ -263,7 +263,9 @@ $(function() {
 </script>
 <script>
 window.onload=window.onscroll=window.onresize=function (){
-	var aImg=document.getElementsByTagName('img');
+   //var oImg=document.getElementsByClassName('lt-lt')[0];
+    var aImg=$('.lt-lt a img');
+    alert(aImg);
 	var scrollTop=document.documentElement.scrollTop || document.body.scrollTop;
 	var clientBottom=document.documentElement.clientHeight+scrollTop;
 
@@ -273,7 +275,7 @@ window.onload=window.onscroll=window.onresize=function (){
 		{
 			// 换
 			// aImg[i].src=aImg[i]['_src']; 错
-			aImg[i].src=aImg[i].getAttribute('_src');
+			aImg[i].src=aImg[i].getAttribute('_lazy_src');
 		}
 	}
 };
