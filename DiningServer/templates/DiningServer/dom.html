@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+    {% load staticfiles %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>dom</title>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/swiper.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/dom.css' %}">
+</head>
+
+<body>
+
+    <div class="dom-box">
+
+
+<!--订单信息-->
+        <ul class="box-order" id="order">
+          <!--全部-->
+            <li class="on">全部<i></i></li>
+            <!--未付款-->
+            <li>未付款<i></i></li>
+            <!--配送中-->
+            <li>配送中<i></i></li>
+            <!--待评价-->
+            <li>待评价<i></i></li>
+        </ul>
+
+
+<!--详细 信息-->
+        <dl class="dom-order" id="dom">
+
+            <li class="active dom-one">
+                <div class="dom-tm">
+                    <img src="prt_1.jpg" class="dom-img">
+                    <div class="dom-dt">
+                        <p>下单时间：<span>2015-2-2</span></p>
+                        <p>总价<span>￥15</span></p>
+                        <p id="dom-color"><span>未完成</span></p>
+                    </div>
+                </div>
+
+
+                <div class="dom-ma">
+                    <p>零食1<span>￥5</span><span>1</span></p>
+                    <p>零食2<span>￥5</span><span>2</span></p>
+                    <div class="dom-mad">合计<p class="dom-map">￥10</p></div>
+                </div>
+            </li>
+
+                        <li class="dom-one">
+                <div class="dom-tm">
+                    <img src="prt_1.jpg" class="dom-img">
+                    <div class="dom-dt">
+                        <p>下单时间：<span>2015-2-2</span></p>
+                        <p>总价<span>￥15</span></p>
+                        <p id="dom-color"><span>未完成</span></p>
+                    </div>
+                </div>
+
+
+                <div class="dom-ma">
+                    <p>零食3<span>￥5</span><span>1</span></p>
+                    <p>零食4<span>￥5</span><span>2</span></p>
+                    <div class="dom-mad">合计<p class="dom-map">￥10</p></div>
+                </div>
+            </li>
+
+            <li class="dom-one">
+                <div class="dom-tm">
+                    <img src="prt_1.jpg" class="dom-img">
+                    <div class="dom-dt">
+                        <p>下单时间：<span>2015-2-2</span></p>
+                        <p>总价<span>￥15</span></p>
+                        <p id="dom-color"><span>未完成</span></p>
+                    </div>
+                </div>
+
+
+                <div class="dom-ma">
+                    <p>零食5<span>￥5</span><span>1</span></p>
+                    <p>零食6<span>￥5</span><span>2</span></p>
+                    <div class="dom-mad">合计<p class="dom-map">￥10</p></div>
+                </div>
+            </li>
+
+            <li class="dom-one">
+                <div class="dom-tm">
+                    <img src="prt_1.jpg" class="dom-img">
+                    <div class="dom-dt">
+                        <p>下单时间：<span>2015-2-2</span></p>
+                        <p>总价<span>￥15</span></p>
+                        <p id="dom-color"><span>未完成</span></p>
+                    </div>
+                </div>
+
+                <div class="dom-ma">
+                    <p>零食7<span>￥5</span><span>1</span></p>
+                    <p>零食9<span>￥5</span><span>2</span></p>
+                    <div class="dom-mad">合计<p class="dom-map">￥10</p></div>
+                </div>
+            </li>
+
+
+
+        </dl>
+
+    </div>
+
+
+<script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#order li").on("click",function(){
+            $("#order li").eq($(this).index()).addClass("on").siblings().removeClass('on');
+            $("#dom li").hide().eq($(this).index()).show();
+        });
+    });
+</script>
+</body>
+</html>
