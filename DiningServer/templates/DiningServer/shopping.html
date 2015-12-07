@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/swiper.min.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/shopping.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/index.css' %}">
 </head>
 
 <body>
@@ -82,13 +83,12 @@
         </div>
 
 <!--尾部-->
-        <div class="box-food">
+     <div class="box-food">
         <div id="container" class="container">
         <div class="section">
         {% for meal in meals.meal_list %}
             <div class="prt-lt" id="{{ meal.meals_id }}">
                 <!-- 图片 -->
-
                 {% if meal.avatar_url %}
                     <div class="lt-lt">
                         <a href="/DiningServer/{{ meal.meals_id }}/getMealDetail/"><img src="{{ meal.avatar_url }}"></a>
