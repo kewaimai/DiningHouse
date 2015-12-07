@@ -175,6 +175,15 @@
 	line-height: 0.4rem;
 }
 
+.dom-bg{
+	width: 4rem;
+	height: 12px;
+	background: #e5e5e5;
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
 
 
 
