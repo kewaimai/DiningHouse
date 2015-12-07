@@ -94,7 +94,6 @@
                     <input type="text" class="result" value="0">
                     <input type="button" class="add" value="+">
                 </div>
-
             </div>
           {% empty %}
         {% endfor %}
@@ -239,17 +238,19 @@ $.windowbox={
     mshbox:function(ssclass){
         $(ssclass).each(function(i){
             var mshtop=$(this).offset().top;
+            alert(mshtop);
             var srcTop=$(window).scrollTop();
             var docHei=$(window).height();
             if(mshtop>(srcTop+docHei)){
                 $(this).css("display","none");
             }
-            if(mshtop<=(srcTop+docHei-100))
-            {
-                $(this).css("display","block");
-                var src=$(this).find("img").attr("_src");
-                $(this).find("img").attr("src",src);
-            }
+            //if(mshtop<=(srcTop+docHei-100))
+            //{
+                //$(this).css("display","block");
+               // var src=$(this).find("img").attr("_src");
+               //alert($(this).find("img").attr("src",src)) ;
+               // $(this).find("img").attr("src",src);
+           // }
             console.log(i);
         });
     }
