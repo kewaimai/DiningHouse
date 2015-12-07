@@ -73,7 +73,7 @@
 
                 {% if meal.avatar_url %}
                     <div class="lt-lt">
-                        <a href="/DiningServer/{{ meal.meals_id }}/getMealDetail/"><img _src="{{ meal.avatar_url }}" /></a>
+                        <a href="/DiningServer/{{ meal.meals_id }}/getMealDetail/"><img _lazy_src="{{ meal.avatar_url }}" /></a>
                         <a href="javascript:;" class="boxtext"><span>已有<strong>{{ meal.judge_count }}</strong>人评价</span></a>
                     </div>
                 {% else %}
