@@ -93,7 +93,9 @@ def getMealDetail(id):
                 item.avatar_url,
                 item.detail_url,
                 item.detail_content,
-                item.meal_price
+                item.meal_price,
+                item.judge_count,
+                item.sold_count,
             )
     else:
         # 如果不唯一就报警了。。。
@@ -159,6 +161,7 @@ def addMealByScript(category_id, category_order, name):
 """
 def getMealsAndCount(post):
     meals_and_count = interface.MealsAndCount()
+    print(post)
     for key in post:
         print(key)
         print(post[key])

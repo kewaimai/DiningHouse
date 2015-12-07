@@ -37,9 +37,10 @@ def index(request):
     return render(request, 'DiningServer/index.html', context)
 
 # 获取商品详情界面
-def getMealDetail(request):
+def getMealDetail(request,meal_id):
     # return HttpResponse(json.dumps(meal_service.getMealDetail('1')))
-    return render(request, 'DiningServer/details.html')
+    context = meal_service.getMealDetail(meal_id)
+    return render(request, 'DiningServer/details.html', context)
 
 # 获取评价我的订单的界面
 def getJudgeMealPage(request):
@@ -72,7 +73,9 @@ def modifyMyDetailInfo(request):
     context = user_service.getMyDetailInfo('abc')
     return render(request, 'DiningServer/userInfoPage.html', context)
 
-# 下订单页面  点击去下单 返回的页面
+"""
+去下单 页面
+"""
 @csrf_exempt
 @require_POST
 def gotoOrderPage(request):

@@ -28,7 +28,6 @@ def getMyDetailInfo(user_id):
             'email' : item.email,
             'location' : item.user_location
         }
-        print(detail_info)
         return detail_info
 
 # 更改用户详细信息

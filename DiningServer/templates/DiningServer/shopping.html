@@ -83,9 +83,43 @@
 
 <!--尾部-->
         <div class="box-food">
-       		<a href="javascript:;">您还没有选餐，快去选餐吧...</a>
-       	</div>
+        <div id="container" class="container">
+        <div class="section">
+        {% for meal in meals.meal_list %}
+            <div class="prt-lt" id="{{ meal.meals_id }}">
+                <!-- 图片 -->
 
+                {% if meal.avatar_url %}
+                    <div class="lt-lt">
+                        <a href="/DiningServer/{{ meal.meals_id }}/getMealDetail/"><img src="{{ meal.avatar_url }}"></a>
+                        <a href="javascript:;" class="boxtext"><span>已有<strong>{{ meal.judge_count }}</strong>人评价</span></a>
+                    </div>
+                {% else %}
+                    <div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
+                    <div class="lt-lt">
+                        <img src="{% static 'DiningServer/images/index/prt_1.jpg' %}">
+                        <a href="javascript:;" class="boxtext"><span>已有<strong>12</strong>人评价</span></a>
+                    </div>
+                {% endif %}
+
+                <div class="lt-ct">
+                    <p>{{ meal.meals_name }}</p>
+                    <p class="pr">¥<span class="price">{{ meal.meal_price }}</span></p>
+                    <p class="pr2">已售<span class="text">{{ meal.sold_count }}</span>份</p>
+                </div>
+                <div class="lt-rt">
+                    <input type="button" class="minus"  value="-">
+                    <input type="text" class="result" value="0">
+                    <input type="button" class="add" value="+">
+                </div>
+
+            </div>
+          {% empty %}
+            <a href="javascript:;">您还没有选餐，快去选餐吧...</a>
+        {% endfor %}
+       	</div>
+    </div>
+    </div>
     </div>
 
 

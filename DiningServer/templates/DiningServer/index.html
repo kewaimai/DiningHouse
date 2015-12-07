@@ -74,8 +74,8 @@
 
                 {% if meal.avatar_url %}
                     <div class="lt-lt">
-                        <img src="{{ meal.avatar_url }}">
-                        <a href="javascript:;" class="boxtext"><span>已有<strong>12</strong>人评价</span></a>
+                        <a href="/DiningServer/{{ meal.meals_id }}/getMealDetail/"><img src="{{ meal.avatar_url }}"></a>
+                        <a href="javascript:;" class="boxtext"><span>已有<strong>{{ meal.judge_count }}</strong>人评价</span></a>
                     </div>
                 {% else %}
                     <div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>

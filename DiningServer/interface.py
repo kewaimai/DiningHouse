@@ -120,14 +120,16 @@ class CategoryAndMeal():
         return self._context
 
 # 根据内容构造 商品详情的字典
-def getMealDetailDict(id, name, avatar_url, detail_url, detail_content, meal_price):
+def getMealDetailDict(id, name, avatar_url, detail_url, detail_content, meal_price, judge_count, sold_count):
     return {
         'id': id,
         'name': name,
         'avatar_url': avatar_url,
         'detail_url': detail_url,
-        'detail_content': detail_content,
-        'meal_price': meal_price
+        'detail_content': detail_content.split('DDD'),
+        'meal_price': meal_price,
+        'judge_count': judge_count,
+        'sold_count': sold_count
         }
 
 # 用于构造我的订单页面的返回值
@@ -177,11 +179,11 @@ class MyBill():
 class MealsAndCount():
     def __init__(self):
         self._context = {}
-        self._meals = []
-        self._context['meals'] = self._meals
+        self._meal_list = []
+        self._context['meal_list'] = self._meal_list
 
     def add_meals(self, meals_id, meals_name, avatar_url, content, sold_count, judge_count, meal_price, last_count, buy_count):
-        self._meals.append({
+        self._meal_list.append({
             'meals_id': meals_id,
             'meals_name': meals_name,
             'avatar_url': avatar_url,

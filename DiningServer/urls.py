@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^judgeMeal/$', views.judgeMeal, name='judgeMeal'),
 
     # 获取商品详情页面
-    url(r'^getMealDetail/$', views.getMealDetail, name='getMealDetail'),
+    url(r'^(?P<meal_id>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})/getMealDetail/$', views.getMealDetail, name='getMealDetail'),
 
     # 获取我的订单页面 未付款 配送中 待评价
     url(r'^getMyBill/$', views.getMyBill, name='getMyBill'),

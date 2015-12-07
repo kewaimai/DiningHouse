@@ -26,13 +26,17 @@
   <div class="section pd6" id="st0">
   	<div class="prt-lt" style="width:100%; border:none;">
     	<div class="lt-lt">
-			<img src="{% static 'DiningServer/images/index/prt_2.jpg' %}">
-			<a href="javascript:;" class="boxtext"><span>已有<strong>12</strong>人评价</span></a>
+            {% if avatar_url %}
+                <img src="{{ avatar_url }}">
+            {% else %}
+			    <img src="{% static 'DiningServer/images/index/prt_2.jpg' %}">
+            {% endif %}
+			<a href="javascript:;" class="boxtext"><span>已有<strong>{{ judge_count }}</strong>人评价</span></a>
 		</div>
         <div class="lt-ct">
         	<p>商品1</p>
-            <p class="pr">¥<span class="price">60.00</span></p>
-			<p class="pr2">已售<span class="text">2</span>份</p>
+            <p class="pr">¥<span class="price">{{ meal_price }}</span></p>
+			<p class="pr2">已售<span class="text">{{ sold_count }}</span>份</p>
         </div>
         <div class="lt-rt">
         	<input type="button" class="minus"  value="-">
@@ -44,15 +48,22 @@
 </div>
 <div class="context">
 	<p class="context-text">商品详情</p>
-	<img class="context-img"src="{% static 'DiningServer/images/index/prt_9.jpg' %}" />
+    {% if detail_url %}
+    <img class="context-img" src="{{ detail_url }}" />
+    {% else %}
+	<img class="context-img" src="{% static 'DiningServer/images/index/prt_9.jpg' %}" />
+    {% endif %}
 	<div class="details">
-		<div class="details-button">柱侯牛腩套餐</div>
+		<div class="details-button">{{ name }}</div>
 		<div class="details-box">
 			<ul class="ul-box">
-				<li class="details-text">米饭：300g(选择正宗的东北五常大米)</li>
-				<li class="details-text">柱侯牛腩：150g</li>
-				<li class="details-text">红烧狮子头：100g</li>
-				<li class="details-text">清炒菜心：50g</li>
+                {% if detail_content %}
+                    {% for item in detail_content %}
+                        <li class="details-text">{{ item }}</li>
+                    {% endfor %}
+                {% else %}
+                    <li class="details-text">暂无详情</li>
+                {% endif %}
 			</ul>
 		</div>
 	</div>
