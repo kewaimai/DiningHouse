@@ -50,6 +50,7 @@ $(document).ready(function(){
         getData(index);
      });
 
+     /*订单请求数据*/
     function getData (iNow){
         $.post('/DiningServer/getOrdersByType/', {'type': iNow}, function (data) {
             if (data.status) {
@@ -62,12 +63,7 @@ $(document).ready(function(){
 })
     /*数据存储*/
      var json = {};
-    /*订单请求数据*/
-    $(function(){
 
-
-
-    })
 
 </script>
 </body>
