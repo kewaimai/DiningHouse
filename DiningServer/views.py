@@ -124,4 +124,5 @@ def getOrdersByType(request):
     """
     context = order_service.getOrders('abc',request.POST['type'])
     print(context)
+    print("=====")
     return render(request, 'DiningServer/orders.html', context)

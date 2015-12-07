@@ -80,7 +80,19 @@
         $("#order li").on("click",function(){
             $("#order li").eq($(this).index()).addClass("on").siblings().removeClass('on');
             $("#dom li").hide().eq($(this).index()).show();
+
+            var index = $(this).index();
+            getData(index);
         });
+
+        /*订单请求数据*/
+        function getData (iNow){
+            $.post('/DiningServer/getOrdersByType/', {'type': iNow}, function (data) {
+
+            }, 'html');
+        }
+
+{#        getData(0);#}
     });
 </script>
 </body>
