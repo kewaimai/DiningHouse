@@ -1,0 +1,85 @@
+.data{ width: 4rem;}
+
+.data-head{
+    height:.625rem;
+    font-size:.2rem;
+    color:#868585;
+    line-height: .625rem;
+    border-bottom:1px solid #aaa;
+}
+
+.data-area{
+    background: #ffffff;
+    line-height: .5rem;
+    height: .5rem;
+    color: #888;
+    font-size: .157rem;
+    border-bottom:2px solid #e5e5e5;
+    position: relative;
+}
+
+.area-text{
+    width: .8rem;
+    text-align: left;
+}
+
+.area-change{
+    position: absolute;
+    height: .5rem;
+    line-height: .5rem;
+    left: 1.4rem;
+    top:0;
+    border: none;
+    outline: none;
+}
+
+.sel-year{
+    position: absolute;
+    left: 1.2rem;
+    width:.6rem;
+    height: .5rem;
+    line-height: .5rem;
+    left: 1.4rem;
+    top:0;
+    border: 1px solid #bdbdbd;
+}
+
+.sel-month{
+    position: absolute;
+    width:.4rem;
+    left: 1.2rem;
+    height: .5rem;
+    line-height: .5rem;
+    left: 2.05rem;
+    top:0;
+    border: 1px solid #bdbdbd;
+}
+
+.sel-day{
+    position: absolute;
+    left: 1.2rem;
+    width:.4rem;
+    height: .5rem;
+    line-height: .5rem;
+    left: 2.49rem;
+    top:0;
+    border: 1px solid #bdbdbd;
+}
+
+
+.submit-box{
+    margin: .25rem auto;
+    width: 3.5rem;
+    height: .375rem;
+}
+.data-submit{
+    width: 100%;
+    height: 100%;
+    background:#f8b62c;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid #faad0e;
+    color: #fff;
+    display: block;
+    font-size: .175rem;
+}
