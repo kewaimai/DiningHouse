@@ -136,10 +136,9 @@ input.im-ra{
 
 .box-food a{
 	font-size: 0.15rem;
-	color: red;
+	color: #ff0000;
 	display: block;
 	text-align: center;
-	line-height: 0.5125rem;
 }
 
 
