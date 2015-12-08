@@ -110,7 +110,25 @@
     	<p id="change-success">选好了</p>
     </div>
 </footer>
+<script>
+window.onload=window.onscroll=window.onresize=function (){
+	//var aImg=document.getElementsByTagName('img');
+    var aImg=$('.lt-lt a img');
+    //alert(aImg);
+	var scrollTop=document.documentElement.scrollTop || document.body.scrollTop;
+	var clientBottom=document.documentElement.clientHeight+scrollTop;
 
+	for (var i=0; i<aImg.length; i++)
+	{
+		if (clientBottom >= aImg[i].offsetTop)
+		{
+			// 换
+			// aImg[i].src=aImg[i]['_src']; 错
+			aImg[i].src=aImg[i].getAttribute('_lazy_src');
+		}
+	}
+};
+</script>
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
@@ -144,8 +162,6 @@ var swiper = new Swiper('.swiper-container', {
 $(function(){
 	$('#nav').onePageNav();
 });
-
-
 
 </script>
 <script>
@@ -233,52 +249,36 @@ $(function() {
     }
         setTotal();
  });
-    // 延迟加载
+// 延迟加载
 //$.windowbox={
-    //mshbox:function(ssclass){
-        //$(ssclass).each(function(i){
-            //var mshtop=$(this).offset().top;
+   // mshbox:function(ssclass){
+       // $(ssclass).each(function(i){
+           // var mshtop=$(this).offset().top;
             //alert(mshtop);
-           // var srcTop=$(window).scrollTop();
-            //var docHei=$(window).height();
-           // if(mshtop>(srcTop+docHei)){
-                //$(this).css("display","none");
+            //var srcTop=$(window).scrollTop();
+           // var docHei=$(window).height();
+            //if(mshtop>(srcTop+docHei)){
+               // $(this).css("display","none");
            // }
-            //if(mshtop<=(srcTop+docHei-100))
-            //{
-                //$(this).css("display","block");
-               // var src=$(this).find("img").attr("_src");
-               //alert($(this).find("img").attr("src",src)) ;
-               // $(this).find("img").attr("src",src);
+           // if(mshtop<=(srcTop+docHei-100))
+           // {
+              //  $(this).css("display","block");
+              //  var src=$(this).find("img").attr("_lazy_src");
+               // alert($(this).find("img").attr("src",src)) ;
+             //   $(this).find("img").attr("src",src);
            // }
-           // console.log(i);
+         //   console.log(i);
        // });
-   // }
+  //  }
 //}
 //$.windowbox.mshbox(".prt-lt");
 //$(window).scroll(function(){
     //$.windowbox.mshbox(".prt-lt");
 //});
 
+
 </script>
 <script>
-window.onload=window.onscroll=window.onresize=function (){
-   //var oImg=document.getElementsByClassName('lt-lt')[0];
-    var aImg=$('.lt-lt a img');
-    alert(aImg);
-	var scrollTop=document.documentElement.scrollTop || document.body.scrollTop;
-	var clientBottom=document.documentElement.clientHeight+scrollTop;
-
-	for (var i=0; i<aImg.length; i++)
-	{
-		if (clientBottom >= aImg[i].offsetTop)
-		{
-			// 换
-			// aImg[i].src=aImg[i]['_src']; 错
-			aImg[i].src=aImg[i].getAttribute('_lazy_src');
-		}
-	}
-};
 
 </script>
 <script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
