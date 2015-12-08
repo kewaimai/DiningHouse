@@ -19,49 +19,49 @@
         <ul class="data-box">
             <li class="data-area pd20">
                 <div class="area-text">真实姓名</div>
-                <input class="area-change" type="text" value="{{ username }}" placeholder="真实姓名" />
+                <input  name="username"  class="area-change" type="text" value="{{ username }}" placeholder="真实姓名"/>
             </li>
             <li class="data-area pd20">
                 <div class="area-text">性别</div>
                 <div class="area-change">
-                    <!--1男2女0未知-->
+                    <!--1男2女0保密-->
                     {% if sex == 1 %}
-                        <input name="pop" type="radio" value="man" checked="true" />&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="man" checked="true"/>&nbsp;男&nbsp;&nbsp;
                         <input name="pop" type="radio" value="woman" />&nbsp;女&nbsp;&nbsp;
-                        <input name="pop" type="radio" value="unKnown" />&nbsp;未知
+                        <input name="pop" type="radio" value="unKnown" />&nbsp;保密
                     {% else %}
                         {% if sex == 2 %}
-                        <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="man"/>&nbsp;男&nbsp;&nbsp;
                         <input name="pop" type="radio" value="woman"  checked="true"  />&nbsp;女&nbsp;&nbsp;
-                        <input name="pop" type="radio" value="unKnown" />&nbsp;未知
+                        <input name="pop" type="radio" value="unKnown" />&nbsp;保密
 
                         {% else %}
                         <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
                         <input name="pop" type="radio" value="woman" />&nbsp;女&nbsp;&nbsp;
-                        <input name="pop" type="radio" value="unKnown"  checked="true"  />&nbsp;未知
+                        <input name="pop" type="radio" value="unKnown"  checked="true"  />&nbsp;保密
                         {% endif %}
                     {% endif %}
                 </div>
             </li>
             <li class="data-area pd20">
                 <div class="area-text">出生年月</div>
-                <input class="mt20 laydate-icon area-change" onClick="laydate()">
+                <input name="time" class="mt20 laydate-icon area-change" onClick="laydate()">0
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系电话</div>
-                <input class="area-change" type="text" value="{{ phone }}" placeholder="输入联系电话" />
+                <input name="phone" class="area-change" type="text" value="{{ phone }}" placeholder="输入联系电话" />
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系邮箱</div>
-                <input class="area-change" type="text" value="{{ email }}" placeholder="输入联系邮箱" />
+                <input name="email" class="area-change" type="text" value="{{ email }}" placeholder="输入联系邮箱" />
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系地址</div>
-                <input class="area-change" type="text" value="{{ location }}" placeholder="输入联系地址" />
+                <input name="location" class="area-change" type="text" value="{{ location }}" placeholder="输入联系地址" />
             </li>
         </ul>
         <div class="submit-box">
-            <input type="submit" class="data-submit" value="保存修改">
+            <input name="submit" type="submit" class="data-submit" value="保存修改">
         </div>
     </form>
 </div>
