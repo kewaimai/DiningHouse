@@ -105,7 +105,6 @@ def getOrders(request):
     :return: 返回”我的订单页面“
     """
     context = order_service.getOrders('abc')
-    print(context)
     return render(request, 'DiningServer/myOrder.html', context)
 
 def ensureSend(request):

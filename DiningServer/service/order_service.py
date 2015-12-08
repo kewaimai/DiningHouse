@@ -84,7 +84,6 @@ def getOrders(user_id, orderType = 0):
         myOrder = TblBill.objects.filter(user_id=user_id)
     myBill = MyBill()
     for item in myOrder:
-        print(type(item.add_time))
         add_time = ''
         pay_time = ''
         ensure_send_time = ''
