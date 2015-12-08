@@ -65,6 +65,7 @@ def getMyDetailInfoPage(request):
     # 获取userid
     # 使用ensure_ascii = False   否则的话中文会只显示编码 不显示汉字
     context = user_service.getMyDetailInfo('abc')
+    print(context)
     return render(request, 'DiningServer/userInfoPage.html', context)
 
 # 修改我的详细信息

@@ -18,18 +18,30 @@
     <form>
         <ul class="data-box">
             <li class="data-area pd20">
-                <div class="area-text">真是姓名</div>
-                <input class="area-change" type="text" value="" placeholder="777" />
+                <div class="area-text">真实姓名</div>
+                <input class="area-change" type="text" value="{{ username }}" placeholder="真实姓名" />
             </li>
             <li class="data-area pd20">
                 <div class="area-text">性别</div>
                 <div class="area-change">
-                    <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
-                    <input name="pop" type="radio" value="woman" />&nbsp;女
+                    <!--1男2女0未知-->
+                    {% if sex == 1 %}
+                        <input name="pop" type="radio" value="man" onselect="true" />&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman" />&nbsp;女
+                        <input name="pop" type="radio" value="unKnown" />&nbsp;未知
+                    {% else if sex == 2 %}
+                        <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman"  onselect="true"  />&nbsp;女
+                        <input name="pop" type="radio" value="unKnown" />&nbsp;未知
+                    {% else %}
+                        <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman" />&nbsp;女
+                        <input name="pop" type="radio" value="unKnown"  onselect="true"  />&nbsp;未知
+                    {% endif %}
                 </div>
             </li>
             <li class="data-area pd20">
-                <div class="area-text">性别</div>
+                <div class="area-text">生日</div>
                 <select class="sel-year">
                     <option>1950</option>
                     <option>1951</option>
@@ -52,6 +64,9 @@
                     <option>7</option>
                     <option>8</option>
                     <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
                 </select>
                 <select class="sel-day">
                     <option>1</option>
@@ -67,19 +82,19 @@
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系电话</div>
-                <input class="area-change" type="text" value="" placeholder="15827387512" />
+                <input class="area-change" type="text" value="" placeholder="输入联系电话" />
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系邮箱</div>
-                <input class="area-change" type="text" value="" placeholder="hjgjh@qq.com" />
+                <input class="area-change" type="text" value="" placeholder="输入联系邮箱" />
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系地址</div>
-                <input class="area-change" type="text" value="" placeholder="三里屯" />
+                <input class="area-change" type="text" value="" placeholder="输入联系地址" />
             </li>
         </ul>
         <div class="submit-box">
-            <input type="submit" class="data-submit" value="点击修改">
+            <input type="submit" class="data-submit" value="保存修改">
         </div>
     </form>
 </div>
