@@ -29,41 +29,8 @@
                 </div>
             </li>
             <li class="data-area pd20">
-                <div class="area-text">性别</div>
-                <select class="sel-year">
-                    <option>1950</option>
-                    <option>1951</option>
-                    <option>1952</option>
-                    <option>1953</option>
-                    <option>1954</option>
-                    <option>1955</option>
-                    <option>1956</option>
-                    <option>1957</option>
-                    <option>1958</option>
-                    <option>1959</option>
-                </select>
-                <select class="sel-month">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                </select>
-                <select class="sel-day">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                </select>
+                <div class="area-text">出生年月</div>
+                <input class="mt20 laydate-icon area-change" onClick="laydate()">
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系电话</div>
@@ -84,7 +51,7 @@
     </form>
 </div>
 <!--用户信息界面，在该界面用户可以修改信息并保存，保存成功后依然跳转回该界面-->
-
+<script type="text/javascript" src="{% static 'DiningServer/js/laydate.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
