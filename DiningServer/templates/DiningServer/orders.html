@@ -10,11 +10,12 @@
 
 
     <div class="dom-ma">
-        {% for item in meals %}
+        {% for item in bill.meals %}
         <p>{{ item.meal_name }}<span>￥{{ item.meal_price }}</span><span>{{ item.meal_count }}</span></p>
         {% endfor %}
         <div class="dom-mad">合计<p class="dom-map">￥{{ bill.bill_totalling }}</p></div>
     </div>
+    <em class="dom-bg"></em>
 {% empty %}
     <p style="font-size:0.1875rem; text-align: center; padding-bottom:15px;">抱歉，无可订单显示</p>
 {% endfor %}

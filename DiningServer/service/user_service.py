@@ -22,13 +22,14 @@ def getMyDetailInfo(user_id):
         detail_info =  {
             'id' : item.id,
             'username' : item.username,
-            'sex' : SEX.get(item.sex, '未知'),
+            'sex' : item.sex,      # html显示的是选项 所以使用int值判断
             'birthday' : item.birthday.strftime(SERVER_DATA_FORMAT),
             'phone' : item.phone,
             'email' : item.email,
             'location' : item.user_location
         }
         return detail_info
+    return {}
 
 # 更改用户详细信息
 def modifyMyDetailInfo(user_id, user_name, sex, birthday, phone, email, location):

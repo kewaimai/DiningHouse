@@ -15,38 +15,94 @@
 <body style="background:#E5E5E5">
 <div class="data">
     <div class="data-head pd20">个人资料修改</div>
-    <form>
+    <form action="/DiningServer/modifyMyDetailInfo/" method="POST">
         <ul class="data-box">
             <li class="data-area pd20">
-                <div class="area-text">真是姓名</div>
-                <input class="area-change" type="text" value="" placeholder="777" />
+                <div class="area-text">真实姓名</div>
+                <input class="area-change" type="text" value="{{ username }}" placeholder="真实姓名" />
             </li>
             <li class="data-area pd20">
                 <div class="area-text">性别</div>
                 <div class="area-change">
-                    <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
-                    <input name="pop" type="radio" value="woman" />&nbsp;女
+                    <!--1男2女0未知-->
+                    {% if sex == 1 %}
+                        <input name="pop" type="radio" value="man" checked="true" />&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman" />&nbsp;女&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="unKnown" />&nbsp;未知
+                    {% else %}
+                        {% if sex == 2 %}
+                        <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman"  checked="true"  />&nbsp;女&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="unKnown" />&nbsp;未知
+
+                        {% else %}
+                        <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman" />&nbsp;女&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="unKnown"  checked="true"  />&nbsp;未知
+                        {% endif %}
+                    {% endif %}
                 </div>
             </li>
             <li class="data-area pd20">
+<<<<<<< HEAD
                 <div class="area-text">出生年月</div>
                 <input class="mt20 laydate-icon area-change" onClick="laydate()">
+=======
+                <div class="area-text">生日</div>
+                <select class="sel-year">
+                    <option>1950</option>
+                    <option>1951</option>
+                    <option>1952</option>
+                    <option>1953</option>
+                    <option>1954</option>
+                    <option>1955</option>
+                    <option>1956</option>
+                    <option>1957</option>
+                    <option>1958</option>
+                    <option>1959</option>
+                </select>
+                <select class="sel-month">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                </select>
+                <select class="sel-day">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                </select>
+>>>>>>> origin/develop
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系电话</div>
-                <input class="area-change" type="text" value="" placeholder="15827387512" />
+                <input class="area-change" type="text" value="{{ phone }}" placeholder="输入联系电话" />
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系邮箱</div>
-                <input class="area-change" type="text" value="" placeholder="hjgjh@qq.com" />
+                <input class="area-change" type="text" value="{{ email }}" placeholder="输入联系邮箱" />
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系地址</div>
-                <input class="area-change" type="text" value="" placeholder="三里屯" />
+                <input class="area-change" type="text" value="{{ location }}" placeholder="输入联系地址" />
             </li>
         </ul>
         <div class="submit-box">
-            <input type="submit" class="data-submit" value="点击修改">
+            <input type="submit" class="data-submit" value="保存修改">
         </div>
     </form>
 </div>

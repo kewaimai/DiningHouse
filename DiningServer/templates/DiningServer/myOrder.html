@@ -90,7 +90,7 @@
         /*订单请求数据*/
         function getData (iNow){
             $.post('/DiningServer/getOrdersByType/', {'type': iNow}, function (data) {
-                $('.dom-one').eq(0).html(data)
+                $('.dom-one').eq(iNow).html(data)
             }, 'html');
         }
 
