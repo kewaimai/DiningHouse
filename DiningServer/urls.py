@@ -24,8 +24,6 @@ urlpatterns = [
     # 获取商品详情页面
     url(r'^(?P<meal_id>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})/getMealDetail/$', views.getMealDetail, name='getMealDetail'),
 
-    # 获取我的订单页面 未付款 配送中 待评价
-    url(r'^getMyBill/$', views.getMyBill, name='getMyBill'),
 
     # 获取我的资料 、更新资料
     url(r'^getMyDetailInfoPage/$', views.getMyDetailInfoPage, name='getMyDetailInfoPage'),
@@ -38,6 +36,8 @@ urlpatterns = [
     url(r'^gotoOrderPage/$', views.gotoOrderPage, name='gotoOrderPage'),
     # 创建订单接口      返回创建订单成功并提示去支付  的界面
     url(r'^createOrder/$', views.createOrder, name='createOrder'),
+
+    # 获取我的订单页面 未付款 配送中 待评价
     # 支付订单接口
     url(r'^payOrder/$', views.payOrder, name='payOrder'),
     url(r'^getOrders/$', views.getOrders, name='getOrder'),
