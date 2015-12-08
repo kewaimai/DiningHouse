@@ -122,7 +122,10 @@ def getOrdersByType(request):
     :param request: httprequest
     :return: 渲染后的订单列表
     """
-    context = order_service.getOrders('abc',request.POST['type'])
+    print(request.POST)
+    if '0' in request.POST['type']:
+        context = order_service.getOrders('abc')
+    else:
+        context = order_service.getOrders('abc', request.POST['type'])
     print(context)
-    print("=====")
     return render(request, 'DiningServer/orders.html', context)

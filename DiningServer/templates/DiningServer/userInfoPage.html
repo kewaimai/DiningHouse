@@ -15,7 +15,7 @@
 <body style="background:#E5E5E5">
 <div class="data">
     <div class="data-head pd20">个人资料修改</div>
-    <form>
+    <form action="/DiningServer/modifyMyDetailInfo/" method="POST">
         <ul class="data-box">
             <li class="data-area pd20">
                 <div class="area-text">真实姓名</div>
@@ -26,17 +26,20 @@
                 <div class="area-change">
                     <!--1男2女0未知-->
                     {% if sex == 1 %}
-                        <input name="pop" type="radio" value="man" onselect="true" />&nbsp;男&nbsp;&nbsp;
-                        <input name="pop" type="radio" value="woman" />&nbsp;女
-                        <input name="pop" type="radio" value="unKnown" />&nbsp;未知
-                    {% else if sex == 2 %}
-                        <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
-                        <input name="pop" type="radio" value="woman"  onselect="true"  />&nbsp;女
+                        <input name="pop" type="radio" value="man" checked="true" />&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman" />&nbsp;女&nbsp;&nbsp;
                         <input name="pop" type="radio" value="unKnown" />&nbsp;未知
                     {% else %}
+                        {% if sex == 2 %}
                         <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
-                        <input name="pop" type="radio" value="woman" />&nbsp;女
-                        <input name="pop" type="radio" value="unKnown"  onselect="true"  />&nbsp;未知
+                        <input name="pop" type="radio" value="woman"  checked="true"  />&nbsp;女&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="unKnown" />&nbsp;未知
+
+                        {% else %}
+                        <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman" />&nbsp;女&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="unKnown"  checked="true"  />&nbsp;未知
+                        {% endif %}
                     {% endif %}
                 </div>
             </li>
@@ -82,15 +85,15 @@
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系电话</div>
-                <input class="area-change" type="text" value="" placeholder="输入联系电话" />
+                <input class="area-change" type="text" value="{{ phone }}" placeholder="输入联系电话" />
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系邮箱</div>
-                <input class="area-change" type="text" value="" placeholder="输入联系邮箱" />
+                <input class="area-change" type="text" value="{{ email }}" placeholder="输入联系邮箱" />
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系地址</div>
-                <input class="area-change" type="text" value="" placeholder="输入联系地址" />
+                <input class="area-change" type="text" value="{{ location }}" placeholder="输入联系地址" />
             </li>
         </ul>
         <div class="submit-box">
