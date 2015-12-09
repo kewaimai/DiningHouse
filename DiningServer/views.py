@@ -21,66 +21,116 @@ from DiningServer.read_excel import startGenerator
 # Create your views here.
 
 def generatorMeals(request):
+    """
+    调用service从excl中构造meal
+    :param request:
+    :return:
+    """
     startGenerator()
     return HttpResponse('success hahahaha')
 
 def indextest(request):
+    """
+    测试test
+    :param request:
+    :return:
+    """
     context = meal_service.getCategoryAndList()
     print(context)
     return HttpResponse(str(context))
 
-# 首页page
 def index(request):
-    #获取用户经纬度，默认使用最近的店面
-
+    """
+    首页
+    :param request:
+    :return:
+    """
     context = meal_service.getCategoryAndList()
     return render(request, 'DiningServer/index.html', context)
 
-# 获取商品详情界面
 def getMealDetail(request,meal_id):
+    """
+    获取商品详情页面
+    :param request:
+    :param meal_id:
+    :return:
+    """
     # return HttpResponse(json.dumps(meal_service.getMealDetail('1')))
     context = meal_service.getMealDetail(meal_id)
     return render(request, 'DiningServer/details.html', context)
 
-# 获取评价我的订单的界面
+
+"""
+评价订单以及获取评价等页面
+"""
+
 def getJudgeMealPage(request):
+    """
+    获取评价Meal页面  需要传订单id
+    :param request:
+    :return:
+    """
     return HttpResponse('')
 
-# 评价商品接口
 @require_POST
 def judgeMeal(request):
+    """
+    评价商品
+    :param request:
+    :return:
+    """
     # meal_service.judgeMeal()
     return HttpResponse('')
 
-# 获取商品的评价页面
 def getMealJudge(request):
+    """
+    获取商品评价界面
+    :param request:
+    :return:
+    """
     return HttpResponse('')
 
-# 获取我的订单
-def getMyBill(request):
-    return render(request, 'DiningServer/myOrder.html', {})
 
-# 获取我的详细信息页面
+"""
+个人信息相关
+"""
+
 def getMyDetailInfoPage(request):
+    """
+    获取我的相信信息接口
+    :param request:
+    :return:
+    """
     # 获取userid
     # 使用ensure_ascii = False   否则的话中文会只显示编码 不显示汉字
     context = user_service.getMyDetailInfo('abc')
     print(context)
     return render(request, 'DiningServer/userInfoPage.html', context)
 
-# 修改我的详细信息
 def modifyMyDetailInfo(request):
+    """
+    修改我的信息 接口
+    :param request:
+    :return:
+    """
     user_service.modifyMyDetailInfo('abc','mingzi','女','1998-10-11','1212312','auisa@qq.com','中关村南大街')
     context = user_service.getMyDetailInfo('abc')
     return render(request, 'DiningServer/userInfoPage.html', context)
 
+
+
 """
-去下单 页面
+订单相关页面及接口
 """
+
 @csrf_exempt
 @require_POST
 def gotoOrderPage(request):
-    #TODO 获取用户id
+    """
+    点击去下单 跳转到的页面
+    :param request:
+    :return:
+    """
     user = user_service.getMyDetailInfo('abc')
     meals = meal_service.getMealsAndCount(request.POST)
     times = time_service.getTimeOption()
@@ -90,12 +140,21 @@ def gotoOrderPage(request):
 
 # 创建订单 创建完成后自动跳转到支付页面
 def createOrder(request):
+    """
+    创建订单接口
+    :param request:
+    :return:
+    """
     order_service.createOrder()
     return HttpResponse('success')
 
 @require_POST
-# 支付订单
 def payOrder(request):
+    """
+    用户支付订单接口
+    :param request:
+    :return:
+    """
     order_service.payOrder()
     return HttpResponse('success')
 
@@ -109,6 +168,11 @@ def getOrders(request):
     return render(request, 'DiningServer/myOrder.html', context)
 
 def ensureSend(request):
+    """
+    确认送达 接口
+    :param request:
+    :return:
+    """
     if order_service.ensureSend('1'):
         return HttpResponse('success')
     else:

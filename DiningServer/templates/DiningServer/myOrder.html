@@ -78,6 +78,8 @@
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+        // 判断是否已经访问过某个类别
+        var visited = [true,false,false,false];
         $("#order li").on("click",function(){
             $("#order li").eq($(this).index()).addClass("on").siblings().removeClass('on');
             $("#dom li").hide().eq($(this).index()).show();
@@ -88,7 +90,11 @@
 
         /*订单请求数据*/
         function getData (iNow){
+            if(visited[iNow]){
+                return ;
+            }
             $.post('/DiningServer/getOrdersByType/', {'type': iNow}, function (data) {
+                visited[iNow] = true;
                 $('.dom-one').eq(iNow).html(data)
             }, 'html');
         }
