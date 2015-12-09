@@ -113,6 +113,14 @@
               </div>
         </div>
     </div>
+    <footer>
+        <div class="ft-lt">
+            <p>合计:<span id="total" class="total">0.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
+        </div>
+        <div class="ft-rt">
+            <p id="change-success">选好了</p>
+        </div>
+    </footer>
 </div>
 
 
@@ -131,7 +139,55 @@ $(function () {
         }
     }, "json")
 
+    $(document).on("click", ".add", function () {
+        var t = $(this).parent().find('input[class*=result]');
+        t.val(parseInt(t.val()) + 1);
+        setTotal();
+    });
+
+    $(document).on("click", ".minus", function () {
+        var t = $(this).parent().find('input[class*=result]');
+        t.val(parseInt(t.val()) - 1);
+        if (parseInt(t.val()) < 0) {
+            t.val(0);
+        }
+        setTotal();
+    });
+
+    function setTotal() {
+        var sum = 0;
+        var meal_count = 0;
+        var category_count = 0;
+        <!--计算总额-->
+        $(".lt-rt").each(function () {
+            sum += parseInt($(this).find('input[class*=result]').val()) * parseFloat($(this).siblings().find('span[class*=price]').text());
+        });
+
+        <!--计算菜种-->
+        var nIn = $("li.current a").attr("href");
+        $(nIn + " input[type='text']").each(function () {
+            if ($(this).val() != 0) {
+                category_count++;
+            }
+        });
+
+        <!--计算总份数-->
+        $("input[type='text']").each(function () {
+            meal_count += parseInt($(this).val());
+        });
+        if (category_count > 0) {
+            $(".current b").html(category_count).show();
+        } else {
+            $(".current b").hide();
+        }
+        $(".share").html(meal_count);
+        $("#total").html(sum.toFixed(2));
+    }
+
+    setTotal();
 });
+
+
 </script>
 </body>
 </html>
