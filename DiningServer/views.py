@@ -133,8 +133,19 @@ def gotoOrderPage(request):
     """
     user = user_service.getMyDetailInfo('abc')
     meals = meal_service.getMealsAndCount(request.POST)
+    count = 0
+    sum = 0
+    print(meals)
+    buy_meals = meals['meal_list']
+    print(buy_meals)
+    # 获取sum和count
+    for meal in buy_meals:
+        print(meal)
+        count += int(meal['buy_count'])
+        sum += int(meal['buy_count']) * float(meal['meal_price'])
     times = time_service.getTimeOption()
-    context = {'meals':meals, 'user':user, 'times': times}
+    print(count, sum)
+    context = {'meals':meals, 'user':user, 'times': times, 'count': count, 'sum':sum}
     print(context)
     return render(request, 'DiningServer/shopping.html', context)
 
