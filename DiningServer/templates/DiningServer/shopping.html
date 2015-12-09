@@ -186,14 +186,14 @@ $(function () {
 
         <!--计算总份数-->
         $("input[type='text']").each(function () {
-            meal_count += parseInt($(this).val());
+            count = parseInt($(this).val());
         });
         if (category_count > 0) {
             $(".current b").html(category_count).show();
         } else {
             $(".current b").hide();
         }
-        $(".share").html(meal_count);
+        $(".share").html(count);
         $("#total").html(sum.toFixed(2));
     }
 
