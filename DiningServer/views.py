@@ -88,7 +88,8 @@ def getMealJudge(request):
     :param request:
     :return:
     """
-    return HttpResponse('')
+    context = {}
+    return render(request,'DiningServer/comoder.html',context)
 
 
 """

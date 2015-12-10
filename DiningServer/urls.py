@@ -16,7 +16,7 @@ urlpatterns = [
 
     # 获取商品的评价界面
     url(r'^getJudgeMealPage/$', views.getJudgeMealPage, name='getJudgeMealPage'),
-    # 获取商品评价
+    # 获取商品评价 kan bie ren de ping jia
     url(r'^getMealJudge/$', views.getMealJudge, name='getMealJudge'),
     # 评价商品
     url(r'^judgeMeal/$', views.judgeMeal, name='judgeMeal'),
