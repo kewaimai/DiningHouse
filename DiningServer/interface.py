@@ -120,12 +120,81 @@ class CategoryAndMeal():
         return self._context
 
 # 根据内容构造 商品详情的字典
-def getMealDetailDict(id, name, avatar_url, detail_url, detail_content, meal_price):
+def getMealDetailDict(id, name, avatar_url, detail_url, detail_content, meal_price, judge_count, sold_count):
     return {
         'id': id,
         'name': name,
         'avatar_url': avatar_url,
         'detail_url': detail_url,
-        'detail_content': detail_content,
-        'meal_price': meal_price
+        'detail_content': detail_content.split('DDD'),
+        'meal_price': meal_price,
+        'judge_count': judge_count,
+        'sold_count': sold_count
         }
+
+# 用于构造我的订单页面的返回值
+class MyBill():
+
+    def __init__(self):
+        self._context = {}
+        # bills 是一个账单列表  每个账单包含账单的信息 同时包含一个餐品列表
+        self._bills = []
+        self._context['bills'] = self._bills
+
+    def createBill(self, id, user_id, user_location, bill_totalling, add_time, pay_time, bill_state, bill_content, ensure_send_time):
+        bill = {
+            'id': id,
+            'user_id': user_id,
+            'user_location': user_location,
+            'bill_totalling': bill_totalling,
+            'add_time': add_time,
+            'pay_time': pay_time,
+            'bill_state': bill_state,
+            'bill_content': bill_content,
+            'ensure_send_time': ensure_send_time,
+            'meals': []
+        }
+        self._bills.append(bill)
+        return len(self._bills) - 1
+
+    def addMeal(self, bill_order, meal_id, meal_name, meal_url, meal_count, meal_price):
+        meal = {
+            'meal_id' : meal_id,
+            'meal_name' : meal_name,
+            'meal_url' : meal_url,
+            'meal_count' : meal_count,
+            'meal_price' : meal_price
+        }
+        try:
+            self._bills[bill_order]['meals'].append(meal)
+        except:
+            return None
+        return 'success'
+
+    def toDict(self):
+        return self._context
+
+"""
+餐品和它对应的数量
+"""
+class MealsAndCount():
+    def __init__(self):
+        self._context = {}
+        self._meal_list = []
+        self._context['meal_list'] = self._meal_list
+
+    def add_meals(self, meals_id, meals_name, avatar_url, content, sold_count, judge_count, meal_price, last_count, buy_count):
+        self._meal_list.append({
+            'meals_id': meals_id,
+            'meals_name': meals_name,
+            'avatar_url': avatar_url,
+            'content': content,
+            'sold_count': sold_count,
+            'judge_count': judge_count,
+            'meal_price': meal_price,
+            'last_count': last_count,
+            'buy_count' : buy_count,
+        })
+
+    def toDict(self):
+        return self._context

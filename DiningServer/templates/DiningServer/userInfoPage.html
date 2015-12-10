@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+     {% load staticfiles %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>订餐系统</title>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/swiper.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/index.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/userInfoPage.css' %}">
+</head>
+<body style="background:#E5E5E5">
+<div class="data">
+    <div class="data-head pd20">个人资料修改</div>
+    <form action="/DiningServer/modifyMyDetailInfo/" method="POST">
+        <ul class="data-box">
+            <li class="data-area pd20">
+                <div class="area-text">真实姓名</div>
+                <input  name="username"  class="area-change" type="text" value="{{ username }}" placeholder="真实姓名"/>
+            </li>
+            <li class="data-area pd20">
+                <div class="area-text">性别</div>
+                <div class="area-change">
+                    <!--1男2女0保密-->
+                    {% if sex == 1 %}
+                        <input name="pop" type="radio" value="man" checked="true"/>&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman" />&nbsp;女&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="unKnown" />&nbsp;保密
+                    {% else %}
+                        {% if sex == 2 %}
+                        <input name="pop" type="radio" value="man"/>&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman"  checked="true"  />&nbsp;女&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="unKnown" />&nbsp;保密
+
+                        {% else %}
+                        <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="woman" />&nbsp;女&nbsp;&nbsp;
+                        <input name="pop" type="radio" value="unKnown"  checked="true"  />&nbsp;保密
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </li>
+            <li class="data-area pd20">
+                <div class="area-text">出生年月</div>
+                <input name="time" class="mt20 laydate-icon area-change" onClick="laydate()">0
+            </li>
+            <li class="data-area pd20">
+                <div class="area-text">联系电话</div>
+                <input name="phone" class="area-change" type="text" value="{{ phone }}" placeholder="输入联系电话" />
+            </li>
+            <li class="data-area pd20">
+                <div class="area-text">联系邮箱</div>
+                <input name="email" class="area-change" type="text" value="{{ email }}" placeholder="输入联系邮箱" />
+            </li>
+            <li class="data-area pd20">
+                <div class="area-text">联系地址</div>
+                <input name="location" class="area-change" type="text" value="{{ location }}" placeholder="输入联系地址" />
+            </li>
+        </ul>
+        <div class="submit-box">
+            <input name="submit" type="submit" class="data-submit" value="保存修改">
+        </div>
+    </form>
+</div>
+<!--用户信息界面，在该界面用户可以修改信息并保存，保存成功后依然跳转回该界面-->
+<script type="text/javascript" src="{% static 'DiningServer/js/laydate.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery.nav.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
+</body>
+</html>

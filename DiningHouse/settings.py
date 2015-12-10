@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'DiningServer',
+    'DiningOAM'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -79,9 +80,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_dining',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'USER': 'dining',
+        'PASSWORD': 'diningpw',
+        'HOST': '101.200.84.75',
         'PORT': '3306',
     }
 }

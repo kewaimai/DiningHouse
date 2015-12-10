@@ -11,15 +11,14 @@
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/index.css' %}">
 </head>
-
-<body>
+<body style="background:#E5E5E5 ">
 <div class="swiper-position">
     <div class="positionleft">
         <span class="position-img"></span>
         {% if house %}
             <a href="javascript:;" class="position-text">{{ house.name }}</a>
         {% else %}
-            <a href="javascript:;">可外卖的东西</a>
+            <a href="javascript:;" class="position-text">可外卖的东西</a>
         {% endif %}
         <!--<a href="javascript:;"><input class="position-text" type="text" name="海泰大厦站点" placeholder="海泰大厦站点" /></a> -->
         <p class="position-paragraph">(点击更换站点)</p>
@@ -69,12 +68,13 @@
       <div class="section" id="st{{ forloop.counter }}">
       <!--  在这里填充section的内容  -->
         {% for meal in meal_list %}
-            <div class="prt-lt">
-                <!-- 酒吧图片 -->
+            <div class="prt-lt" id="{{ meal.meals_id }}">
+                <!-- 图片 -->
+
                 {% if meal.avatar_url %}
                     <div class="lt-lt">
-                        <img src="{{ meal.avatar_url }}">
-                        <a href="javascript:;" class="boxtext"><span>已有<strong>12</strong>人评价</span></a>
+                        <a href="/DiningServer/{{ meal.meals_id }}/getMealDetail/"><img _lazy_src="{{ meal.avatar_url }}" /></a>
+                        <a href="javascript:;" class="boxtext"><span>已有<strong>{{ meal.judge_count }}</strong>人评价</span></a>
                     </div>
                 {% else %}
                     <div class="lt-lt"><img src="{% static 'DiningServer/images/index/prt_1.jpg' %}"></div>
@@ -104,19 +104,48 @@
 <br/><br/><br/><br/><br/><br/>
 <footer>
 	<div class="ft-lt">
-        <p>合计:<span id="total" class="total">163.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
+        <p>合计:<span id="total" class="total">0.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
     </div>
     <div class="ft-rt">
-    	<p>去结算</p>
+    	<p id="change-success">选好了</p>
     </div>
 </footer>
+<script>
+    //图片延时加载
+window.onload=window.onscroll=window.onresize=function (){
+	//var aImg=document.getElementsByTagName('img');
+    var aImg=$('.lt-lt a img');
+    //alert(aImg);
+	var scrollTop=document.documentElement.scrollTop || document.body.scrollTop;
+	var clientBottom=document.documentElement.clientHeight+scrollTop;
 
+	for (var i=0; i<aImg.length; i++)
+	{
+		if (clientBottom >= aImg[i].offsetTop)
+		{
+			// 换
+			// aImg[i].src=aImg[i]['_src']; 错
+			aImg[i].src=aImg[i].getAttribute('_lazy_src');
+		}
+	}
+};
+</script>
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery.nav.js' %}"></script>
 <script type="text/javascript">
-<!--  餐厅的电话号码在这里  -->
+//图片数组
+var src_list = {
+    {% for meal_list in meals %}
+        {% for item in meal_list %}
+            "{{ item.meals_id }}":"{{ item.avatar_url }}",
+        {% endfor %}
+    {% endfor %}
+};
+
+
+//餐厅的电话号码
 {% if house %}
 var phone = {{ house.phone }}
 {% else %}
@@ -126,7 +155,7 @@ var swiper = new Swiper('.swiper-container', {
 	pagination: '.swiper-pagination',
 	paginationClickable: true,
 	spaceBetween: 30,
- centeredSlides: true,
+    centeredSlides: true,
     autoplay: 1000,
     autoplayDisableOnInteraction: false,
     loop: true
@@ -136,60 +165,123 @@ $(function(){
 });
 
 </script>
-<script> 
-$(function(){ 
+<script>
+$(function() {
 
-$(".add").click(function(){
-var t=$(this).parent().find('input[class*=result]'); 
-t.val(parseInt(t.val())+1);
-setTotal(); 
-})
- 
-$(".minus").click(function(){ 
-var t=$(this).parent().find('input[class*=result]'); 
-t.val(parseInt(t.val())-1);
-if(parseInt(t.val())<0){ 
-t.val(0); 
-} 
-setTotal(); 
+        //数据存储
+    var json = {};
+
+    $(".add").click(function () {
+        var t = $(this).parent().find('input[class*=result]');
+        t.val(parseInt(t.val()) + 1);
+        setTotal();
+
+        //获取当前选择的菜
+        var _id = $(this).parents(".prt-lt").attr('id');
+        json[ _id ] = t.val();
+    });
+
+    $(".minus").click(function () {
+        var t = $(this).parent().find('input[class*=result]');
+        t.val(parseInt(t.val()) - 1);
+        if (parseInt(t.val()) < 0) {
+            t.val(0);
+        }
+        setTotal();
+
+        var _id = $(this).parents(".prt-lt").attr('id');
+        json[ _id ] = t.val();
+
+    });
+
+    var $changeBtn = $("#change-success")
+            , url = '/DiningServer/gotoOrderPage/'
+            ;
+//选好了提交
+    $changeBtn.on("click", function () {
+        StandardPost(url, json);
+    });
+
+    function StandardPost(url,args) {
+        var body = $(document.body),
+            form = $("<form method='post'></form>"),
+            input;
+        form.attr({"action":url});
+        $.each(args,function(key,value){
+            input = $("<input type='hidden'>");
+            input.attr({"name":key});
+            input.val(value);
+            form.append(input);
+        });
+
+        form.appendTo(document.body);
+        form.submit();
+        document.body.removeChild(form[0]);
+    }
+
+    function setTotal() {
+        var sum = 0;
+        var meal_count = 0;
+        var category_count = 0;
+        <!--计算总额-->
+        $(".lt-rt").each(function () {
+            sum += parseInt($(this).find('input[class*=result]').val()) * parseFloat($(this).siblings().find('span[class*=price]').text());
+        });
+
+        <!--计算菜种-->
+        var nIn = $("li.current a").attr("href");
+        $(nIn + " input[type='text']").each(function () {
+            if ($(this).val() != 0) {
+                category_count++;
+            }
+        });
+
+        <!--计算总份数-->
+        $("input[type='text']").each(function () {
+            meal_count += parseInt($(this).val());
+        });
+        if (category_count > 0) {
+            $(".current b").html(category_count).show();
+        } else {
+            $(".current b").hide();
+        }
+        $(".share").html(meal_count);
+        $("#total").html(sum.toFixed(2));
+    }
+        setTotal();
+ });
+// 延迟加载
+//$.windowbox={
+   // mshbox:function(ssclass){
+       // $(ssclass).each(function(i){
+           // var mshtop=$(this).offset().top;
+            //alert(mshtop);
+            //var srcTop=$(window).scrollTop();
+           // var docHei=$(window).height();
+            //if(mshtop>(srcTop+docHei)){
+               // $(this).css("display","none");
+           // }
+           // if(mshtop<=(srcTop+docHei-100))
+           // {
+              //  $(this).css("display","block");
+              //  var src=$(this).find("img").attr("_lazy_src");
+               // alert($(this).find("img").attr("src",src)) ;
+             //   $(this).find("img").attr("src",src);
+           // }
+         //   console.log(i);
+       // });
+  //  }
+//}
+//$.windowbox.mshbox(".prt-lt");
+//$(window).scroll(function(){
+    //$.windowbox.mshbox(".prt-lt");
+//});
 
 
-})
- 
-function setTotal(){ 
-var s=0;
-var v=0;
-var n=0;
-<!--计算总额--> 
-$(".lt-rt").each(function(){ 
-s+=parseInt($(this).find('input[class*=result]').val())*parseFloat($(this).siblings().find('span[class*=price]').text()); 
+</script>
+<script>
 
-});
-
-<!--计算菜种-->
-var nIn = $("li.current a").attr("href");
-$(nIn+" input[type='text']").each(function() {
-	if($(this).val()!=0){
-		n++;
-	}
-});
-
-<!--计算总份数-->
-$("input[type='text']").each(function(){
-	v += parseInt($(this).val());
-});
-if(n>0){
-	$(".current b").html(n).show();		
-	}else{
-	$(".current b").hide();		
-		}	
-$(".share").html(v);
-$("#total").html(s.toFixed(2)); 
-} 
-setTotal(); 
-
-}) 
-</script> 
+</script>
 <script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
 </body>

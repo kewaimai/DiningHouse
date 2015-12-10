@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+    {% load staticfiles %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>购物车结算</title>
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/swiper.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/shopping.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/index.css' %}">
+</head>
+
+<body>
+    <div class="box">
+		
+<!--head-->
+        <div class="box-head">
+            <a href="javascript:;"></a>
+            <a href="javascript:;">北京</a>
+            <a href="javascript:;">咨询电话</a>
+        </div>
+        <p class="box-head-bd"></p>
+
+<!--信息-->		
+        <div class="box-im">
+        	<h3>用户信息</h3>
+            {% if user %}
+                <div class="im-name">
+        		<p>联系姓名</p>
+        		<input type="text" placeholder="请输入姓名.." value="{{ user.username }}">
+        	</div>
+        	<div class="im-name">
+        		<p>联系电话</p>
+        		<input type="text" value="{{ user.phone }}">
+        	</div>
+        	<div class="im-name">
+        		<p>详细地址</p>
+        		<input type="text" placeholder="请输入详细地址.." class="im-add" value="{{ user.location }}">
+        	</div>
+        	<div class="im-name">
+        		<p>备注</p>
+        		<input type="text" class="im-ra">
+        	</div>
+            {% else %}
+        	<div class="im-name">
+        		<p>联系姓名</p>
+        		<input type="text" placeholder="请输入姓名..">
+        	</div>
+        	<div class="im-name">
+        		<p>联系电话</p>
+        		<input type="text" value="12345678901">
+        	</div>
+        	<div class="im-name">
+        		<p>详细地址</p>
+        		<input type="text" placeholder="请输入详细地址.." class="im-add">
+        	</div>
+        	<div class="im-name">
+        		<p>配送门店</p>
+        		<input type="text" value="朝阳区">
+        	</div>
+        	<div class="im-name">
+        		<p>备注</p>
+        		<input type="text" class="im-ra">
+        	</div>
+            {% endif %}
+        </div>
+
+        <p class="box-ftbd"></p>
+        <div class="box-footer">
+        	<p>送货时间</p>
+        	<select>
+            {% if times %}
+                {% for item in times %}
+                    <option>{{ item }}</option>
+                {% endfor %}
+            {% else %}
+                <option>立即送达</option>
+            {% endif %}
+        	</select>
+        </div>
+
+<!--尾部-->
+     <div class="box-food">
+         <div id="container" class="container-box ">
+              <div class="section pd6" id="st0">
+              {% for meal in meals.meal_list %}
+                    <div class="prt-lt" style="width:100%; border:none;"  id="{{ meal.meals_id }}" >
+                        <div class="lt-lt">
+                            {% if meal.avatar_url %}
+                                <img src="{{ meal.avatar_url }}">
+                            {% else %}
+                                <img src="{% static 'DiningServer/images/index/prt_2.jpg' %}">
+                            {% endif %}
+                            <a href="javascript:;" class="boxtext"><span>已有<strong>{{ meal.judge_count }}</strong>人评价</span></a>
+                        </div>
+                        <div class="lt-ct">
+                            <p>{{ meal.meals_name }}</p>
+                            <p class="pr">¥<span class="price">{{ meal.meal_price }}</span></p>
+                            <p class="pr2">已售<span class="text">{{ meal.sold_count }}</span>份</p>
+                        </div>
+                        <div class="lt-rt">
+                            <input type="button" class="minus"  value="-">
+                            <input type="text" class="result" value="{{ meal.buy_count }}">
+                            <input type="button" class="add" value="+">
+                        </div>
+                    </div>
+              {% empty %}
+                  <a href="javascript:;">您还没有选餐，快去选餐吧...</a>
+              {% endfor %}
+              </div>
+        </div>
+    </div>
+    <footer>
+        <div class="ft-lt">
+            <p>合计:<span id="total" class="total">{{ sum }}元</span><span class="nm">(<label class="share">{{ count }}</label>份)</span></p>
+        </div>
+        <div class="ft-rt">
+            <p id="change-success">选好了</p>
+        </div>
+    </footer>
+</div>
+
+
+<script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery.nav.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
+<script>
+//这里是上一个页面选择的菜品id和对应的数量
+var json = {
+    {% for meal in meals.meal_list %}
+        "{{ meal.meals_id }}": {{ meal.buy_count }}
+    {% endfor %}
+};
+
+//这里是服务器传过来的总份数
+var count = {{ count }};
+
+//这里是服务器传过来的合计多少元
+var sum = {{ sum }};
+
+$(function () {
+    var url = "/DiningServer/createOrder/";
+    $.post(url, function (data) {
+        if (data.status) {
+
+        }
+    }, "json")
+
+    $(document).on("click", ".add", function () {
+        var t = $(this).parent().find('input[class*=result]');
+        t.val(parseInt(t.val()) + 1);
+        setTotal();
+    });
+
+    $(document).on("click", ".minus", function () {
+        var t = $(this).parent().find('input[class*=result]');
+        t.val(parseInt(t.val()) - 1);
+        if (parseInt(t.val()) < 0) {
+            t.val(0);
+        }
+        setTotal();
+    });
+
+    function setTotal() {
+        var sum = 0;
+        var meal_count = 0;
+        var category_count = 0;
+        <!--计算总额-->
+        $(".lt-rt").each(function () {
+            sum += parseInt($(this).find('input[class*=result]').val()) * parseFloat($(this).siblings().find('span[class*=price]').text());
+        });
+
+        <!--计算菜种-->
+        var nIn = $("li.current a").attr("href");
+        $(nIn + " input[type='text']").each(function () {
+            if ($(this).val() != 0) {
+                category_count++;
+            }
+        });
+
+        <!--计算总份数-->
+        $("input[type='text']").each(function () {
+            count = parseInt($(this).val());
+        });
+        if (category_count > 0) {
+            $(".current b").html(category_count).show();
+        } else {
+            $(".current b").hide();
+        }
+        $(".share").html(count);
+        $("#total").html(sum.toFixed(2));
+    }
+
+    setTotal();
+});
+
+
+</script>
+</body>
+</html>

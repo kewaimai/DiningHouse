@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    #酒吧OAM部分
     url(r'^DiningServer/', include('DiningServer.urls')),
+    # dining OAM
+    url(r'^DiningOAM/', include('DiningOAM.urls')),
 ]

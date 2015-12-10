@@ -68,7 +68,7 @@ def getCategoryAndList():
         if item.category_id in category_list:
             index = category_list.index(item.category_id)
         category_and_meal.add_meals(
-            item.meal_id,
+            item.id,
             item.name,
             item.avatar_url,
             item.detail_content,
@@ -93,7 +93,9 @@ def getMealDetail(id):
                 item.avatar_url,
                 item.detail_url,
                 item.detail_content,
-                item.meal_price
+                item.meal_price,
+                item.judge_count,
+                item.sold_count,
             )
     else:
         # 如果不唯一就报警了。。。
@@ -153,3 +155,28 @@ def addMealByScript(category_id, category_order, name):
     item.sold_count = 120
     item.save()
     pass
+
+"""
+获取用户选的商品id的详情 并返回用户选择的数量
+"""
+def getMealsAndCount(post):
+    meals_and_count = interface.MealsAndCount()
+    print(post)
+    for key in post:
+        print(key)
+        print(post[key])
+        tblMeal = TblMealInHouse.objects.filter(id=key)
+        for item in tblMeal:
+            meals_and_count.add_meals(
+                item.id
+                , item.name
+                , item.avatar_url
+                , item.detail_content
+                , item.sold_count
+                , item.judge_count
+                , item.meal_price
+                , item.last_count
+                , post[key]
+            )
+            break
+    return meals_and_count.toDict()

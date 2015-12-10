@@ -33,7 +33,7 @@ $(function() {
 	
 	sections.waypoint({
 		handler: function(event, direction) {
-
+		
 			var active_section;
 			active_section = $(this);
 			if (direction === "up") active_section = active_section.prev();
@@ -47,9 +47,9 @@ $(function() {
 	})
 
 
-     navigation_links.click( function(event) {
-
-		$.scrollTo(
+	
+	navigation_links.click( function(event) {
+        $.scrollTo(
 			$(this).attr("href"),
 			{
 				duration: 200,
