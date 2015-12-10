@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+     {% load staticfiles %}
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/swiper.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/dom.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/tojudge.css' %}">
+</head>
+<body>
+
+<div class="tojudge-box">
+
+
+    <!--购买的东西-->
+    <dl class="dom-order" id="dom">
+
+        <li class="active dom-one">
+            <div class="dom-tm">
+                <img src="prt_1.jpg" class="dom-img">
+                <div class="dom-dt">
+                    <p>下单时间：<span>2015-2-2</span></p>
+                    <p>总价<span>￥15</span></p>
+                    <p id="dom-color"><span>待评价</span></p>
+                </div>
+            </div>
+
+
+            <div class="dom-ma">
+                <p>零食1<span>￥5</span><span>1</span></p>
+                <p>零食2<span>￥5</span><span>2</span></p>
+                <div class="dom-mad">合计<p class="dom-map">￥10</p></div>
+            </div>
+            <em class="dom-bg"></em>
+        </li>
+
+    </dl>
+
+    <!--评价-->
+
+    <div class="todge-order">
+
+        <div class="order-todge">
+            <a href="javascript:;">商品评价</a>
+            <a href="javascript:;">菜品满意度</a>
+            <a href="javascript:;">
+                <i></i><i></i><i></i><i></i><i></i>
+            </a>
+            <a href="javascript:;">送餐速度</a>
+            <a href="javascript:;">
+                <i></i><i></i><i></i><i></i><i></i>
+            </a>
+            <a href="javascript:;">小哥满意度</a>
+            <a href="javascript:;">
+                <i></i><i></i><i></i><i></i><i></i>
+            </a>
+        </div>
+
+    </div>
+
+    <!--提交-->
+    <div class="btn-box">
+        <a href="javascript:;">提交</a>
+    </div>
+
+</div>
+
+
+<script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+</body>
+</html>

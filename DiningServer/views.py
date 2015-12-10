@@ -70,7 +70,7 @@ def getJudgeMealPage(request):
     :param request:
     :return:
     """
-    return HttpResponse('')
+    return render(request,'DiningServer/toJudge.html',{})
 
 @require_POST
 def judgeMeal(request):
