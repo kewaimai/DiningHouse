@@ -16,14 +16,6 @@
 	padding-top: 20px;
 }
 
-.dom-order li{
-	display: none;
-}
-
-.dom-order li.active{
-	display: block;
-}
-
 .dom-tm{
 	position: relative;
 	width: 4rem;
