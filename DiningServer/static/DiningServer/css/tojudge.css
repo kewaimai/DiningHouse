@@ -173,30 +173,38 @@
 }
 
 /*星星*/
-.todge-order .order-todge a:nth-child(3){
+.todge-order .order-todge ul:nth-child(3){
     position: absolute;
     top: 0.5rem;
     right: 0.1875rem;
 }
 
-.todge-order .order-todge a:nth-child(5){
+.todge-order .order-todge ul:nth-child(5){
     position: absolute;
     top: 0.82rem;
     right: 0.1875rem;
 }
 
-.todge-order .order-todge a:nth-child(7){
+.todge-order .order-todge ul:nth-child(7){
     position: absolute;
     top: 1.125rem;
     right: 0.1875rem;
 }
 
-.todge-order .order-todge a i{
+.todge-order .order-todge ul li{
     display: inline-block;
     width: 0.175rem;
     height: 0.175rem;
-    background: url("../images/index/star_1.png") no-repeat;
     background-size: cover;
+}
+
+li.off{
+    background: url("../images/index/star_1.png") no-repeat;
+}
+
+li.on{
+
+    background: url("../images/index/star_3.png") no-repeat;
 }
 
 /*提交*/

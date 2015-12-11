@@ -3,6 +3,9 @@
      {% load staticfiles %}
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
     <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/swiper.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
@@ -44,17 +47,29 @@
         <div class="order-todge">
             <a href="javascript:;">商品评价</a>
             <a href="javascript:;">菜品满意度</a>
-            <a href="javascript:;">
-                <i></i><i></i><i></i><i></i><i></i>
-            </a>
+            <ul class="star" id="UserStart">
+                <li class="off"></li>
+                <li class="off"></li>
+                <li class="off"></li>
+                <li class="off"></li>
+                <li class="off"></li>
+            </ul>
             <a href="javascript:;">送餐速度</a>
-            <a href="javascript:;">
-                <i></i><i></i><i></i><i></i><i></i>
-            </a>
+            <ul class="star" id="UserStart2">
+                <li class="off"></li>
+                <li class="off"></li>
+                <li class="off"></li>
+                <li class="off"></li>
+                <li class="off"></li>
+            </ul>
             <a href="javascript:;">小哥满意度</a>
-            <a href="javascript:;">
-                <i></i><i></i><i></i><i></i><i></i>
-            </a>
+            <ul class="star" id="UserStart3">
+                <li class="off"></li>
+                <li class="off"></li>
+                <li class="off"></li>
+                <li class="off"></li>
+                <li class="off"></li>
+            </ul>
         </div>
 
     </div>
@@ -69,5 +84,11 @@
 
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/star.js' %}"></script>
+<script>
+    operated($("#UserStart > li"));
+    operated($("#UserStart2 > li"));
+    operated($("#UserStart3 > li"));
+</script>
 </body>
 </html>
