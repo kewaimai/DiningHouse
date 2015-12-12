@@ -14,7 +14,7 @@ def login(request):
     return HttpResponse('login')
 
 def index(request):
-    return HttpResponse('index')
+    return render(request, 'DiningOAM/index.html')
 
 
 """

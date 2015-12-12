@@ -55,3 +55,4 @@ docs/_build/
 
 # PyBuilder
 target/
+DiningOAM/templates/DiningOAM/__init__.py
