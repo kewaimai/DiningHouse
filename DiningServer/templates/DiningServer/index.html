@@ -169,8 +169,19 @@ $(function(){
 $(function() {
 
         //数据存储
-    var json = {};
-
+    // 先获取，判断用户上次是否点击是否有数据，如果没有，重定义
+    var json = window.localStorage["menuData"]?JSON.parse(window.localStorage["menuData"]): {
+        "time": Date.now(),
+        "data": {}
+    };
+    // 判断过期时间 ： 默认 2小时
+    if(json["time"] + 1000*3600*2 < Date.now()){
+        // 过期
+        json = {
+            "time": Date.now(),
+            "data": {}
+        }
+    }
     $(".add").click(function () {
         var t = $(this).parent().find('input[class*=result]');
         t.val(parseInt(t.val()) + 1);
@@ -178,8 +189,15 @@ $(function() {
 
         //获取当前选择的菜
         var _id = $(this).parents(".prt-lt").attr('id');
-        json[ _id ] = t.val();
+
+            json["data"][_id] = t.val();
+
+
+        // 存储
+        window.localStorage['menuData'] = JSON.toString(json);
+
     });
+
 
     $(".minus").click(function () {
         var t = $(this).parent().find('input[class*=result]');
@@ -190,7 +208,10 @@ $(function() {
         setTotal();
 
         var _id = $(this).parents(".prt-lt").attr('id');
-        json[ _id ] = t.val();
+        var index = fnFindId(_id);
+        json["data"][_id] = t.val();
+
+
 
     });
 
@@ -285,6 +306,9 @@ $(function() {
 <script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery.cookie.js' %}"></script>
+<script>
+    $.cookie(名,值);
+</script>
 
 </body>
 </html>
