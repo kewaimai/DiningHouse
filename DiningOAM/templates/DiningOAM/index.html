@@ -51,36 +51,36 @@ function show_menu(num){
 	$('mshlis-'+num).className='left02down01_xia_li';	//触发以后TAG样式
 }
 
-function show_menuB(numB){
-	for(j=0;j<100;j++){
-		if(j!=numB){	//80
-			if($('mshbox-'+j)){
-				$('mshbox-'+j).style.display='none';
-				$('img-'+j).style.background='url(images/01.gif)';
-			}
-		}
-	}
-	if($('mshbox-'+numB)){   
-		if($('mshbox-'+numB).style.display=='block'){
-			$('mshbox-'+numB).style.display='none';
-			$('img-'+numB).style.background='url(images/01.gif)';
-		}else {
-			$('mshbox-'+numB).style.display='block';
-			$('img-'+numB).style.background='url(images/02.gif)';
-		}
-	}
-}
+//function show_menuB(numB){
+	//for(j=0;j<100;j++){
+		//if(j!=numB){	//80
+			//if($('mshbox-'+j)){
+				//$('mshbox-'+j).style.display='none';
+				//$('img-'+j).style.background='url({% static 'DiningOAM/images/01.gif' %})';
+			//}
+		//}
+	//}
+	//if($('mshbox-'+numB)){
+		//if($('mshbox-'+numB).style.display=='block'){
+			//$('mshbox-'+numB).style.display='none';
+			//$('img-'+numB).style.background='url({% static 'DiningOAM/images/01.gif' %})';
+		//}else {
+			//$('mshbox-'+numB).style.display='block';
+			//$('img-'+numB).style.background='url({% static 'DiningOAM/images/02.gif' %})';
+	    //}
+	//}
+//}
 var temp=0;
 function show_menuC(){
 	if (temp==0){
 		document.getElementById('LeftBox').style.display='none';
 	  	document.getElementById('RightBox').style.marginLeft='0';
-		document.getElementById('Mobile').style.background='url(images/center.gif)';
+		document.getElementById('Mobile').style.background='url({% static 'DiningOAM/images/center.gif' %})';
 		temp=1;
 	}else{
 		document.getElementById('RightBox').style.marginLeft='222px';
 	   	document.getElementById('LeftBox').style.display='block';
-		document.getElementById('Mobile').style.background='url(images/center0.gif)';
+		document.getElementById('Mobile').style.background='url({% static 'DiningOAM/images/center0.gif' %})';
    		temp=0;
 	}
 }
@@ -110,16 +110,8 @@ window.onload=window.onresize=function(){
 			<div class="left02top_c">用户统计</div>
 		</div>
 	    <div class="left02down">
-			<div class="left02down01">
-				<a onClick="show_menuB(1)" href="javascript:;">
-					<div id="img-1" class="left02down01_img"></div>
-					用户走势图
-				</a>
-			</div>
-			<div class="left02down01_xia noneBox" id="mshbox-1">
-				<ul>
-					<li onClick="show_menu(1)" id="mshlis-1"><a href="javascript:;">&middot;折线图</a></li>
-				</ul>
+			<div style="padding-left: 19px;" onClick="show_menu(1)" id="mshlis-1">
+				<a href="javascript:;">&nbsp用户走势图</a>
 			</div>
 		</div>
 	</div>
@@ -130,16 +122,10 @@ window.onload=window.onresize=function(){
 			<div class="left02top_c">订单统计</div>
 		</div>
 		<div class="left02down">
-			<div class="left02down01">
-				<a onClick="show_menuB(3)" href="javascript:;">
-					<div id="img-3" class="left02down01_img"></div>
-					订单总量
-				</a>
-			</div>
-			<div class="left02down01_xia noneBox" id="mshbox-3">
+			<div class="left02down01_xia" id="mshbox-3">
 				<ul>
-					<li onClick="show_menu(2)" id="mshlis-2"><a href="javascript:;">&middot;每日订单量</a></li>
-					<li onClick="show_menu(3)" id="mshlis-3"><a href="javascript:;">&middot;订单列表</a></li>
+					<li onClick="show_menu(2)" id="mshlis-2"><a href="javascript:;">&nbsp每日订单量</a></li>
+					<li onClick="show_menu(3)" id="mshlis-3"><a href="javascript:;">&nbsp订单列表</a></li>
 				</ul>
 			</div>
 		</div>
@@ -148,31 +134,15 @@ window.onload=window.onresize=function(){
 		<div class="left02top">
 			<div class="left02top_right"></div>
 			<div class="left02top_left"></div>
-			<div class="left02top_c">统计</div>
+			<div class="left02top_c">菜品统计</div>
 		</div>
 		<div class="left02down">
-			<div class="left02down01">
-				<a onClick="show_menuB(6)" href="javascript:;">
-					<div id="img-6" class="left02down01_img"></div>
-					菜品列表
-				</a>
-			</div>
-			<div class="left02down01_xia noneBox" id="mshbox-6">
+			<div class="left02down01_xia" id="mshbox-6">
 				<ul>
-					<li onClick="show_menu(4)" id="mshlis-4"><a href="javascript:;">&middot;菜品列表</a></li>
-					<li onClick="show_menu(5)" id="mshlis-5"><a href="javascript:;">&middot;新加菜品</a></li>
-				</ul>
-			</div>
-			<div class="left02down01">
-				<a onClick="show_menuB(7)" href="javascript:;">
-					<div id="img-7" class="left02down01_img"></div>
-					店面统计
-				</a>
-			</div>
-			<div class="left02down01_xia noneBox" id="mshbox-7">
-				<ul>
-					<li onClick="show_menu(6)" id="mshlis-6"><a href="javascript:;">&middot;新加店面</a></li>
-					<li onClick="show_menu(7)" id="mshlis-7"><a href="javascript:;">&middot;店面列表</a></li>
+					<li onClick="show_menu(4)" id="mshlis-4"><a href="javascript:;">&nbsp新加店面</a></li>
+					<li onClick="show_menu(5)" id="mshlis-5"><a href="javascript:;">&nbsp店面列表</a></li>
+                    <li onClick="show_menu(6)" id="mshlis-6"><a href="javascript:;">&nbsp菜品列表</a></li>
+					<li onClick="show_menu(7)" id="mshlis-7"><a href="javascript:;">&nbsp新加菜品</a></li>
 				</ul>
 			</div>
 		</div>
@@ -184,16 +154,10 @@ window.onload=window.onresize=function(){
 			<div class="left02top_c">评价</div>
 		</div>
 		<div class="left02down">
-			<div class="left02down01">
-				<a onClick="show_menuB(8)" href="javascript:;">
-					<div id="img-8" class="left02down01_img"></div>
-					评价统计
-				</a>
-			</div>
-			<div class="left02down01_xia noneBox" id="mshbox-8">
+			<div class="left02down01_xia" id="mshbox-8">
 				<ul>
-					<li onClick="show_menu(8)" id="mshlis-8"><a href="javascript:;">&middot;评价列表</a></li>
-					<li onClick="show_menu(9)" id="mshlis-9"><a href="javascript:;">&middot;评价分布</a></li>
+					<li onClick="show_menu(8)" id="mshlis-8"><a href="javascript:;">&nbsp评价列表</a></li>
+					<li onClick="show_menu(9)" id="mshlis-9"><a href="javascript:;">&nbsp评价分布</a></li>
 				</ul>
 			</div>
 
@@ -265,7 +229,7 @@ window.onload=window.onresize=function(){
 	
 	</div>
 	<div class="right noneBox" id="mshli-4">
-		<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 统计 &gt; <span>菜品列表</span></div>
+		<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 菜品统计 &gt; <span>新加店面</span></div>
 		<div>
 			<div class="text-c"> 日期范围：
 		<input type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
@@ -309,7 +273,7 @@ window.onload=window.onresize=function(){
 		</div>
 	</div>
 	<div class="right noneBox" id="mshli-5">
-		<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 统计 &gt; <span>新加菜品</span></div>
+		<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 菜品统计 &gt; <span>店面列表</span></div>
 		<div>
 			<div class="text-c"> 日期范围：
 		<input type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
@@ -353,7 +317,7 @@ window.onload=window.onresize=function(){
 		</div>
 	</div>
 	<div class="right noneBox" id="mshli-6">
-		<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 统计 &gt; <span>新加店面</span></div>
+		<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 菜品统计 &gt; <span>菜品列表</span></div>
 		<div>
 			<div class="text-c"> 日期范围：
 		<input type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
@@ -397,7 +361,7 @@ window.onload=window.onresize=function(){
 		</div>
 	</div>
 	<div class="right noneBox" id="mshli-7">
-		<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 统计 &gt; <span>店面列表</span></div>
+		<div class="right01"><img src="{% static 'DiningOAM/images/04.gif' %}" /> 菜品统计 &gt; <span>新加菜品</span></div>
 		<div>
 			<div class="text-c"> 日期范围：
 		<input type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
@@ -466,6 +430,7 @@ window.onload=window.onresize=function(){
 					<th width="100">操作</th>
 				</tr>
 			</thead>
+
 			<tbody>
 				<tr class="text-c">
 					<td><input name="" type="checkbox" value=""></td>

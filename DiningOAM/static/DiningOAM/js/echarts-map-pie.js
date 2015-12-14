@@ -29,7 +29,7 @@ function pieo()
     legend: {
         orient : 'vertical',
         x : 'left',
-        data:['直接访问','邮件营销','联盟广告','视频广告']
+        data:['一星','二星','三星','四星']
     },
     toolbox: {
         show : true,
@@ -60,10 +60,10 @@ function pieo()
             radius : '55%',
             center: ['50%', '60%'],
             data:[
-                {value:335, name:'直接访问'},
-                {value:310, name:'邮件营销'},
-                {value:234, name:'联盟广告'},
-                {value:135, name:'视频广告'}
+                {value:335, name:'一星'},
+                {value:310, name:'二星'},
+                {value:234, name:'三星'},
+                {value:135, name:'四星'}
             ]
         }
     ]
