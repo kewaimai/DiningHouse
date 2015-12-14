@@ -114,6 +114,6 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
 )
 
-CRONJOBS = [
-    ('10 19 * * *', 'DiningHouse.DiningHouse.test_task.test')
-]
+# CRONJOBS = [
+#     ('10 19 * * *', 'DiningHouse.DiningHouse.test_task.test')
+# ]
