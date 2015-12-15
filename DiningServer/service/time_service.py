@@ -11,6 +11,10 @@ def getTimeOption():
     time_list = []
     minute = time.localtime(time.time())
     stemp_now = time.time()
+    print('getTimeOption: print')
+    print(minute)
+    print('stemp_now: print')
+    print(stemp_now)
     local_time = time.strftime(HOUR_AND_MINUTE, time.localtime(stemp_now))
     l_hour , l_minute = [int(i) for i in local_time.split(':')]
     for i in range(15):

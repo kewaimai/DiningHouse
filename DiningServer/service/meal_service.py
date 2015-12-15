@@ -161,10 +161,11 @@ def addMealByScript(category_id, category_order, name):
 """
 def getMealsAndCount(post):
     meals_and_count = interface.MealsAndCount()
+    print('getMealsAndCount: print len(post):', len(post))
     print(post)
     for key in post:
-        print(key)
-        print(post[key])
+        print('the key is:', key)
+        print('the post[key] is:', post[key])
         tblMeal = TblMealInHouse.objects.filter(id=key)
         for item in tblMeal:
             meals_and_count.add_meals(

@@ -45,6 +45,9 @@ def index(request):
     :param request:
     :return:
     """
+    print('index print request:\n')
+    print(request.POST)
+    print('end of index print')
     context = meal_service.getCategoryAndList()
     return render(request, 'DiningServer/index.html', context)
 
@@ -131,11 +134,16 @@ def gotoOrderPage(request):
     :param request:
     :return:
     """
-    user = user_service.getMyDetailInfo('abc')
-    meals = meal_service.getMealsAndCount(request.POST)
+    print('gotorderpage print request:')
+    print(request.POST)
+    print('end of getorderpage print')
+    user = user_service.getMyDetailInfo('abc')#这里的abc只是作为测试使用
+    meals = meal_service.getMealsAndCount(request.POST)#实际post为空字典
     times = time_service.getTimeOption()
     context = {'meals':meals, 'user':user, 'times': times}
+    print ("the gotoOrderPage context print")
     print(context)
+    print('the end of gotoOrderPage context print')
     return render(request, 'DiningServer/shopping.html', context)
 
 # 创建订单 创建完成后自动跳转到支付页面
@@ -186,7 +194,9 @@ def getOrdersByType(request):
     :param request: httprequest
     :return: 渲染后的订单列表
     """
+    print('getorderbytype print')
     print(request.POST)
+    print('endof getordefsbytype')
     if '0' in request.POST['type']:
         context = order_service.getOrders('abc')
     else:
