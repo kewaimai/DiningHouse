@@ -74,6 +74,7 @@ def getJudgeMealPage(request):
     :return:
     """
     return HttpResponse('')
+    #return render(request,'DiningServer/toJudge.html',{})
 
 @require_POST
 def judgeMeal(request):
@@ -92,6 +93,8 @@ def getMealJudge(request):
     :return:
     """
     return HttpResponse('')
+    #context = {}
+    #return render(request,'DiningServer/comoder.html',context)
 
 
 """
@@ -137,6 +140,7 @@ def gotoOrderPage(request):
     print('gotorderpage print request:')
     print(request.POST)
     print('end of getorderpage print')
+    print('gotorderpage print request:')
     user = user_service.getMyDetailInfo('abc')#这里的abc只是作为测试使用
     meals = meal_service.getMealsAndCount(request.POST)#实际post为空字典
     times = time_service.getTimeOption()
@@ -144,6 +148,21 @@ def gotoOrderPage(request):
     print ("the gotoOrderPage context print")
     print(context)
     print('the end of gotoOrderPage context print')
+    user = user_service.getMyDetailInfo('abc')
+    meals = meal_service.getMealsAndCount(request.POST)
+    count = 0
+    sum = 0
+    print(meals)
+    buy_meals = meals['meal_list']
+    print(buy_meals)
+    # 获取sum和count
+    for meal in buy_meals:
+        print(meal)
+        count += int(meal['buy_count'])
+        sum += int(meal['buy_count']) * float(meal['meal_price'])
+    times = time_service.getTimeOption()
+    print(count, sum)
+    context = {'meals':meals, 'user':user, 'times': times, 'count': count, 'sum':sum}
     return render(request, 'DiningServer/shopping.html', context)
 
 # 创建订单 创建完成后自动跳转到支付页面

@@ -55,4 +55,17 @@ docs/_build/
 
 # PyBuilder
 target/
+<<<<<<< HEAD
 .idea/misc.xml
+=======
+DiningOAM/templates/DiningOAM/__init__.py
+>>>>>>> origin/develop
+DiningHouse/settings.py
+DiningHouse/wsgi.py
+DiningOAM/cron.py
+DiningOAM/cron.py
+DiningOAM/static/DiningOAM/js/H-ui.admin.js
+DiningServer/static/DiningServer/css/comoder.css
+DiningServer/views.py
+DiningOAM/static/__init__.py
+*.html

@@ -1,0 +1,233 @@
+
+
+.tojudge-box{
+    width: 4rem;
+    height: 100vh;
+    background: #e5e5e5;
+}
+
+
+
+/*全部订单*/
+
+.dom-order{
+	margin-top: 0.125rem;
+	background: #fff;
+	padding-top: 20px;
+}
+
+.dom-tm{
+	position: relative;
+	width: 4rem;
+	background: #fff;
+	height: 1.3rem;
+}
+
+.dom-tm .dom-img{
+	position: absolute;
+	top: 0;
+	left: 0.15rem;
+	width: 1.3rem;
+	height: 1.1rem;
+}
+
+.dom-tm .dom-dt{
+	position: absolute;
+	top: 0;
+	right: 0.15rem;
+	width: 2.2rem;
+	height: 1.3rem;
+	font-size: 0.1625rem;
+	text-align: left;
+}
+
+.dom-dt p{
+	margin-bottom: 8px;
+	position: relative;
+}
+
+.dom-dt p span{
+	position: absolute;
+	top: 0;
+	right: 0.15rem;
+}
+
+#dom-color{
+	color: rgb(245, 130, 30);
+	line-height: 0.4rem;
+}
+
+
+/*餐点*/
+
+.dom-ma{
+	width: 4rem;
+	background: #fff;
+}
+
+.dom-ma p{
+	font-size: 0.175rem;
+	position: relative;
+	width: 4rem;
+	text-align: left;
+	padding-left: 0.15rem;
+	line-height: 0.4rem;
+
+	padding-top:10px;
+}
+
+.dom-ma p:nth-child(2){
+	padding-top:0;
+}
+
+.dom-ma p span:nth-child(1){
+	position: absolute;
+	top: 0;
+	right: 0.45rem;
+	width: 0.375rem;
+	text-align: right;
+	padding-top: 5px;
+}
+
+.dom-ma p span:nth-child(2){
+	position: absolute;
+	top: 0;
+	right: 1.5rem;
+	text-align: center;
+	padding-top: 5px;
+	color:#666;
+}
+
+.dom-ma div.dom-mad{
+	font-size: 0.2rem;
+	width: 4rem;
+	position: relative;
+	height: 0.4rem;
+	padding-left: 0.15rem;
+	padding-top: 0.09375rem;
+	padding-bottom: 0.05rem;
+	line-height: 0.4rem;
+}
+
+.dom-mad .dom-map{
+	width: 0.625rem;
+	position: absolute;
+	top: 0;
+	right: 0.23rem;
+	line-height: 0.4rem;
+}
+
+.dom-bg{
+	width: 4rem;
+	height: 12px;
+	background: #e5e5e5;
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+/*评价*/
+.todge-order{
+    width: 4rem;
+    height: 1.5rem;
+    background: #fff;
+    border-bottom: 2px solid #d7d7d7;
+}
+
+.todge-order .order-todge{
+    width: 3.625rem;
+    margin: 0 auto ;
+    padding-top:0.0625rem;
+    font-size:0.15rem;
+    color:#7e7e7e;
+    position: relative;
+}
+
+.todge-order .order-todge a{
+    line-height: 0.25rem;
+}
+/*文字*/
+.todge-order .order-todge a:nth-child(1){
+    width: 0.8135rem;
+    margin-right: 0.325rem;
+    font-size: 0.1875rem;
+    margin-bottom: 0.0625rem;
+}
+
+.todge-order .order-todge a:nth-child(2){
+    position: absolute;
+    top: 0.5rem;
+    left: 0;
+}
+
+.todge-order .order-todge a:nth-child(4){
+    position: absolute;
+    top:0.82rem;
+    left: 0;
+}
+
+.todge-order .order-todge a:nth-child(6){
+    position: absolute;
+    top: 1.125rem;
+    left: 0;
+}
+
+/*星星*/
+.todge-order .order-todge ul:nth-child(3){
+    position: absolute;
+    top: 0.5rem;
+    right: 0.1875rem;
+}
+
+.todge-order .order-todge ul:nth-child(5){
+    position: absolute;
+    top: 0.82rem;
+    right: 0.1875rem;
+}
+
+.todge-order .order-todge ul:nth-child(7){
+    position: absolute;
+    top: 1.125rem;
+    right: 0.1875rem;
+}
+
+.todge-order .order-todge ul li{
+    display: inline-block;
+    width: 0.175rem;
+    height: 0.175rem;
+    background-size: cover;
+}
+
+li.off{
+    background: url("../images/index/star_1.png") no-repeat;
+}
+
+li.on{
+
+    background: url("../images/index/star_3.png") no-repeat;
+}
+
+/*提交*/
+
+.btn-box{
+    width: 4rem;
+    height: 0.775rem;
+    background: #fff;
+    margin-top: 0.125rem;
+    position: relative;
+}
+
+.btn-box a{
+    width: 3rem;
+    height: 0.375rem;
+    background: #f8b62c;
+    display: block;
+    font-size: 0.1875rem;
+    color: #fff;
+    text-align: center;
+    line-height: 0.375rem;
+    border-radius: 10px;
+    position: absolute;
+    top:0.2rem;
+    left: 0.5rem;
+}

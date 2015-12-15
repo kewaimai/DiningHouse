@@ -115,7 +115,7 @@
     </div>
     <footer>
         <div class="ft-lt">
-            <p>合计:<span id="total" class="total">0.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
+            <p>合计:<span id="total" class="total">{{ sum }}元</span><span class="nm">(<label class="share">{{ count }}</label>份)</span></p>
         </div>
         <div class="ft-rt">
             <p id="change-success">选好了</p>
@@ -131,8 +131,21 @@
 <script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
 <script>
+//这里是上一个页面选择的菜品id和对应的数量
+var json = {
+    {% for meal in meals.meal_list %}
+        "{{ meal.meals_id }}": {{ meal.buy_count }}
+    {% endfor %}
+};
+
+//这里是服务器传过来的总份数
+var count = {{ count }};
+
+//这里是服务器传过来的合计多少元
+var sum = {{ sum }};
+
 $(function () {
-    var url = "";
+    var url = "/DiningServer/createOrder/";
     $.post(url, function (data) {
         if (data.status) {
 
@@ -173,14 +186,14 @@ $(function () {
 
         <!--计算总份数-->
         $("input[type='text']").each(function () {
-            meal_count += parseInt($(this).val());
+            count = parseInt($(this).val());
         });
         if (category_count > 0) {
             $(".current b").html(category_count).show();
         } else {
             $(".current b").hide();
         }
-        $(".share").html(meal_count);
+        $(".share").html(count);
         $("#total").html(sum.toFixed(2));
     }
 
