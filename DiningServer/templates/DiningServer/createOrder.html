@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    {% load staticfiles %}
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,31 +19,49 @@
     <div class="timer-surplus">
         <a href="javascript:;"></a>
         <a href="javascript:;">支付剩余时间：</a>
-        <p class="timer-tm">
-            <em>00</em>:<em>00</em>:<em>00</em>
-        </p>
+        <p class="timer-tm" id="timer">15:00</p>
     </div>
- <div></div>
+    
+    <!--结算信息-->
+    <div class="setent">结算信息</div>
+    <div class="set-box">
+        <p><a href="javascript:;">订单名称</a><a href="javascript:;">这是商品名称</a></p>
+        <p><a href="javascript:;">订单总价</a><a href="javascript:;">20</a></p>
+        <p><a href="javascript:;">支付价格</a><a href="javascript:;">20</a></p>
+    </div>
 
-
+    <!--支付方式-->
+    <div class="setent">选择支付方式</div>
+    <div class="payment-box">
+        <div></div>
+        <div>
+            <p>微信支付</p>
+            <p>推荐安装微信5.0及以上版本的使用</p>
+        </div>
+        <div></div>
+    </div>
+    <div class="compayment">确认支付</div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'DiningServer/js/jquery.nav.js' %}"></script>
+<script type="text/javascript">
+    function to(num){
+        return num<10?'0'+num:''+num;
+    }
+    var Timer=document.getElementById('timer');
+    var t=15*60;
+    setInterval(function(){
+        t--;
+        var m=Math.floor(t/60);
+        var s=t%60;
+        Timer.innerHTML=m+':'+to(s);
+
+        if(t==1){
+            alert('您已超过支付时间，请您重新提交订单及时支付');
+        }
+    },1000);
+</script>
 </body>
 </html>
