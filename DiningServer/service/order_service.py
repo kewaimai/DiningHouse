@@ -2,12 +2,11 @@ __author__ = '祥祥'
 
 from DiningServer.models import TblBill
 from DiningServer.models import TblBillMeal
-
 from DiningServer.interface import MyBill
 
 from DiningServer.common.time_format_util import SERVER_TIME_FORMAT_WITHOUT_SECOND
 from DiningServer.common.time_format_util import SERVER_TIME_FORMAT
-from DiningServer.common.wc_pay import *
+
 from uuid import uuid4
 import time
 
@@ -78,9 +77,6 @@ def payOrder(request,bill_id):
 
     #TODO 支付订单
     pay_result = False
-    CallOrderAPI()
-    GenerJsAPIPara()
-    pay_result = CallQueryPayResult()
 
     # 如果支付成功
     if pay_result:

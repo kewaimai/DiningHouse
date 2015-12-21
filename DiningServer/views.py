@@ -1,19 +1,13 @@
-from django.http import HttpRequest
-from django.http import HttpResponse
-from django.shortcuts import render
-from django.shortcuts import render_to_response
-from django.shortcuts import get_object_or_404
-from django.shortcuts import redirect
-from DiningServer.service import meal_service
-from DiningServer.service import user_service
-from DiningServer.service import order_service
-from DiningServer.service import time_service
-import json
+from django.http import HttpRequest,HttpResponse,HttpResponseRedirect
+from django.shortcuts import render,render_to_response,get_object_or_404,redirect
+from DiningServer.service import meal_service,user_service,order_service,time_service,weixin_service
+from DiningHouse.settings import *
 
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from DiningServer.read_excel import startGenerator
 
+import json
 """
 在这里郑重声明   order = bill =  订单
 """
@@ -168,7 +162,30 @@ def createOrder(request):
 
     (bill,bill_meal) = order_service.createOrder()
     print("order Done!!!")
-    context = {'bill':bill, 'bill_meal':bill_meal, 'meals':meals, 'count': count, 'sum':sum}
+
+
+    body = request.GET.get('body', None)
+    out_trade_no = request.GET.get('out_trade_no', None)
+    total_fee = request.GET.get('total_fee', None)
+    spbill_create_ip = request.META.get('REMOTE_ADDR', "127.0.0.1")
+    notify_url = "http://www.szjiajia.com/pay/notify/url/"
+
+    weixin_service.CallOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url)
+    josn_pay_info = weixin_service.GenerJsAPIParams(request)
+    context = {
+            'bill':bill,
+            'bill_meal':bill_meal, 
+            'meals':meals, 
+            'count': count, 
+            'sum':sum,
+            'prepay_id':prepay_id,
+            'appId':appId,
+            'timeStamp':timeStamp,
+            'nonceStr':nonceStr,
+            'package':package,
+            'signType':signType,
+            'paySign':paySign,
+            }
     return render(request, 'DiningServer/createOrder.html', context)
 
 @csrf_exempt
@@ -184,11 +201,12 @@ def payOrder(request,bill_id):
     out_trade_no = request.GET.get('out_trade_no', None)
     total_fee = request.GET.get('total_fee', None)
     spbill_create_ip = request.META.get('REMOTE_ADDR', "127.0.0.1")
-    notify_url = "http://www.xxxx.com/pay/notify/url/"
+    notify_url = "http://www.szjiajia.com/pay/notify/url/"
 
+    josn_pay_info = weixin_service.GenerJsAPIParams(request)
     # bill = get_object_or_404(TblBill, pk=bill_id)
-    order_service.payOrder(bill_id)
-    return HttpResponse('success')
+    order_service.payOrder(request,bill_id)
+    return HttpResponseRedirect("/getOrders/%s/" % bill_id)
 
 def getOrders(request):
     """

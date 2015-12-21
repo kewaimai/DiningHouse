@@ -53,7 +53,7 @@ class WeiXinPay(object):
                       "ORDERPAID": u"订单已支付",
                       "OUT_TRADE_NO_USED": u"商户订单号重复",
                       "NOAUTH": u"商户无权限",
-                      "NOTENOUGH": u"余额丌足",
+                      "NOTENOUGH": u"余额不足",
                       "NOTSUPORTCARD": u"不支持卡类型",
                       "ORDERCLOSED": u"订单已关闭",
                       "BANKERROR": u"银行系统异常",
@@ -68,7 +68,7 @@ class UnifiedOrderPay(WeiXinPay):
     def __init__(self, appid, mch_id, api_key):
         super(UnifiedOrderPay, self).__init__(appid, mch_id, api_key)
         self.url = "https://api.mch.weixin.qq.com/pay/unifiedorder"
-        self.trade_type = "NATIVE"
+        self.trade_type = "JSAPI"
 
     def post(self, body, out_trade_no, total_fee, spbill_create_ip, notify_url, **kwargs):
         tmp_kwargs = {
