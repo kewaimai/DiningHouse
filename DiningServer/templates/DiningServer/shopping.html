@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    {% load staticfiles %}
+{% load staticfiles %}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -71,13 +71,13 @@
         <p class="box-ftbd"></p>
         <div class="box-footer">
         	<p>送货时间</p>
-        	<select>
+        	<select  id='arriveTime'>
             {% if times %}
                 {% for item in times %}
-                    <option>{{ item }}</option>
+                    <option value='{{item}}'>{{ item }}</option>
                 {% endfor %}
             {% else %}
-                <option>立即送达</option>
+                <option value='立即送达'>立即送达</option>
             {% endif %}
         	</select>
         </div>
@@ -118,7 +118,7 @@
             <p>合计:<span id="total" class="total">{{ sum }}元</span><span class="nm">(<label class="share">{{ count }}</label>份)</span></p>
         </div>
         <div class="ft-rt">
-            <p id="change-success">选好了</p>
+            <p id="change-success">去下单</p>
         </div>
     </footer>
 </div>
@@ -134,7 +134,7 @@
 //这里是上一个页面选择的菜品id和对应的数量
 var json = {
     {% for meal in meals.meal_list %}
-        "{{ meal.meals_id }}": {{ meal.buy_count }}
+        "{{ meal.meals_id }}": {{ meal.buy_count }},
     {% endfor %}
 };
 
@@ -199,6 +199,36 @@ $(function () {
 
     setTotal();
 });
+
+var $changeBtn = $("#change-success")
+            , url = '/DiningServer/createOrder/';
+
+    $changeBtn.on ("click", function () {
+        json['arrive-time']=$('#arriveTime').val()
+        StandardPost(url, json);
+    });
+
+
+    function StandardPost(url,args) {
+        var body = $(document.body),
+            form = $("<form method='post'></form>"),
+            input;
+        form.attr({"action":url});
+        $.each(args,function(key,value){
+            input = $("<input  type='hidden'>");
+            input.attr({"name":key});
+            input.val(value);
+            form.append(input);
+         });
+
+        form.appendTo(document.body);
+        form.submit();
+        document.body.removeChild(form[0]);
+    }
+
+
+
+
 
 
 </script>

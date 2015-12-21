@@ -7,25 +7,37 @@ from DiningServer.interface import MyBill
 
 from DiningServer.common.time_format_util import SERVER_TIME_FORMAT_WITHOUT_SECOND
 from DiningServer.common.time_format_util import SERVER_TIME_FORMAT
+from DiningServer.common.wc_pay import *
 from uuid import uuid4
 import time
+
 
 """
 订单相关服务
 """
 
 # 1,未付款    2，配送中    3，待评价
+# bill_state = [
+#     '全部',
+#     '未付款',
+#     '配送中',
+#     '待评价',
+#     '已评价'
+# ]
+# BILL_STATE_ALL = 0
+# BILL_STATE_UNPAY = 1
+# BILL_STATE_SENDING = 2
+# BILL_STATE_JUDGE = 3
+# BILL_STATE_JUDGED = 4       #这个状态的订单不再显示到用户的订单列表里
+
+(BILL_STATE_ALL,BILL_STATE_UNPAY,BILL_STATE_SENDING,BILL_STATE_JUDGE,BILL_STATE_JUDGED)=range(5)
 bill_state = [
-    '全部',
-    '未付款',
-    '配送中',
-    '待评价'
-]
-BILL_STATE_ALL = 0
-BILL_STATE_UNPAY = 1
-BILL_STATE_SENDING = 2
-BILL_STATE_JUDGE = 3
-BILL_STATE_JUDGED = 4       #这个状态的订单不再显示到用户的订单列表里
+            (BILL_STATE_ALL,'全部'),
+            (BILL_STATE_UNPAY,'未付款'),
+            (BILL_STATE_SENDING,'配送中'),
+            (BILL_STATE_JUDGE,'待评价'),
+            (BILL_STATE_JUDGED,'已评价'),
+            ]
 
 
 def createOrder():
@@ -49,22 +61,26 @@ def createOrder():
     bill_meal.bill_id = bill.id
     # bill_meal.meal_in_house_id =
     # bill_meal.buy_count =
-    bill_meal.save()
     bill_meal.meal_price = 1.0
-    pass
+    bill_meal.save()
+    
+    return(bill,bill_meal)
 
 """
 如果支付成功 则返回非None 如果失败 返回None
 """
-def payOrder(bill_id):
+def payOrder(request,bill_id):
     # 查询订单状态 如果不是等待支付 则返回对应的订单的状态
-    bill = TblBill.objects.filter(id=bill_id)
+    bill = TblBill.objects.get(id=bill_id)
     for item in bill:
         if item.bill_state != BILL_STATE_UNPAY:
             return None
 
     #TODO 支付订单
     pay_result = False
+    CallOrderAPI()
+    GenerJsAPIPara()
+    pay_result = CallQueryPayResult()
 
     # 如果支付成功
     if pay_result:

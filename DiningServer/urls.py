@@ -1,5 +1,3 @@
-
-
 from django.conf.urls import url
 from . import views
 
@@ -31,7 +29,6 @@ urlpatterns = [
 
     # 我的钱包
 
-    # 下单
     # 去下单页面
     url(r'^gotoOrderPage/$', views.gotoOrderPage, name='gotoOrderPage'),
     # 创建订单接口      返回创建订单成功并提示去支付  的界面
@@ -39,7 +36,7 @@ urlpatterns = [
 
     # 获取我的订单页面 未付款 配送中 待评价
     # 支付订单接口
-    url(r'^payOrder/$', views.payOrder, name='payOrder'),
+    url(r'^payOrderTest/(?P<bill_id>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})/$', views.payOrder, name='payOrder'),
     url(r'^getOrders/$', views.getOrders, name='getOrder'),
     url(r'^ensureSend/$', views.ensureSend),
     url(r'^getOrdersByType', views.getOrdersByType, name='ordersByType'),

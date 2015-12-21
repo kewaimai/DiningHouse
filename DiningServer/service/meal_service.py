@@ -34,10 +34,13 @@ def getCategoryAndList():
     # 从数据库中读取 分类数据并存入缓存数据
     else:
         result_list = TblMealCategory.objects.all().order_by('show_order')
+        print('len(result_list):',len(result_list))
         for item in result_list:
+            print('item:',item)
             category_list.append(item.id)
             category_and_meal.add_category_and_meals(item.name,item.id)
             #add to cache
+            print('server_cache.cache_meal_category:',type(server_cache.cache_meal_category))
             server_cache.cache_meal_category.append(item)
 
     #判断获取的结果
@@ -161,11 +164,10 @@ def addMealByScript(category_id, category_order, name):
 """
 def getMealsAndCount(post):
     meals_and_count = interface.MealsAndCount()
-    print('getMealsAndCount: print len(post):', len(post))
     print(post)
     for key in post:
-        print('the key is:', key)
-        print('the post[key] is:', post[key])
+        print(key)
+        print(post[key])
         tblMeal = TblMealInHouse.objects.filter(id=key)
         for item in tblMeal:
             meals_and_count.add_meals(

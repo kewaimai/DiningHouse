@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-     {% load staticfiles %}
+{% load staticfiles %}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -113,7 +113,9 @@
 <script>
     //图片延时加载
 window.onload=window.onscroll=window.onresize=function (){
+	//var aImg=document.getElementsByTagName('img');
     var aImg=$('.lt-lt a img');
+    //alert(aImg);
 	var scrollTop=document.documentElement.scrollTop || document.body.scrollTop;
 	var clientBottom=document.documentElement.clientHeight+scrollTop;
 
@@ -121,6 +123,8 @@ window.onload=window.onscroll=window.onresize=function (){
 	{
 		if (clientBottom >= aImg[i].offsetTop)
 		{
+			// 换
+			// aImg[i].src=aImg[i]['_src']; 错
 			aImg[i].src=aImg[i].getAttribute('_lazy_src');
 		}
 	}
@@ -128,7 +132,6 @@ window.onload=window.onscroll=window.onresize=function (){
 </script>
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
-
 <script type="text/javascript" src="{% static 'DiningServer/js/swiper.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery.nav.js' %}"></script>
 <script type="text/javascript">
@@ -166,19 +169,8 @@ $(function(){
 $(function() {
 
         //数据存储
-    // 先获取，判断用户上次是否点击是否有数据，如果没有，重定义
-    var json = {
-        "time": Date.now(),
-        "data": {}
-    };
-    // 判断过期时间 ： 默认 2小时
-    if(json["time"] + 1000*3600*2 < Date.now()){
-        // 过期
-        json = {
-            "time": Date.now(),
-            "data": {}
-        }
-    } 
+    var json = {};
+
     $(".add").click(function () {
         var t = $(this).parent().find('input[class*=result]');
         t.val(parseInt(t.val()) + 1);
@@ -186,15 +178,9 @@ $(function() {
 
         //获取当前选择的菜
         var _id = $(this).parents(".prt-lt").attr('id');
-
-            json["data"][_id] = t.val();
-
-
-        // 存储
-        window.localStorage['menuData'] = JSON.toString(json);
+        json[ _id ] = t.val();
 
     });
-
 
     $(".minus").click(function () {
         var t = $(this).parent().find('input[class*=result]');
@@ -205,9 +191,7 @@ $(function() {
         setTotal();
 
         var _id = $(this).parents(".prt-lt").attr('id');
-        var index = fnFindId(_id);
-        json["data"][_id] = t.val();
-
+        json[ _id ] = t.val();
 
 
     });
@@ -215,7 +199,7 @@ $(function() {
     var $changeBtn = $("#change-success")
             , url = '/DiningServer/gotoOrderPage/'
             ;
-//选好了提交
+            
     $changeBtn.on("click", function () {
         StandardPost(url, json);
     });
@@ -268,6 +252,33 @@ $(function() {
     }
         setTotal();
  });
+// 延迟加载
+//$.windowbox={
+   // mshbox:function(ssclass){
+       // $(ssclass).each(function(i){
+           // var mshtop=$(this).offset().top;
+            //alert(mshtop);
+            //var srcTop=$(window).scrollTop();
+           // var docHei=$(window).height();
+            //if(mshtop>(srcTop+docHei)){
+               // $(this).css("display","none");
+           // }
+           // if(mshtop<=(srcTop+docHei-100))
+           // {
+              //  $(this).css("display","block");
+              //  var src=$(this).find("img").attr("_lazy_src");
+               // alert($(this).find("img").attr("src",src)) ;
+             //   $(this).find("img").attr("src",src);
+           // }
+         //   console.log(i);
+       // });
+  //  }
+//}
+//$.windowbox.mshbox(".prt-lt");
+//$(window).scroll(function(){
+    //$.windowbox.mshbox(".prt-lt");
+//});
+
 
 </script>
 <script>
@@ -275,7 +286,5 @@ $(function() {
 </script>
 <script type="text/javascript" src="{% static 'DiningServer/js/waypoints.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/navbar2.js' %}"></script>
-<script type="text/javascript" src="{% static 'DiningServer/js/jquery.cookie.js' %}"></script>
-
 </body>
 </html>

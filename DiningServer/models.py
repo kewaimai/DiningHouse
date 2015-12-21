@@ -148,6 +148,7 @@ class TblBill(models.Model):
 class TblBillMeal(models.Model):
     id = models.CharField(primary_key=True, max_length=36)
     bill_id = models.CharField(max_length=36)
+    # bill_id = models.ForeignKey(User, on_delete=models.PROTECT)
     meal_in_house_id = models.CharField(max_length=36)
     buy_count = models.IntegerField()
     add_time = models.DateTimeField()
@@ -281,3 +282,5 @@ class TblUserMoneyChange(models.Model):
     class Meta:
         managed = False
         db_table = 'tbl_user_money_change'
+
+

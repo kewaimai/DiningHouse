@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from os.path import dirname, join
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,7 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'utrh@e-*ggc(q0+-7q$c7eye)&*p12e8a6h(f@!l$mf3g)4j#k'
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -32,16 +32,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'DiningMealManage',
     'DiningServer',
-    'DiningOAM',
-    'DiningMealManage'
+    'DiningOAM'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -69,7 +68,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'debug': DEBUG
         },
     },
 ]
@@ -90,7 +88,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
+# 'HOST': '101.200.84.75',
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -115,6 +113,17 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
 )
 
-# CRONJOBS = [
-#     ('10 19 * * *', 'DiningHouse.DiningHouse.test_task.test')
-# ]
+
+with open(join(BASE_DIR, 'DiningHouse', 'wc_app_conf')) as f:
+    wc_app_conf = f.readline().strip().split("|")
+# WC_NONCERSTR = "qhH9cYT20sm2V"
+# WC_PAY_APPID = wc_app_conf[0]
+WC_PAY_APPID = 'wxacfdb1da76aa7763'
+# WC_PAY_APPSECRET = wc_app_conf[1]
+WC_PAY_APPSECRET = 'd4624c36b6795d1d99dcf0547af5443d'
+# WC_PAY_MCHID = wc_app_conf[2]
+WC_PAY_MCHID = '1270766901'
+# WC_PAY_KEY = wc_app_conf[3]
+WC_PAY_KEY = 'akd2230dkdkiDKJkjkjdkfjskfjkslfj'
+WC_ID = 'Raymond_jc'
+

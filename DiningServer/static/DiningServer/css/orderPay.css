@@ -1,0 +1,138 @@
+
+.box-timer{
+	font-size: .2rem;
+	background: #e5e5e5;
+	height: 100vh;
+}
+
+
+/*剩余时间*/
+.timer-surplus{
+    width: 4rem;
+	background: #fffbd9;
+	height: 0.5625rem;
+	position: relative;
+	border-top: 1px solid #e6e6e6;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+
+.timer-surplus a,.timer-surplus p{
+	font-size: .165rem;
+	display: block;
+	position: absolute;
+	color: #ffaf67;
+}
+
+.timer-surplus a:nth-child(1){
+	width: 0.3rem;
+	height: 0.3rem;
+	background: url('../images/shopping/timer.png') no-repeat;
+	background-size:contain;
+	left: 0.16875rem;
+	top: 0.15rem;
+}
+
+.timer-surplus a:nth-child(2){
+	top: 0;
+	left: 0.5rem;
+	line-height: 0.5625rem;
+	text-align: center;
+}
+
+.timer-surplus p:nth-child(3){
+	top: 0;
+	left: 1.62rem;
+	line-height: 0.5625rem;
+	text-align: center;
+}
+
+/*结算信息*/
+
+.setent{
+	font-weight: bold;
+	margin-left: 0.16875rem;
+	height: 0.75rem;
+	line-height: 0.75rem;
+}
+
+.set-box{
+	width: 3.8625rem;
+	margin: 0 auto;
+	background: #fff;
+}
+
+.set-box p{
+	height: 0.625rem;
+	position: relative;
+	border-top: 1px solid #e6e6e6;
+	border-bottom: 1px solid #e6e6e6;
+}
+
+.set-box a{
+	color: #a1a1a1;
+	position: absolute;
+	top: 0;
+	line-height: 0.625rem;
+}
+
+.set-box p a:nth-child(1){
+	left: 0.06875rem;
+}
+
+.set-box p a:nth-child(2){
+	right: 0.06875rem;
+}
+
+/*支付方式*/
+.payment-box{
+	height: 0.875rem;
+	width: 3.8625rem;
+	margin: 0 auto;
+	background:#fff;
+	border: 1px solid #e6e6e6;
+	position: relative;
+}
+
+.payment-box div{
+	position: absolute;
+}
+
+.payment-box div:nth-child(1){
+	top: 0.275rem;
+	left: 0.06875rem;
+	width: 0.3rem;
+	height: 0.3rem;
+	background: url('../images/shopping/weixin.png');
+	background-size: contain;
+}
+
+.payment-box div:nth-child(2){
+	top: 0.22rem;
+	left: .5rem;
+	width: 2.875rem;
+	font-size: .16rem;
+}
+
+.payment-box div:nth-child(3){
+	top: 0.275rem;
+	right: 0.06875rem;
+	width: 0.3rem;
+	height: 0.3rem;
+	background: url('../images/shopping/check.png');
+	background-size: contain;
+	border-radius: 50%;
+	-webkit-border-radius:50%;
+}
+
+
+.compayment{
+	height: 0.675rem;
+	width: 3.8625rem;
+	margin: 0 auto;
+	background: #8fc31f;
+	line-height: .675rem;
+	text-align: center;
+	color: #fff;
+	margin-top: .125rem;
+}

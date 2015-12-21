@@ -11,7 +11,7 @@ class CategoryAndMeal():
     """
     最后的context的效果示例
     context = {
-        # banners
+        # _banners
         'banners':[
             {
                 image_url: '这里是图片路径',

@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import render_to_response
+from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from DiningServer.service import meal_service
 from DiningServer.service import user_service
@@ -45,9 +45,6 @@ def index(request):
     :param request:
     :return:
     """
-    print('index print request:\n')
-    print(request.POST)
-    print('end of index print')
     context = meal_service.getCategoryAndList()
     return render(request, 'DiningServer/index.html', context)
 
@@ -74,7 +71,6 @@ def getJudgeMealPage(request):
     :return:
     """
     return HttpResponse('')
-    #return render(request,'DiningServer/toJudge.html',{})
 
 @require_POST
 def judgeMeal(request):
@@ -93,8 +89,6 @@ def getMealJudge(request):
     :return:
     """
     return HttpResponse('')
-    #context = {}
-    #return render(request,'DiningServer/comoder.html',context)
 
 
 """
@@ -137,52 +131,63 @@ def gotoOrderPage(request):
     :param request:
     :return:
     """
-    print('gotorderpage print request:')
-    print(request.POST)
-    print('end of getorderpage print')
-    print('gotorderpage print request:')
-    user = user_service.getMyDetailInfo('abc')#这里的abc只是作为测试使用
-    meals = meal_service.getMealsAndCount(request.POST)#实际post为空字典
-    times = time_service.getTimeOption()
-    context = {'meals':meals, 'user':user, 'times': times}
-    print ("the gotoOrderPage context print")
-    print(context)
-    print('the end of gotoOrderPage context print')
     user = user_service.getMyDetailInfo('abc')
     meals = meal_service.getMealsAndCount(request.POST)
     count = 0
     sum = 0
-    print(meals)
+
     buy_meals = meals['meal_list']
-    print(buy_meals)
     # 获取sum和count
     for meal in buy_meals:
-        print(meal)
+        print('meal in buy_meal:\n',meal)
         count += int(meal['buy_count'])
         sum += int(meal['buy_count']) * float(meal['meal_price'])
     times = time_service.getTimeOption()
-    print(count, sum)
     context = {'meals':meals, 'user':user, 'times': times, 'count': count, 'sum':sum}
     return render(request, 'DiningServer/shopping.html', context)
 
 # 创建订单 创建完成后自动跳转到支付页面
+@csrf_exempt
+@require_POST
 def createOrder(request):
     """
     创建订单接口
     :param request:
     :return:
     """
-    order_service.createOrder()
-    return HttpResponse('success')
+    meals = meal_service.getMealsAndCount(request.POST)
+    count = 0
+    sum = 0
 
+    buy_meals = meals['meal_list']
+
+    # 获取sum和count
+    for meal in buy_meals:
+        count += int(meal['buy_count'])
+        sum += int(meal['buy_count']) * float(meal['meal_price'])
+
+    (bill,bill_meal) = order_service.createOrder()
+    print("order Done!!!")
+    context = {'bill':bill, 'bill_meal':bill_meal, 'meals':meals, 'count': count, 'sum':sum}
+    return render(request, 'DiningServer/createOrder.html', context)
+
+@csrf_exempt
 @require_POST
-def payOrder(request):
+def payOrder(request,bill_id):
     """
     用户支付订单接口
     :param request:
     :return:
     """
-    order_service.payOrder()
+    
+    body = request.GET.get('body', None)
+    out_trade_no = request.GET.get('out_trade_no', None)
+    total_fee = request.GET.get('total_fee', None)
+    spbill_create_ip = request.META.get('REMOTE_ADDR', "127.0.0.1")
+    notify_url = "http://www.xxxx.com/pay/notify/url/"
+
+    # bill = get_object_or_404(TblBill, pk=bill_id)
+    order_service.payOrder(bill_id)
     return HttpResponse('success')
 
 def getOrders(request):
@@ -213,9 +218,7 @@ def getOrdersByType(request):
     :param request: httprequest
     :return: 渲染后的订单列表
     """
-    print('getorderbytype print')
     print(request.POST)
-    print('endof getordefsbytype')
     if '0' in request.POST['type']:
         context = order_service.getOrders('abc')
     else:

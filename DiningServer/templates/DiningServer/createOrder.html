@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 <html>
+{% load staticfiles %}
 <head lang="en">
-         {% load staticfiles %}
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>订单页面</title>
+    <title>支付页面</title>
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/swiper.min.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/createOrder.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/orderPay.css' %}">
 </head>
+
 <body>
 
 <div class="box-timer">
@@ -19,16 +20,17 @@
     <!--剩余时间-->
     <div class="timer-surplus">
         <a href="javascript:;"></a>
-        <a href="javascript:;">支付剩余时间：</a>
-        <p class="timer-tm" id="timer">15:00</p>
+        <a href="javascript:;">支付剩余时间</a>
+        <p class="timer-tm" id="timer">
+            15:00
+        </p>
     </div>
     
     <!--结算信息-->
     <div class="setent">结算信息</div>
     <div class="set-box">
-        <p><a href="javascript:;">订单名称</a><a href="javascript:;">这是商品名称</a></p>
-        <p><a href="javascript:;">订单总价</a><a href="javascript:;">20</a></p>
-        <p><a href="javascript:;">支付价格</a><a href="javascript:;">20</a></p>
+        <p>订单号: {{ bill.id }}</p>
+        <p>订单总价: {{ sum }}</p>
     </div>
 
     <!--支付方式-->
@@ -41,8 +43,9 @@
         </div>
         <div></div>
     </div>
-    <div class="compayment">确认支付</div>
+    <div class="compayment" id="compayment">确认支付</div>
 </div>
+
 
 
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
@@ -58,11 +61,39 @@
         var m=Math.floor(t/60);
         var s=t%60;
         Timer.innerHTML=m+':'+to(s);
-
+        
         if(t==1){
             alert('您已超过支付时间，请您重新提交订单及时支付');
         }
     },1000);
+
+
+    var json = {};
+    var $compayment = $("#compayment")
+            , url = '/DiningServer/payOrderTest/';
+
+//选好了提交
+    $compayment.on ("click", function () {
+        StandardPost(url, json);
+    });
+
+
+     function StandardPost(url,args) {
+        var body = $(document.body),
+            form = $("<form method='post'></form>"),
+             input;
+        form.attr({"action":url});
+        $.each(args,function(key,value){
+            input = $("<input  type='hidden'>");
+            input.attr({"name":key});
+            input.val(value);
+            form.append(input);
+         });
+
+        form.appendTo(document.body);
+        form.submit();
+        document.body.removeChild(form[0]);
+    }
 </script>
 </body>
 </html>

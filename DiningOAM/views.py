@@ -15,7 +15,6 @@ def login(request):
 
 def index(request):
     return HttpResponse('index')
-    #return render(request, 'DiningOAM/index.html')
 
 
 """
