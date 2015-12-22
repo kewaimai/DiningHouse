@@ -160,34 +160,40 @@ def createOrder(request):
         count += int(meal['buy_count'])
         sum += int(meal['buy_count']) * float(meal['meal_price'])
 
-    (bill,bill_meal) = order_service.createOrder()
+    (bill,bill_meal) = order_service.createOrder(request)
+    print("count:",count)
+    print("sum:",sum)
     print("order Done!!!")
-
-
-    body = request.GET.get('body', None)
-    out_trade_no = request.GET.get('out_trade_no', None)
-    total_fee = request.GET.get('total_fee', None)
+    (yuan,fen) = str('%.2f' % sum).split('.')
+    print(yuan,fen)
+    print(bill.id)
+    print(bill.bill_content)
+    body = 'body'
+    out_trade_no = str(bill.id).replace('-','')
+    total_fee = int(yuan)*100 + int(fen)
     spbill_create_ip = request.META.get('REMOTE_ADDR', "127.0.0.1")
     notify_url = "http://www.szjiajia.com/pay/notify/url/"
 
-    weixin_service.CallOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url)
-    josn_pay_info = weixin_service.GenerJsAPIParams(request)
+    response = weixin_service.CallOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url,bill)
+    josn_pay_info = weixin_service.GenJsAPIParams(request,body,out_trade_no,total_fee,spbill_create_ip,notify_url)
+    print(josn_pay_info)
+    
     context = {
             'bill':bill,
             'bill_meal':bill_meal, 
             'meals':meals, 
             'count': count, 
             'sum':sum,
-            'prepay_id':prepay_id,
-            'appId':appId,
-            'timeStamp':timeStamp,
-            'nonceStr':nonceStr,
-            'package':package,
-            'signType':signType,
-            'paySign':paySign,
+            'prepay_id':response['prepay_id'],
+            'appId':response['appid'],
+            'nonceStr':response['nonce_str'],
             }
     return render(request, 'DiningServer/createOrder.html', context)
-
+            # 'timeStamp':timeStamp,
+            # 'nonceStr':response['nonceStr'],
+            # 'package':package,
+            # 'signType':signType,
+            # 'paySign':paySign,
 @csrf_exempt
 @require_POST
 def payOrder(request,bill_id):
@@ -197,15 +203,10 @@ def payOrder(request,bill_id):
     :return:
     """
     
-    body = request.GET.get('body', None)
-    out_trade_no = request.GET.get('out_trade_no', None)
-    total_fee = request.GET.get('total_fee', None)
-    spbill_create_ip = request.META.get('REMOTE_ADDR', "127.0.0.1")
-    notify_url = "http://www.szjiajia.com/pay/notify/url/"
-
-    josn_pay_info = weixin_service.GenerJsAPIParams(request)
+    pay_result = False
+    pay_result = weixin_service.CallQueryPayResult(out_trade_no)
     # bill = get_object_or_404(TblBill, pk=bill_id)
-    order_service.payOrder(request,bill_id)
+    order_service.payOrder(request,bill_id,pay_result)
     return HttpResponseRedirect("/getOrders/%s/" % bill_id)
 
 def getOrders(request):

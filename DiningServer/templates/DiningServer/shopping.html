@@ -42,7 +42,7 @@
         	</div>
         	<div class="im-name">
         		<p>备注</p>
-        		<input type="text" class="im-ra">
+        		<input type="text" class="im-ra" id="im-ra">
         	</div>
             {% else %}
         	<div class="im-name">
@@ -63,7 +63,7 @@
         	</div>
         	<div class="im-name">
         		<p>备注</p>
-        		<input type="text" class="im-ra">
+        		<input type="text" class="im-ra" id="im-ra">
         	</div>
             {% endif %}
         </div>
@@ -146,7 +146,7 @@ var sum = {{ sum }};
 
 $(function () {
     var url = "/DiningServer/createOrder/";
-    $.post(url, function (data) {
+    $.post(url,_data, function (data) {
         if (data.status) {
 
         }
@@ -204,7 +204,8 @@ var $changeBtn = $("#change-success")
             , url = '/DiningServer/createOrder/';
 
     $changeBtn.on ("click", function () {
-        json['arrive-time']=$('#arriveTime').val()
+        json['arrive-time']=$('#arriveTime').val();
+        json["remarks"]=$("#im-ra").val();
         StandardPost(url, json);
     });
 

@@ -39,7 +39,7 @@ bill_state = [
             ]
 
 
-def createOrder():
+def createOrder(request):
     #TODO 创建订单
     time_now = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
     bill = TblBill()
@@ -50,7 +50,8 @@ def createOrder():
     # bill.bill_totalling =
     bill.add_time = time_now
     bill.bill_state = BILL_STATE_UNPAY
-    bill.bill_content = ''
+    bill.bill_content = request.POST.get('remarks','')
+    print('request.POST:',request.POST)
     bill.save()
 
     #TODO 保存订单中的商品
@@ -68,15 +69,12 @@ def createOrder():
 """
 如果支付成功 则返回非None 如果失败 返回None
 """
-def payOrder(request,bill_id):
+def payOrder(request,bill):
     # 查询订单状态 如果不是等待支付 则返回对应的订单的状态
-    bill = TblBill.objects.get(id=bill_id)
+    bill = TblBill.objects.get(id=bill.id)
     for item in bill:
         if item.bill_state != BILL_STATE_UNPAY:
             return None
-
-    #TODO 支付订单
-    pay_result = False
 
     # 如果支付成功
     if pay_result:
