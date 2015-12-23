@@ -1,0 +1,56 @@
+
+
+.box-branch{
+	width: 4rem;
+	background: #e5e5e5;
+}
+
+
+
+.box-close{
+    width: .4rem;
+    height: .4rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-size:.5rem;
+    color: #fff;
+    text-align: center;
+    line-height: .4rem;
+}
+
+
+/*更换分店*/
+
+.box-suf{
+    width: 3.5rem;
+    height: 100vh;
+    z-index: 2;
+    font-size: .1rem;
+    margin: auto;
+    padding-top: 20px;
+}
+
+
+.box-suf li{
+    padding: 10px .1rem;
+    border-bottom: 2px solid #ccc;
+}
+
+.box-suf li p,.box-suf li span{
+    height: .2rem;
+    line-height: .2rem;
+}
+
+.box-suf li p{
+	font-size: 0.1875rem;
+	margin-bottom: 6px;
+	font-weight: bold;
+}
+
+.box-suf li span{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    font-size: 0.1125rem;
+}
