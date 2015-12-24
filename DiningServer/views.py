@@ -171,7 +171,7 @@ def createOrder(request):
     print(yuan,fen)
     print(bill.id)
     print(bill.bill_content)
-    body = 'jiajia'
+    body = 'jiajiamifen'
     out_trade_no = str(bill.id).replace('-','')
     total_fee = int(yuan)*100 + int(fen)
     spbill_create_ip = request.META.get('REMOTE_ADDR', "127.0.0.1")
