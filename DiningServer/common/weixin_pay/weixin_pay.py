@@ -149,15 +149,22 @@ class JsAPIOrderPay(UnifiedOrderPay):
         return js_params
 
     def post(self, body, out_trade_no, total_fee, spbill_create_ip, notify_url, code):
-        if code:
-            open_id = self._get_openid(code)
-            if open_id:
-                #直接调用基类的post方法查询prepay_id，如果成功，返回一个字典
-                unified_order = super(JsAPIOrderPay, self).post(body, out_trade_no, total_fee, spbill_create_ip, notify_url, open_id=open_id)
-                if unified_order:
-                    prepay_id = unified_order.get("prepay_id", None)
-                    if prepay_id:
-                        return self._get_json_js_api_params(prepay_id)
-        return None
+        open_id = self._get_openid(code)
+        if open_id:
+            #直接调用基类的post方法查询prepay_id，如果成功，返回一个字典
+            unified_order = super(JsAPIOrderPay, self).post(body, out_trade_no, total_fee, spbill_create_ip, notify_url, open_id=open_id)
+            if unified_order:
+                prepay_id = unified_order.get("prepay_id", None)
+                if prepay_id:
+                    return self._get_json_js_api_params(prepay_id)
+
+        return {
+               "appId": self.appid,
+               "timeStamp": "%d" % time.time(),
+               "nonceStr": random_str(32),
+               "package": "prepay_id=",
+               "signType": "MD5",
+               "paySign": "",
+                }
 
 

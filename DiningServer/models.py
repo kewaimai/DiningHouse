@@ -131,6 +131,9 @@ class TblBanner(models.Model):
 
 class TblBill(models.Model):
     id = models.CharField(primary_key=True, max_length=36)
+    prepay_id = models.CharField(max_length=36, blank=True, null=True)
+    code_url = models.CharField(max_length=300, blank=True, null=True)
+    house_id = models.CharField(max_length=36, blank=True, null=True)
     user_id = models.CharField(max_length=36)
     user_location = models.CharField(max_length=300, blank=True, null=True)
     bill_totalling = models.IntegerField()

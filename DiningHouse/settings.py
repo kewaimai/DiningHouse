@@ -95,13 +95,13 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Beijing'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -120,7 +120,7 @@ with open(join(BASE_DIR, 'DiningHouse', 'wc_app_conf')) as f:
 # WC_PAY_APPID = wc_app_conf[0]
 WC_PAY_APPID = 'wxacfdb1da76aa7763'
 # WC_PAY_APPSECRET = wc_app_conf[1]
-WC_PAY_APPSECRET = 'd4624c36b6795d1d99dcf0547af5443d'
+WC_PAY_APPSECRET = '0f0f71dbff7dbde3e3b07897ddd8f78b '
 # WC_PAY_MCHID = wc_app_conf[2]
 WC_PAY_MCHID = '1270766901'
 # WC_PAY_KEY = wc_app_conf[3]

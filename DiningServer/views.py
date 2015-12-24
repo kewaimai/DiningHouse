@@ -1,7 +1,10 @@
 from django.http import HttpRequest,HttpResponse,HttpResponseRedirect
 from django.shortcuts import render,render_to_response,get_object_or_404,redirect
+from django.core.exceptions import ObjectDoesNotExist
 from DiningServer.service import meal_service,user_service,order_service,time_service,weixin_service
 from DiningHouse.settings import *
+from DiningServer.models import *
+from DiningServer.common.func import *
 
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
@@ -168,15 +171,15 @@ def createOrder(request):
     print(yuan,fen)
     print(bill.id)
     print(bill.bill_content)
-    body = 'body'
+    body = 'jiajia'
     out_trade_no = str(bill.id).replace('-','')
     total_fee = int(yuan)*100 + int(fen)
     spbill_create_ip = request.META.get('REMOTE_ADDR', "127.0.0.1")
     notify_url = "http://www.szjiajia.com/pay/notify/url/"
 
-    response = weixin_service.CallOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url,bill)
-    josn_pay_info = weixin_service.GenJsAPIParams(request,body,out_trade_no,total_fee,spbill_create_ip,notify_url)
-    print(josn_pay_info)
+    response = weixin_service.callOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url,bill)
+    js_params = weixin_service.genJsAPIParams(request,body,out_trade_no,total_fee,spbill_create_ip,notify_url)
+    print('js_params:',js_params)
     
     context = {
             'bill':bill,
@@ -184,16 +187,17 @@ def createOrder(request):
             'meals':meals, 
             'count': count, 
             'sum':sum,
-            'prepay_id':response['prepay_id'],
-            'appId':response['appid'],
-            'nonceStr':response['nonce_str'],
+            'prepay_id':response.get('prepay_id',''),
+            'appId':response.get('appid','wxacfdb1da76aa7763'),
+            'nonceStr':response.get('nonce_str','hhxLvW9mk6hK0HO9'),
+            'openid':js_params.get('openid',''),
+            'timeStamp':js_params.get('timeStamp',''),
+            'package':js_params.get('package',''),
+            'signType':js_params.get('signType',''),
+            'paySign':js_params.get('paySign',''),
             }
     return render(request, 'DiningServer/createOrder.html', context)
-            # 'timeStamp':timeStamp,
-            # 'nonceStr':response['nonceStr'],
-            # 'package':package,
-            # 'signType':signType,
-            # 'paySign':paySign,
+            
 @csrf_exempt
 @require_POST
 def payOrder(request,bill_id):
@@ -202,20 +206,25 @@ def payOrder(request,bill_id):
     :param request:
     :return:
     """
-    
     pay_result = False
-    pay_result = weixin_service.CallQueryPayResult(out_trade_no)
-    # bill = get_object_or_404(TblBill, pk=bill_id)
+    out_trade_no = str(bill_id).replace('-','')
+
+    try:
+        bill = TblBill.objects.get(id=bill_id)
+    except ObjectDoesNotExist:
+        pass
+    
+    pay_result = weixin_service.callQueryPayResult(out_trade_no)
     order_service.payOrder(request,bill_id,pay_result)
     return HttpResponseRedirect("/getOrders/%s/" % bill_id)
 
-def getOrders(request):
+def getOrders(request,bill_id):
     """
     获取用户订单页面
     :param request:
     :return: 返回”我的订单页面“
     """
-    context = order_service.getOrders('abc')
+    context = order_service.getOrders(user_id, orderType = 0)
     return render(request, 'DiningServer/myOrder.html', context)
 
 def ensureSend(request):

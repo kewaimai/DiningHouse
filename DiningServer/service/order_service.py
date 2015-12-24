@@ -2,10 +2,12 @@ __author__ = '祥祥'
 
 from DiningServer.models import TblBill
 from DiningServer.models import TblBillMeal
+from DiningServer.models import TblUser
 from DiningServer.interface import MyBill
 
 from DiningServer.common.time_format_util import SERVER_TIME_FORMAT_WITHOUT_SECOND
 from DiningServer.common.time_format_util import SERVER_TIME_FORMAT
+from DiningServer.common.func import *
 
 from uuid import uuid4
 import time
@@ -40,7 +42,13 @@ bill_state = [
 
 
 def createOrder(request):
-    #TODO 创建订单
+    # 保存新用户信息
+    # username = request.POST.get('username','').strip()
+    # phone    = request.POST.get('phone','').strip()
+    # location = request.POST.get('location','').strip()
+    # user = TblUser.objects.filter(id=user_id).update(username=username,phone=phone,location=location)
+
+    # 创建订单
     time_now = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
     bill = TblBill()
     bill.id = uuid4()
@@ -54,7 +62,7 @@ def createOrder(request):
     print('request.POST:',request.POST)
     bill.save()
 
-    #TODO 保存订单中的商品
+    # 保存订单中的商品
     bill_meal = TblBillMeal()
     bill_meal.id = uuid4()
     bill_meal.add_time = time_now
@@ -69,20 +77,18 @@ def createOrder(request):
 """
 如果支付成功 则返回非None 如果失败 返回None
 """
-def payOrder(request,bill):
+def payOrder(request,bill_id,pay_result):
     # 查询订单状态 如果不是等待支付 则返回对应的订单的状态
-    bill = TblBill.objects.get(id=bill.id)
-    for item in bill:
-        if item.bill_state != BILL_STATE_UNPAY:
-            return None
+    bill = TblBill.objects.get(id=bill_id)
+    if bill.bill_state != BILL_STATE_UNPAY:
+        return None
 
     # 如果支付成功
     if pay_result:
-        for item in bill:
-            item.bill_state = BILL_STATE_SENDING
-            item.pay_time = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
-            item.save()
-    pass
+        bill.bill_state = BILL_STATE_SENDING
+        bill.pay_time = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
+        bill.save()
+    else: return json_response(request,u'支付失败')
 
 """
 获取用户订单，根据用户输入的用户id和订单类型（未付款，派送中，待评价）返回用户订单列表

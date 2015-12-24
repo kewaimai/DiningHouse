@@ -30,15 +30,15 @@
             {% if user %}
                 <div class="im-name">
         		<p>联系姓名</p>
-        		<input type="text" placeholder="请输入姓名.." value="{{ user.username }}">
+        		<input type="text" placeholder="请输入姓名.." value="{{ user.username }}" id="im-rn">
         	</div>
         	<div class="im-name">
         		<p>联系电话</p>
-        		<input type="text" value="{{ user.phone }}">
+        		<input type="text" value="{{ user.phone }}" id="im-rp">
         	</div>
         	<div class="im-name">
         		<p>详细地址</p>
-        		<input type="text" placeholder="请输入详细地址.." class="im-add" value="{{ user.location }}">
+        		<input type="text" placeholder="请输入详细地址.." class="im-add" value="{{ user.location }}" id="im-rl">
         	</div>
         	<div class="im-name">
         		<p>备注</p>
@@ -56,14 +56,6 @@
         	<div class="im-name">
         		<p>详细地址</p>
         		<input type="text" placeholder="请输入详细地址.." class="im-add">
-        	</div>
-        	<div class="im-name">
-        		<p>配送门店</p>
-        		<input type="text" value="朝阳区">
-        	</div>
-        	<div class="im-name">
-        		<p>备注</p>
-        		<input type="text" class="im-ra" id="im-ra">
         	</div>
             {% endif %}
         </div>
@@ -146,11 +138,6 @@ var sum = {{ sum }};
 
 $(function () {
     var url = "/DiningServer/createOrder/";
-    $.post(url,_data, function (data) {
-        if (data.status) {
-
-        }
-    }, "json")
 
     $(document).on("click", ".add", function () {
         var t = $(this).parent().find('input[class*=result]');
@@ -206,6 +193,9 @@ var $changeBtn = $("#change-success")
     $changeBtn.on ("click", function () {
         json['arrive-time']=$('#arriveTime').val();
         json["remarks"]=$("#im-ra").val();
+        json["username"]=$("#im-rn").val();
+        json["phone"]=$("#im-rp").val();
+        json["location"]=$("#im-rl").val();
         StandardPost(url, json);
     });
 

@@ -17,7 +17,7 @@ spbill_create_ip='127.0.0.1'
 notify_url="http://www.szjiajia.com/pay/notify/url/"
 
 #调用统一下单API
-def CallOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url,bill):
+def callOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url,bill):
     pay = UnifiedOrderPay(WC_PAY_APPID, WC_PAY_MCHID, WC_PAY_KEY)
 
     response = pay.post(body,out_trade_no,total_fee,spbill_create_ip,notify_url)
@@ -29,15 +29,11 @@ def CallOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url,bill):
         code_url = response["code_url"]   #二维码链接
 
         # bill = get_object_or_404(TblBill, pk=bill.id)
-        try:
-            bill = TblBill.objects.get(id=bill.id)
-            print('bill:',prepay_id,code_url)
-            bill.prepay_id = response["prepay_id"]
-            bill.code_url = response["code_url"]
-            print('save:',bill.prepay_id,bill.code_url)
-            bill.save()
-        except ObjectDoesNotExist:
-            pass
+        bill = TblBill.objects.filter(id=bill.id).update(
+            prepay_id=response["prepay_id"],
+            code_url=response["code_url"],
+            )
+        print('prepay_id,code_url:',prepay_id,code_url)
 
         return response
     else:
@@ -55,25 +51,24 @@ def CallOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url,bill):
 
 
 #生成JSAPI页面调用的支付参数并签名
-def GenJsAPIParams(request,ody,out_trade_no,total_fee,spbill_create_ip,notify_url):
+def genJsAPIParams(request,ody,out_trade_no,total_fee,spbill_create_ip,notify_url):
     pay = JsAPIOrderPay(WC_PAY_APPID, WC_PAY_MCHID, WC_PAY_KEY,WC_PAY_APPSECRET)
 
     #先判断request.GET中是否有code参数，如果没有，需要使用create_oauth_url_for_code函数获取OAuth2授权地址后重定向到该地址并取得code值
+    print('request.GET:',request.GET)
     if 'code' not in request.GET:
-        oauth_url = pay.create_oauth_url_for_code("www.szjiajia.com/pay/url/")
-        # HttpResponseRedirect(oauth_url)
-        redirect(oauth_url)
-        print('HttpResponseRedirect')
+        oauth_url = pay.create_oauth_url_for_code("http://www.szjiajia.com/pay/url/")
+        HttpResponseRedirect(oauth_url)
+        # redirect(oauth_url)
+        print('HttpResponseRedirect:',oauth_url)
     code = request.GET.get('code', None)
-    print(code)
-    if code:
-        #使用code获取H5页面JsAPI所需的所有参数，类型为字典
-        josn_pay_info = pay.post(body,out_trade_no,total_fee,spbill_create_ip,notify_url,code)
-        print(josn_pay_info)
-        return josn_pay_info
+    print('code:',code)
+    #使用code获取H5页面JsAPI所需的所有参数，类型为字典
+    js_params= pay.post(body,out_trade_no,total_fee,spbill_create_ip,notify_url,code)
+    return js_params
 
 #查询支付结果
-def CallQueryPayResult(out_trade_no):
+def callQueryPayResult(out_trade_no):
     pay = OrderQuery(WC_PAY_APPID, WC_PAY_MCHID, WC_PAY_KEY)
     response = pay.post(out_trade_no)
     if response and response["return_code"] == "SUCCESS" and response["result_code"] == "SUCCESS":
