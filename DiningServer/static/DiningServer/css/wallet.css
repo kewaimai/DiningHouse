@@ -1,0 +1,95 @@
+
+/*我的钱包*/
+
+.box-wallet{
+	width: 4rem;
+	height: 100vh;
+	background: #e5e5e5;
+	font-size: 0.1875rem;
+}
+
+.wallet-box{
+	width: 4rem;
+	height: 2.0625rem;
+	background: #f8b62c;
+}
+
+.wallet-box p{
+	width: 3.6rem;
+	margin: 0 auto;
+	padding:0.25rem 0;
+	text-align: left;
+	color: #fff;
+}
+
+.wallet-box a{
+	display: block;
+	font-size: 0.3rem;
+	color: #fff;
+	width: 4rem;
+	text-align: center;
+}
+
+.wallet-box a i{
+	font-size: 0.1875rem;
+}
+
+.recharge-box{
+	width: 4rem;
+	height: 0.625rem;
+	line-height: 0.625rem;
+	background: #fff;
+	position: relative;
+}
+
+.recharge-box p{
+	position: absolute;
+	top: 0;
+}
+
+.recharge-box p:nth-child(1){
+	left:0.2rem;
+}
+
+.recharge-box p:nth-child(2){
+	right:0.2rem;
+}
+
+
+.recharge-ta{
+	margin-top: 0.25rem;
+}
+
+.recharge-ba{
+	border-top: 2px solid #c3c3c3;
+}
+
+.recharge-ba,.recharge-kt{
+	width: 4rem;
+	height: 0.4375rem;
+	line-height: 0.4375rem;
+	background: #f5f7f8;
+	border-bottom: 1px solid #dfdfe0;
+}
+
+.recharge-ba a,.recharge-kt a{
+	display: inline-block;
+	text-align: center;
+}
+
+
+.recharge-ba a:nth-child(1),.recharge-kt a:nth-child(1){
+	width: 1.8rem;
+	border-right: 1px solid #dfdfe0;
+}
+
+.recharge-ba a:nth-child(2),.recharge-kt a:nth-child(2){
+	width: 0.8rem;
+	border-right: 1px solid #dfdfe0;
+}
+
+
+.recharge-ba a:nth-child(3),.recharge-kt a:nth-child(3){
+	width: 1.2rem;
+}
+

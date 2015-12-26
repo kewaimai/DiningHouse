@@ -1,0 +1,66 @@
+/*我的积分*/
+
+.box-integral{
+	width: 4rem;
+	height: 100vh;
+	background: #e5e5e5;
+	font-size: 0.1875rem;
+}
+
+.integral-box{
+	width: 3.6rem;
+	margin: 0 auto;
+	height: 0.4375rem;
+	line-height: 0.4375rem;
+}
+
+.integral-box a:nth-child(2){
+	color:#f8b62c;
+}
+
+.integral-img{
+	width: 4rem;
+}
+
+.integral-img img{
+	width: 100%;
+}
+
+.integral-ta{
+	margin-top: 0.25rem;
+}
+
+.integral-ba{
+	border-top: 2px solid #c3c3c3;
+}
+
+.integral-ba,.integral-kt{
+	width: 4rem;
+	height: 0.4375rem;
+	line-height: 0.4375rem;
+	background: #f5f7f8;
+	border-bottom: 1px solid #dfdfe0;
+}
+
+.integral-ba a,.integral-kt a{
+	display: inline-block;
+	text-align: center;
+}
+
+
+.integral-ba a:nth-child(1),.integral-kt a:nth-child(1){
+	width: 1.8rem;
+	border-right: 1px solid #dfdfe0;
+}
+
+.integral-ba a:nth-child(2),.integral-kt a:nth-child(2){
+	width: 0.8rem;
+	border-right: 1px solid #dfdfe0;
+}
+
+
+.integral-ba a:nth-child(3),.integral-kt a:nth-child(3){
+	width: 1.2rem;
+}
+
+
