@@ -13,7 +13,7 @@ body='body'
 out_trade_no='out_trade_no'
 total_fee='total_fee'
 spbill_create_ip='127.0.0.1'
-notify_url="http://www.szjiajia.com/pay/notify/url/"
+notify_url="http://120.25.151.183/DiningServer/pay/notify/url/"
 
 
 #调用统一下单API

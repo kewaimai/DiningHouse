@@ -59,6 +59,8 @@ def createOrder(request):
     bill.add_time = time_now
     bill.bill_state = BILL_STATE_UNPAY
     bill.bill_content = request.POST.get('remarks','')
+    import logging
+    logger = logging.getLogger('django')
     print('request.POST:',request.POST)
     bill.save()
 
@@ -78,6 +80,8 @@ def createOrder(request):
 如果支付成功 则返回非None 如果失败 返回None
 """
 def payOrder(request,bill_id,pay_result):
+    import logging
+    logger = logging.getLogger('django')
     # 查询订单状态 如果不是等待支付 则返回对应的订单的状态
     bill = TblBill.objects.get(id=bill_id)
     if bill.bill_state != BILL_STATE_UNPAY:
@@ -88,18 +92,18 @@ def payOrder(request,bill_id,pay_result):
         bill.bill_state = BILL_STATE_SENDING
         bill.pay_time = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
         bill.save()
-    else: return json_response(request,u'支付失败')
+    else: return json_response(u'支付失败')
 
 """
 获取用户订单，根据用户输入的用户id和订单类型（未付款，派送中，待评价）返回用户订单列表
 """
 def getOrders(user_id, orderType = 0):
-    print('=',orderType,'=')
+    import logging
+    logger = logging.getLogger('django')
+
     if orderType != 0:
-        print('select by type', orderType)
         myOrder = TblBill.objects.filter(user_id=user_id,bill_state=orderType)
     else:
-        print('not by type')
         myOrder = TblBill.objects.filter(user_id=user_id)
     myBill = MyBill()
     for item in myOrder:
@@ -130,6 +134,8 @@ def getOrders(user_id, orderType = 0):
 
 # 确认送达 可有商户或者用户两方调用
 def ensureSend(bill_id):
+    import logging
+    logger = logging.getLogger('django')
     bill = TblBill.objects.filter(id=bill_id)
     for item in bill:
         # 如果不是正在派送的状态，则返回失败

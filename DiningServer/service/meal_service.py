@@ -20,6 +20,8 @@ _in_use_ = 1
 
 
 def getCategoryAndList():
+    import logging
+    logger = logging.getLogger('django')
     # 需要返回的数据  商店 banner 分类 第一个分类的餐品
     category_and_meal = interface.CategoryAndMeal()
     #获取菜品分类列表
@@ -86,6 +88,8 @@ def getCategoryAndList():
 获取商品详情
 """
 def getMealDetail(id):
+    import logging
+    logger = logging.getLogger('django')
     tbl_meal_in_house = TblMealInHouse.objects.filter(id=id)
 
     if len(tbl_meal_in_house) == 1:
@@ -110,6 +114,8 @@ def getMealDetail(id):
 评价商品
 """
 def judgeMeal(bill_id, meal_in_house_id, user_id, user_name, judge_meal, judge_speed, judge_service):
+    import logging
+    logger = logging.getLogger('django')
     judge_item = TblJudgeMeal()
     judge_item.id = uuid4()
     judge_item.add_time = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
@@ -131,6 +137,8 @@ def judgeMeal(bill_id, meal_in_house_id, user_id, user_name, judge_meal, judge_s
 添加分类
 """
 def addCategory(category_name):
+    import logging
+    logger = logging.getLogger('django')
     count = TblMealCategory.objects.count()
     item = TblMealCategory()
     item.name = category_name
@@ -141,6 +149,8 @@ def addCategory(category_name):
     return item
 
 def addMealByScript(category_id, category_order, name):
+    import logging
+    logger = logging.getLogger('django')
     item = TblMealInHouse()
     item.id = uuid4()
     item.add_time = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
@@ -163,6 +173,8 @@ def addMealByScript(category_id, category_order, name):
 获取用户选的商品id的详情 并返回用户选择的数量
 """
 def getMealsAndCount(post):
+    import logging
+    logger = logging.getLogger('django')
     meals_and_count = interface.MealsAndCount()
     print(post)
     for key in post:

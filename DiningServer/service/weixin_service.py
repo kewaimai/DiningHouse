@@ -14,10 +14,12 @@ body='body'
 out_trade_no='out_trade_no'
 total_fee=100
 spbill_create_ip='127.0.0.1'
-notify_url="http://www.szjiajia.com/pay/notify/url/"
+notify_url="http://120.25.151.183/DiningServer/pay/notify/url/"
 
 #调用统一下单API
-def callOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url,bill):
+def callOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url):
+    import logging
+    logger = logging.getLogger('django')
     pay = UnifiedOrderPay(WC_PAY_APPID, WC_PAY_MCHID, WC_PAY_KEY)
 
     response = pay.post(body,out_trade_no,total_fee,spbill_create_ip,notify_url)
@@ -28,11 +30,6 @@ def callOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url,bill):
         prepay_id = response["prepay_id"] #预支付ID
         code_url = response["code_url"]   #二维码链接
 
-        # bill = get_object_or_404(TblBill, pk=bill.id)
-        bill = TblBill.objects.filter(id=bill.id).update(
-            prepay_id=response["prepay_id"],
-            code_url=response["code_url"],
-            )
         print('prepay_id,code_url:',prepay_id,code_url)
 
         return response
@@ -55,16 +52,22 @@ def genJsAPIParams(request,ody,out_trade_no,total_fee,spbill_create_ip,notify_ur
     pay = JsAPIOrderPay(WC_PAY_APPID, WC_PAY_MCHID, WC_PAY_KEY,WC_PAY_APPSECRET)
 
     #先判断request.GET中是否有code参数，如果没有，需要使用create_oauth_url_for_code函数获取OAuth2授权地址后重定向到该地址并取得code值
-    print('request.GET:',request.GET)
+    import logging
+    logger = logging.getLogger('django')
+    print('request.GET(code):',request.GET)
+
     if 'code' not in request.GET:
-        oauth_url = pay.create_oauth_url_for_code("http://www.szjiajia.com/pay/url/")
-        HttpResponseRedirect(oauth_url)
+        oauth_url = pay.create_oauth_url_for_code("http://120.25.151.183/DiningServer/payOrder/")
+        print('redirect:',oauth_url)
+        print('redirect:',oauth_url)
+        return redirect(oauth_url)
         # redirect(oauth_url)
-        print('HttpResponseRedirect:',oauth_url)
-    code = request.GET.get('code', None)
+    else:  
+        code = request.GET.get('code', None)
     print('code:',code)
+
     #使用code获取H5页面JsAPI所需的所有参数，类型为字典
-    js_params= pay.post(body,out_trade_no,total_fee,spbill_create_ip,notify_url,code)
+    js_params = pay.post(body,out_trade_no,total_fee,spbill_create_ip,notify_url,code)
     return js_params
 
 #查询支付结果

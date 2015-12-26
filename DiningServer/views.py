@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from DiningServer.read_excel import startGenerator
 
 import json
+
 """
 在这里郑重声明   order = bill =  订单
 """
@@ -32,6 +33,8 @@ def indextest(request):
     :param request:
     :return:
     """
+    import logging
+    logger = logging.getLogger('django')
     context = meal_service.getCategoryAndList()
     print(context)
     return HttpResponse(str(context))
@@ -98,6 +101,8 @@ def getMyDetailInfoPage(request):
     :param request:
     :return:
     """
+    import logging
+    logger = logging.getLogger('django')
     # 获取userid
     # 使用ensure_ascii = False   否则的话中文会只显示编码 不显示汉字
     context = user_service.getMyDetailInfo('abc')
@@ -128,6 +133,9 @@ def gotoOrderPage(request):
     :param request:
     :return:
     """
+    import logging
+    logger = logging.getLogger('django')
+
     user = user_service.getMyDetailInfo('abc')
     meals = meal_service.getMealsAndCount(request.POST)
     count = 0
@@ -152,6 +160,8 @@ def createOrder(request):
     :param request:
     :return:
     """
+    import logging
+    logger = logging.getLogger('django')
     meals = meal_service.getMealsAndCount(request.POST)
     count = 0
     sum = 0
@@ -174,10 +184,12 @@ def createOrder(request):
     body = 'jiajiamifen'
     out_trade_no = str(bill.id).replace('-','')
     total_fee = int(yuan)*100 + int(fen)
-    spbill_create_ip = request.META.get('REMOTE_ADDR', "127.0.0.1")
-    notify_url = "http://www.szjiajia.com/pay/notify/url/"
+    spbill_create_ip = request.META.get('REMOTE_ADDR', "120.25.151.185")
+    # spbill_create_ip = "120.25.151.185"
+    print('spbill_create_ip:',spbill_create_ip)
+    notify_url = "http://120.25.151.183/DiningServer/pay/notify/url/"
 
-    response = weixin_service.callOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url,bill)
+    response = weixin_service.callOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url)
     js_params = weixin_service.genJsAPIParams(request,body,out_trade_no,total_fee,spbill_create_ip,notify_url)
     print('js_params:',js_params)
     
@@ -188,11 +200,11 @@ def createOrder(request):
             'count': count, 
             'sum':sum,
             'prepay_id':response.get('prepay_id',''),
-            'appId':response.get('appid','wxacfdb1da76aa7763'),
-            'nonceStr':response.get('nonce_str','hhxLvW9mk6hK0HO9'),
+            'appId':WC_PAY_APPID,
+            'nonceStr':response.get('nonce_str',''),
             'openid':js_params.get('openid',''),
             'timeStamp':js_params.get('timeStamp',''),
-            'package':js_params.get('package',''),
+            'package':"prepay_id=%s" % response.get('prepay_id',''),
             'signType':js_params.get('signType',''),
             'paySign':js_params.get('paySign',''),
             }
@@ -216,9 +228,10 @@ def payOrder(request,bill_id):
     
     pay_result = weixin_service.callQueryPayResult(out_trade_no)
     order_service.payOrder(request,bill_id,pay_result)
-    return HttpResponseRedirect("/getOrders/%s/" % bill_id)
+    return HttpResponseRedirect("/DiningServer/getOrders/")
 
-def getOrders(request,bill_id):
+
+def getOrders(request,user_id):
     """
     获取用户订单页面
     :param request:
@@ -246,6 +259,8 @@ def getOrdersByType(request):
     :param request: httprequest
     :return: 渲染后的订单列表
     """
+    import logging
+    logger = logging.getLogger('django')
     print(request.POST)
     if '0' in request.POST['type']:
         context = order_service.getOrders('abc')
@@ -253,3 +268,49 @@ def getOrdersByType(request):
         context = order_service.getOrders('abc', request.POST['type'])
     print(context)
     return render(request, 'DiningServer/orders.html', context)
+
+
+from DiningServer.common.wechat_sdk.basic import WechatBasic
+@csrf_exempt
+def getToken(request):
+    token = 'szjiajia'
+    wechat = WechatBasic(token=token)
+
+    import logging
+    logger = logging.getLogger('django')
+    print(request.GET)
+
+    if wechat.check_signature(signature=request.GET.get('signature',''),
+                              timestamp=request.GET.get('timestamp',''),
+                              nonce=request.GET.get('nonce','')):
+        pass
+        # if request.method == 'GET': 
+        #     rsp = request.GET.get('echostr', 'error')
+        # else:
+        #     wechat.parse_data(request.body)
+        #     message = wechat.get_message()
+        #     rsp = wechat.response_text(u'消息类型: {}'.format(message.type))
+    else:
+        rsp = wechat.response_text('check error')
+        return HttpResponse('request GET nothing')
+    return HttpResponse(request.GET.get('echostr', 'error'))
+
+
+@csrf_exempt
+def getPrepayid(request):
+    import logging
+    logger = logging.getLogger('django')
+    print(request.POST)
+
+    if request.method == 'POST': 
+        prepay_id = request.POST.get('prepay_id', 'error')
+        code_url  = request.POST.get('prepay_id', 'error')
+
+        # bill = TblBill.objects.filter(id=bill.id).update(
+        #     prepay_id=prepay_id,
+        #     code_url =code_url,
+        #     )
+    else:
+        pass
+
+    return HttpResponse('hello')
