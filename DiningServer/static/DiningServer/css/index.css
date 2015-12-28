@@ -245,9 +245,13 @@
     text-align: center;
     color: #A1A09C;
     background-color: #fff;
+   	-webkit-appearance:none;
+	outline:none
+    border-radius: 0;
 }
 
 .prt-lt .lt-rt input.result {
+    font-size: 0.15rem;
     border: none;
     color: #FF5151;
 }
