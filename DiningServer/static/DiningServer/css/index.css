@@ -248,6 +248,7 @@
    	-webkit-appearance:none;
 	outline:none
     border-radius: 0;
+    box-sizing: border-box;
 }
 
 .prt-lt .lt-rt input.result {
