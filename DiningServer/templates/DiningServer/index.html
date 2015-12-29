@@ -67,8 +67,10 @@
       {% for meal_list in meals %}
       <div class="section" id="st{{ forloop.counter }}">
       <!--  在这里填充section的内容  -->
+            <div style="height: 0.3rem; width: 2rem;"></div>
         {% for meal in meal_list %}
             <div class="prt-lt" id="{{ meal.meals_id }}">
+
                 <!-- 图片 -->
 
                 {% if meal.avatar_url %}
