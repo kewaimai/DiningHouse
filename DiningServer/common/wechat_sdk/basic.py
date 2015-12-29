@@ -112,8 +112,8 @@ class WechatBasic(object):
         result = {}
         if type(data) == str:
             pass
-        elif type(data) == unicode:
-            data = data.encode('utf-8')
+        elif type(data) == bytes:
+            data = data.decode()
         else:
             raise ParseError()
 
@@ -125,10 +125,13 @@ class WechatBasic(object):
         result = xml.xml2dict
         result['raw'] = data
         result['type'] = result.pop('MsgType').lower()
+        for k,v in result.items:
+            print(k,v)
 
         message_type = MESSAGE_TYPES.get(result['type'], UnknownMessage)
         self.__message = message_type(result)
         self.__is_parse = True
+        return result
 
     @property
     def message(self):

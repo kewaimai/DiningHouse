@@ -17,12 +17,11 @@ spbill_create_ip='127.0.0.1'
 notify_url="http://120.25.151.183/DiningServer/pay/notify/url/"
 
 #调用统一下单API
-def callOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url):
-    import logging
-    logger = logging.getLogger('django')
+def callOrderAPI(body,out_trade_no,total_fee,spbill_create_ip,notify_url,openid):
+    
     pay = UnifiedOrderPay(WC_PAY_APPID, WC_PAY_MCHID, WC_PAY_KEY)
 
-    response = pay.post(body,out_trade_no,total_fee,spbill_create_ip,notify_url)
+    response = pay.post(body,out_trade_no,total_fee,spbill_create_ip,notify_url,openid)
     print('response:',type(response))
     for k,v in response.items():
         print(k.encode('utf-8'),v.encode('utf-8'))
@@ -52,18 +51,17 @@ def genJsAPIParams(request,ody,out_trade_no,total_fee,spbill_create_ip,notify_ur
     pay = JsAPIOrderPay(WC_PAY_APPID, WC_PAY_MCHID, WC_PAY_KEY,WC_PAY_APPSECRET)
 
     #先判断request.GET中是否有code参数，如果没有，需要使用create_oauth_url_for_code函数获取OAuth2授权地址后重定向到该地址并取得code值
-    import logging
-    logger = logging.getLogger('django')
+    
     print('request.GET(code):',request.GET)
 
     if 'code' not in request.GET:
         oauth_url = pay.create_oauth_url_for_code("http://120.25.151.183/DiningServer/payOrder/")
+        print('oauth_ur:',oauth_url)
+        redirect(oauth_url)
         print('redirect:',oauth_url)
-        print('redirect:',oauth_url)
-        return redirect(oauth_url)
-        # redirect(oauth_url)
-    else:  
-        code = request.GET.get('code', None)
+        # requests.get(oauth_url)
+
+    code = request.GET.get('code', None)
     print('code:',code)
 
     #使用code获取H5页面JsAPI所需的所有参数，类型为字典

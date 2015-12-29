@@ -1,4 +1,5 @@
 # -*- coding=utf-8 -*-
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 
 import time
 import json
@@ -27,8 +28,7 @@ class WeiXinPay(object):
 		self.trade_type = ""
 
 	def set_params(self, **kwargs):
-		import logging
-		logger = logging.getLogger('django')
+		
 		self.params = {}
 		for (k, v) in kwargs.items():
 			self.params[k] = smart_str(v)
@@ -36,12 +36,13 @@ class WeiXinPay(object):
 		self.params["nonce_str"] = random_str(32)
 		if self.trade_type:
 			self.params["trade_type"] = self.trade_type
+		# if self.openid:
+		# 	self.params["openid"] = self.openid
 		self.params.update(self.common_params)
 		print('self.params:',self.params)
 
 	def post_xml(self):
-		import logging
-		logger = logging.getLogger('django')
+		
 		sign = calculate_sign(self.params, self.api_key)
 		print('sign:',sign)
 		xml = dict_to_xml(self.params, sign)
@@ -76,17 +77,19 @@ class UnifiedOrderPay(WeiXinPay):
 	def __init__(self, appid, mch_id, api_key):
 		super(UnifiedOrderPay, self).__init__(appid, mch_id, api_key)
 		self.url = "https://api.mch.weixin.qq.com/pay/unifiedorder"
-		self.trade_type = "NATIVE"
+		self.trade_type = "JSAPI"
 
-	def post(self, body, out_trade_no, total_fee, spbill_create_ip, notify_url, **kwargs):
+	def post(self, body, out_trade_no, total_fee, spbill_create_ip, notify_url, openid, **kwargs):
 		tmp_kwargs = {
 					  "body": body,
 					  "out_trade_no": out_trade_no,
 					  "total_fee": total_fee,
 					  "spbill_create_ip": spbill_create_ip,
 					  "notify_url": notify_url,
+					  "openid": openid,
 					 }
 		tmp_kwargs.update(**kwargs)
+		print('tmp_kwargs in UnifiedOrderPay:',tmp_kwargs)
 		self.set_params(**tmp_kwargs)
 		return self.post_xml()[1]
 
@@ -159,10 +162,9 @@ class JsAPIOrderPay(UnifiedOrderPay):
 	def post(self, body, out_trade_no, total_fee, spbill_create_ip, notify_url, code):
 		open_id = self._get_openid(code)
 		#直接调用基类的post方法查询prepay_id，如果成功，返回一个字典
-		import logging
-		logger = logging.getLogger('django')
+		
 		print('open_id:',open_id)
-		unified_order = super(JsAPIOrderPay, self).post(body, out_trade_no, total_fee, spbill_create_ip, notify_url, open_id=open_id)
+		unified_order = super(JsAPIOrderPay, self).post(body, out_trade_no, total_fee, spbill_create_ip, notify_url, open_id)
 		# print('unified_order:',unified_order)
 		prepay_id = unified_order.get("prepay_id", None)
 		print('prepay_id:',prepay_id)

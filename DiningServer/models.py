@@ -261,6 +261,8 @@ class TblUser(models.Model):
     email = models.CharField(max_length=50, blank=True, null=True)
     add_time = models.DateTimeField(blank=True, null=True)
     user_location = models.CharField(max_length=300, blank=True, null=True)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
 
     class Meta:
         managed = False

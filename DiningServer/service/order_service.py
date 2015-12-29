@@ -92,7 +92,7 @@ def payOrder(request,bill_id,pay_result):
         bill.bill_state = BILL_STATE_SENDING
         bill.pay_time = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
         bill.save()
-    else: return json_response(u'支付失败')
+    else: return None
 
 """
 获取用户订单，根据用户输入的用户id和订单类型（未付款，派送中，待评价）返回用户订单列表
