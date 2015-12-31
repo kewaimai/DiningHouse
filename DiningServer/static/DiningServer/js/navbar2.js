@@ -1,62 +1,93 @@
 $(function() {
+    // 全局变量
+    var $Menu = $('#nav');          // 左部菜单
+    var $aMenuLi = $Menu.find('li');  // 菜单按钮
 
-	// Do our DOM lookups beforehand
-	var nav_container = $(".nav-lf");
-	var nav = $("#nav");
-	
-	var top_spacing = 0;
-	var waypoint_offset = 0;
+    //滚轮事件合并scroll
+    function scrollAll(){
+        var t = $Menu.offset().top;
 
-	nav_container.waypoint({
-		handler: function(event, direction) {
-			
-			if (direction == 'down') {
-			
-				nav_container.css({ 'height':nav.outerHeight() });		
-				nav.stop().addClass("sticky").css("top",-nav.outerHeight()).animate({"top":top_spacing});
-				
-			} else {
-			
-				nav_container.css({ 'height':'auto' });
-				nav.stop().removeClass("sticky").css("top",nav.outerHeight()+waypoint_offset).animate({"top":""});
-				
-			}
-			
-		},
-		offset: function() {
-			return -nav.outerHeight()-waypoint_offset;
-		}
-	});
-	
-	var sections = $("#container");
-	var navigation_links = $("#nav a");
-	
-	sections.waypoint({
-		handler: function(event, direction) {
-		
-			var active_section;
-			active_section = $(this);
-			if (direction === "up") active_section = active_section.prev();
+        var $all = $('.container .section');
 
-			var active_link = $('nav a[href="#' + active_section.attr("id") + '"]');
-			navigation_links.removeClass("#container");
-			active_link.addClass("#container");
+        var arrHeight = [];
+        for(var i=0;i<$all.length;i++){
+            arrHeight[i] = $all.eq(i).offset().top;
+        }
 
-		},
-		offset: '25%'
-	})
+        __fnFixNav();
+        __fnScrollShowNav();
+        $(window).on('scroll',function (){
+            __fnFixNav();
+            __fnScrollShowNav()
+        });
+
+        // 固定左边菜单
+        function __fnFixNav(){
+            var top = $(window).scrollTop();
+            if(top > t){
+                $Menu.css({
+                    'position': 'fixed',
+                    'top':        0,
+                    'left':       0,
+                    'z-index':    1000
+                });
+            }else{
+                $Menu.css({
+                    'position': 'relative'
+                });
+            }
+        }
+
+         //滚动自动显示左边菜单
+        function __fnScrollShowNav(){
+            var t = $(window).scrollTop();
+            var isTrue = false;
+            for(var i=0;i<arrHeight.length;i++){
+                if(t<arrHeight[i]){
+                    isTrue = true;
+                    if(i==0){
+                        $aMenuLi.removeClass('current').eq(0).addClass('current');
+                    }else{
+                        $aMenuLi.removeClass('current').eq(i-1).addClass('current');
+                    }
+
+                    break;
+                }
+            }
+            if(!isTrue){
+                $aMenuLi.removeClass('current').eq(arrHeight.length-1).addClass('current');
+            }
+        }
+    }
 
 
-	
-	navigation_links.click( function(event) {
-        $.scrollTo(
-			$(this).attr("href"),
-			{
-				duration: 200,
-				offset: { 'left':0, 'top':-0.15*$(window).height() }
-			}
-		);
-	});
+
+    // 点击滑动菜单
+    function moveMeue(){
+        $aMenuLi.on('touchstart',function (){
+            $aMenuLi.removeClass('current');
+            $(this).addClass('current');
+
+            var $item = $($(this).attr('data-href'));
+            var t = $item.offset().top + $('.container-divzw').eq(-1).height();
+
+            if($(this).index()===0){
+                t = 0;
+            }
+            Mobile.scrollMove({
+                y: t,
+                time: 300
+            });
+        })
+    }
 
 
+
+
+    function init(){
+        scrollAll();
+        moveMeue();
+    }
+
+    init();
 });

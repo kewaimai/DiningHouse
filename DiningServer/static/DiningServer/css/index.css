@@ -92,12 +92,16 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
 }
 
 .nav-lf {
-    position: absolute;
-    left: 0;
     width: 1rem;
     background-color: #E5E5E5;
     font-size: 0.15rem;
     text-align: center;
+}
+.container-divzw{
+    height: 0.3rem;
+}
+.section:first-of-type .container-divzw{
+    height: 0;
 }
 
 .nav-lf ul li {
@@ -121,11 +125,12 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
     border-radius: .1rem;
 }
 
+.index-content{
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+}
 .container {
-    position: absolute;
-    right: 0;
     width: 3rem;
-
 }
 
 .current {
@@ -135,9 +140,6 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
 .sticky {
     position: fixed;
     top: 0;
-    animation: thedrop 1s 1;
-    -moz-animation: thedrop 1s 1;
-    -webkit-animation: thedrop 1s 1;
     background-color: #E5E5E5;
     font-size: .15rem;
 }
