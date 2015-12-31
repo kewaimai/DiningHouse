@@ -76,7 +76,7 @@ $(function() {
             }
             Mobile.scrollMove({
                 y: t,
-                time: 300
+                time: 100
             });
         })
     }
