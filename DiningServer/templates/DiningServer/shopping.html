@@ -93,11 +93,7 @@
                             <p class="pr">¥<span class="price">{{ meal.meal_price }}</span></p>
                             <p class="pr2">已售<span class="text">{{ meal.sold_count }}</span>份</p>
                         </div>
-                        <div class="lt-rt">
-                            <input type="button" class="minus"  value="-">
-                            <input type="text" class="result" value="{{ meal.buy_count }}">
-                            <input type="button" class="add" value="+">
-                        </div>
+                       
                     </div>
               {% empty %}
                   <a href="javascript:;">您还没有选餐，快去选餐吧...</a>
