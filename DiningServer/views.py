@@ -322,11 +322,11 @@ def getOrdersByType(request,user_id):
     return render(request, 'DiningServer/orders.html', context)
 
 
-from DiningServer.common.wechat_sdk.basic import WechatBasic
+from wechat_sdk.basic import WechatBasic
 from django.http.response import HttpResponseBadRequest
-from DiningServer.common.wechat_sdk.exceptions import ParseError
-from DiningServer.common.wechat_sdk.messages import LocationMessage
-from DiningServer.common.wechat_sdk.context.framework.django import DatabaseContextStore
+from wechat_sdk.exceptions import ParseError
+from wechat_sdk.messages import LocationMessage
+from wechat_sdk.context.framework.django import DatabaseContextStore
 
 @csrf_exempt
 def getToken(request):
