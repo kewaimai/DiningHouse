@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     'DiningMealManage',
     'DiningServer',
     'DiningOAM',
-    # 'wechat_sdk.context.framework.django',
+    'wechat_sdk.context.framework.django',
 )
 
 MIDDLEWARE_CLASSES = (
