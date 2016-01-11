@@ -288,7 +288,7 @@ class TblUserMoneyChange(models.Model):
         managed = False
         db_table = 'tbl_user_money_change'
 
-from wechat_sdk.context.framework.django.backends.db import ContextStore
+from DiningServer.common.wechat_sdk.context.framework.django.backends.db import ContextStore
 class ContextManager(models.Manager):
     def encode(self, openid, context_dict):
         return ContextStore(openid).encode(context_dict)
