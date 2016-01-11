@@ -288,6 +288,8 @@ a:link {text-decoration: none; color:black;}
 	outline:none
     border-radius: 0;
     box-sizing: border-box;
+    border-radius: .14rem;
+    -webit-border-radius:.14rem;
 }
 
 .prt-lt .lt-rt input.result {
