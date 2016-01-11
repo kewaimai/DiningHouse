@@ -1,8 +1,11 @@
 input[type=button], input[type=submit], input[type=file], button { cursor: pointer; -webkit-appearance: none; }
+a {text-decoration:none;}
+a:hover {text-decoration:underline;}
+a:link {text-decoration: none; color:black;}
 
 .swiper-position {
     width: 4rem;
-    height:.4rem;
+    height:.453125rem;
 }
 
 .positionleft{
@@ -11,25 +14,26 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
 }
 
 .position-img{
-    background: url(../images/index/biao.png) no-repeat;
     display: block;
-    width: .3rem;
-    height:.3rem;
+    width: .14375rem;
+    height:.2rem;
     float: left;
-    margin-left: 10px;
+    margin-top:.0625rem;
+    margin-left:.171875rem;
+    margin-right: .09375rem;
 }
 
 .position-text{
     display: block;
     height:.25rem;
-    width:1.2rem;
     float: left;
     font-size:10px;
     border: none;
-    background: #E5E5E5;
     line-height: .25rem;
     margin-top: .03rem;
+    margin-right: 0.125rem;
 }
+
 
 .position-paragraph{
     font-size:.1rem;
@@ -49,8 +53,23 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
 
 .positionright{
     float: right;
-    margin-top: .08rem;
-    margin-right: .06rem;
+    margin-top: .1125rem;
+    margin-right: .2125rem;
+    height: .453125rem;
+}
+
+.positionright .right-img1{
+    width: 0.175rem;
+    height: 0.175rem;
+    float: left;
+}
+
+.positionright .right-bd{
+    float: left;
+    width: 1px;
+    height: .2125rem;
+    border-left: 1px solid #ccc;
+    margin: 0 .1625rem;
 }
 
 .position-botton{
@@ -66,7 +85,7 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
 .swiper-slide {
     text-align: center;
     font-size: 18px;
-    background: #fff; /* Center slide text vertically */
+    background: #f8f8f6; /* Center slide text vertically */
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -93,7 +112,7 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
 
 .nav-lf {
     width: 1rem;
-    background-color: #E5E5E5;
+    background-color: #f8f8f6;
     font-size: 0.15rem;
     text-align: center;
 }
@@ -107,8 +126,12 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
 .nav-lf ul li {
     position: relative;
     width: 1rem;
-    height: .4rem;
-    line-height: .4rem;
+    height: .59375rem;
+    line-height: .59375rem;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 .nav-lf ul li b {
@@ -125,6 +148,14 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
     border-radius: .1rem;
 }
 
+.index-bg{
+    width: 4rem;
+    height: 0.1rem;
+    background: #f8f8f6;
+    border-top:1px solid #eee;
+    border-bottom:1px solid #eee;
+}
+
 .index-content{
     display: -webkit-box;
     -webkit-box-orient: horizontal;
@@ -135,12 +166,15 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
 
 .current {
     background-color: #fff;
+    border-left: .034375rem solid #ff644e;
+    box-sizing: border-box;
+    text-align: center;
 }
 
 .sticky {
     position: fixed;
     top: 0;
-    background-color: #E5E5E5;
+    background-color: #f8f8f6;
     font-size: .15rem;
 }
 
@@ -264,6 +298,7 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
 
 .total {
     color: #FF5151;
+    margin-left: .125rem;
 }
 
 .nm {
@@ -343,4 +378,35 @@ input[type=button], input[type=submit], input[type=file], button { cursor: point
 	font-size:.18rem;
 	line-height:.3rem;
 
+}
+
+
+#footer-box{
+    background: #fff;
+    border:1px solid #ccc;
+    height: .61875rem;
+    line-height: .61875rem;
+}
+
+#ft-lt .ft-lt-img{
+    width: .28125rem;
+    height: .28125rem;
+    float: left;
+    margin:.14375rem 0 0 .171875rem;
+    border-right: 1px solid #ccc;
+    padding-right: .14375rem;
+}
+
+
+#change-success{
+    width: .9rem;
+    height: .3rem;
+    margin: .15625rem .2125rem 0 0;
+    background: #ff644e;
+    font-size: .1375rem;
+    color: #fff;
+    text-align: center;
+    line-height: .3rem;
+    border-radius: .14375rem;
+    float: right;
 }

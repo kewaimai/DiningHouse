@@ -172,7 +172,7 @@ def gotoOrderPage(request):
     
 
     # user = user_service.getMyDetailInfo('abc')
-    user = user_service.getMyDetailInfo(request.COOKIES.get('user_id'))
+    user = user_service.getMyDetailInfo(request.COOKIES.get('user_id','abc'))
     meals = meal_service.getMealsAndCount(request.POST)
     count = 0
     sum = 0

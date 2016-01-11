@@ -11,10 +11,10 @@
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'DiningServer/css/index.css' %}">
 </head>
-<body style="background:#E5E5E5 ">
-<div class="swiper-position">
+<body>
+<div class="swiper-position clearfix">
     <div class="positionleft">
-        <span class="position-img"></span>
+        <img src="{% static 'DiningServer/images/index/biao.png' %}" class="position-img">
         {% if house %}
             <a href="javascript:;" class="position-text">{{ house.name }}</a>
         {% else %}
@@ -23,28 +23,14 @@
         <!--<a href="javascript:;"><input class="position-text" type="text" name="海泰大厦站点" placeholder="海泰大厦站点" /></a> -->
         <p class="position-paragraph">(点击更换站点)</p>
     </div>
-    <div class="positionright">
-        <input class="position-botton" type="button" value="咨询电话" />
+    <div class="positionright clearfix">
+        <img src="{% static 'DiningServer/images/index/sosuo.png' %}" class="right-img1">
+        <i class="right-bd"></i>
+        <img src="{% static 'DiningServer/images/index/phone.png' %}" class="right-img1">
     </div>
 </div>
-<div class="swiper-container">
-    <div class="swiper-wrapper">
+<div class="index-bg"></div>
 
-        {% if banners %}
-            {% for banner in banners %}
-                {% if banner.image_url %}
-                    <div class="swiper-slide"><img src="{{ banner.image_url }}" href="{{ banner.link }}"></div>
-                {% else %}
-                    <div class="swiper-slide"><img src="{% static 'DiningServer/images/index/shop_1.jpg' %}"></div>
-                {% endif %}
-            {% endfor %}
-        {% else %}
-        <div class="swiper-slide"><img src="{% static 'DiningServer/images/index/shop_1.jpg' %}"></div>
-        <div class="swiper-slide"><img src="{% static 'DiningServer/images/index/shop_1.jpg' %}"></div>
-        <div class="swiper-slide"><img src="{% static 'DiningServer/images/index/shop_1.jpg' %}"></div>
-        {% endif %}
-    </div>
-</div>
 
 <div class="index-content">
 
@@ -109,13 +95,12 @@
 </div>
 </div>
 <div style="height:0.45rem"></div>
-<footer>
-	<div class="ft-lt">
-        <p>合计:<span id="total" class="total">0.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
+<footer id="footer-box">
+	<div class="ft-lt" id="ft-lt">
+        <img src="{% static 'DiningServer/images/index/shop.png' %}" class="ft-lt-img">
+        <p>总计:<span id="total" class="total">0.00元</span><span class="nm">(<label class="share"></label>份)</span></p>
     </div>
-    <div class="ft-rt">
-    	<p id="change-success">选好了</p>
-    </div>
+    <div class="ft-rt" id="change-success">确认订单</div>
 </footer>
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
@@ -139,15 +124,7 @@ var phone = {{ house.phone }}
 {% else %}
 var phone = {{ house.phone }}
 {% endif %}
-var swiper = new Swiper('.swiper-container', {
-	pagination: '.swiper-pagination',
-	paginationClickable: true,
-	spaceBetween: 30,
-    centeredSlides: true,
-    autoplay: 1000,
-    autoplayDisableOnInteraction: false,
-    loop: true
-});
+
 
 
 </script>
