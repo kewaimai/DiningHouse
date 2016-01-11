@@ -1,9 +1,6 @@
 __author__ = '祥祥'
 
-from DiningServer.models import TblMealCategory
-from DiningServer.models import TblMealInHouse
-from DiningServer.models import TblBanner
-from DiningServer.models import TblJudgeMeal
+from DiningServer.models import *
 
 from DiningServer.cache import server_cache
 
@@ -19,7 +16,7 @@ import time
 _in_use_ = 1
 
 
-def getCategoryAndList():
+def getCategoryAndList(request):
     import logging
     logger = logging.getLogger('django')
     # 需要返回的数据  商店 banner 分类 第一个分类的餐品
@@ -61,11 +58,24 @@ def getCategoryAndList():
             # add to cache
             server_cache.cache_banner.append(item)
 
-    #判断得出需要获取的分店
-    category_and_meal.set_house(name='三里屯店',location='三里屯soho地下美食广场', phone='1990009002')
+    #判断得出需要获取的最近分店
+    print('user_id:',request.COOKIES.get('user_id'))
+    user  = TblUser.objects.get(id=request.COOKIES.get('user_id','abc'))
+
+    sql = '''select p.* from tbl_house p ORDER BY POW(%s - p.latitude, 2) + POW(%s - p.longitude, 2) ASC;'''%(user.latitude, user.longitude)
+    house_list = TblHouse.objects.raw(sql)
+    house_id = house_list[0].id
+    print('house_id:',house_id)
+
+
+    category_and_meal.set_house(house_id=house_list[0].id,
+                                name=house_list[0].name,
+                                location=house_list[0].location, 
+                                phone=house_list[0].phone)
+    # category_and_meal.set_house(id=1,name='三里屯店',location='三里屯soho地下美食广场', phone='1990009002')
 
     # 获取分店全部菜品
-    house_id = 1    #测试使用的house id
+    # house_id = 1    #测试使用的house id
     # 获取第一个分类的商品内容
     meal_list = TblMealInHouse.objects.filter(house_id=house_id).order_by('category_id')
     for item in meal_list:
@@ -127,11 +137,8 @@ def judgeMeal(bill_id, meal_in_house_id, user_id, user_name, judge_meal, judge_s
     judge_item.judge_meal = judge_meal
     judge_item.judge_speed = judge_speed
     judge_item.judge_service = judge_service
-    try:
-        judge_item.save()
-    except Exception as exception:
-        print('judge insert error , detail : ', exception)
-        return None   # 失败 返回None
+
+    judge_item.save()
     return 'success'   # 成功 返回非None字符串
 
 """
@@ -168,7 +175,6 @@ def addMealByScript(category_id, category_order, name):
     item.name = name
     item.sold_count = 120
     item.save()
-    pass
 
 """
 获取用户选的商品id的详情 并返回用户选择的数量
@@ -184,15 +190,14 @@ def getMealsAndCount(post):
         tblMeal = TblMealInHouse.objects.filter(id=key)
         for item in tblMeal:
             meals_and_count.add_meals(
-                item.id
-                , item.name
-                , item.avatar_url
-                , item.detail_content
-                , item.sold_count
-                , item.judge_count
-                , item.meal_price
-                , item.last_count
-                , post[key]
+                item.id, item.name,
+                item.avatar_url,
+                item.detail_content,
+                item.sold_count,
+                item.judge_count,
+                item.meal_price,
+                item.last_count,
+                post[key]
             )
             break
     return meals_and_count.toDict()

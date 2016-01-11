@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'DiningMealManage',
     'DiningServer',
-    'DiningOAM'
+    'DiningOAM',
+    # 'wechat_sdk.context.framework.django',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,14 +118,10 @@ TEMPLATE_DIRS = (
 
 with open(join(BASE_DIR, 'DiningHouse', 'wc_app_conf')) as f:
     wc_app_conf = f.readline().strip().split("|")
-# WC_NONCERSTR = "qhH9cYT20sm2V"
-# WC_PAY_APPID = wc_app_conf[0]
+
 WC_PAY_APPID = 'wxacfdb1da76aa7763'
-# WC_PAY_APPSECRET = wc_app_conf[1]
 WC_PAY_APPSECRET = '0f0f71dbff7dbde3e3b07897ddd8f78b '
-# WC_PAY_MCHID = wc_app_conf[2]
 WC_PAY_MCHID = '1270766901'
-# WC_PAY_KEY = wc_app_conf[3]
 WC_PAY_KEY = 'akd2230dkdkiDKJkjkjdkfjskfjkslfj'
 WC_ID = 'Raymond_jc'
 

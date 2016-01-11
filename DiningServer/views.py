@@ -1,5 +1,6 @@
 from django.http import HttpRequest,HttpResponse,HttpResponseRedirect
 from django.shortcuts import render,render_to_response,get_object_or_404,redirect
+from django.template import loader, Context, RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from DiningServer.service import meal_service,user_service,order_service,time_service,weixin_service
 from DiningHouse.settings import *
@@ -10,12 +11,14 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from DiningServer.read_excel import startGenerator
 
+from DiningServer.common.time_format_util import *
+from uuid import uuid4
 import json
+import datetime,time
 
 """
 在这里郑重声明   order = bill =  订单
 """
-
 # Create your views here.
 
 def generatorMeals(request):
@@ -44,8 +47,13 @@ def index(request):
     :param request:
     :return:
     """
-    context = meal_service.getCategoryAndList()
-    return render(request, 'DiningServer/index.html', context)
+    context = meal_service.getCategoryAndList(request)
+    for k,v in context.items():
+        print(k,v)
+    response = render(request, 'DiningServer/index.html', context)
+    response.set_cookie('house_id', context['house']['house_id']) 
+    
+    return response
 
 def getMealDetail(request,meal_id):
     """
@@ -103,20 +111,50 @@ def getMyDetailInfoPage(request):
     
     # 获取userid
     # 使用ensure_ascii = False   否则的话中文会只显示编码 不显示汉字
-    context = user_service.getMyDetailInfo('abc')
+    # context = user_service.getMyDetailInfo('abc')
+
+    context = user_service.getMyDetailInfo(request.COOKIES.get('user_id'))
     print(context)
     return render(request, 'DiningServer/userInfoPage.html', context)
 
+@csrf_exempt
 def modifyMyDetailInfo(request):
     """
     修改我的信息 接口
     :param request:
     :return:
     """
-    user_service.modifyMyDetailInfo('abc','mingzi','女','1998-10-11','1212312','auisa@qq.com','中关村南大街')
-    context = user_service.getMyDetailInfo('abc')
-    return render(request, 'DiningServer/userInfoPage.html', context)
+    time_now = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
 
+    if request.method == 'POST':
+        # user_id  = uuid4()
+        user_id = request.COOKIES.get('user_id')
+        print('user_id:',user_id)
+        username = request.POST.get('username','').strip()
+        print('username:',username) 
+        sex      = request.POST.get('sex','').strip()
+        print('sex:',sex)
+        birthday = datetime.datetime.strptime(request.POST.get('birthday','2016-01-01').strip(),SERVER_DATA_FORMAT)
+        # birthday = request.POST.get('birthday','').strip()
+        print('birthday:',birthday,type(birthday))
+        phone    = request.POST.get('phone','').strip()
+        print('phone:',phone)
+        email    = request.POST.get('email','').strip()
+        print('email:',email)
+        add_time = time_now
+        location = request.POST.get('location','').strip()
+        print('location:',location)
+        latitude = '324'
+        longitude = '453'
+        user_service.modifyMyDetailInfo(user_id,username,sex,birthday,phone,email,add_time,location,latitude,longitude)
+        response = HttpResponseRedirect('/DiningServer/index/')
+        response.set_cookie('user_id', user_id) 
+        return response
+
+    else:
+        # context = user_service.getMyDetailInfo('abc')
+        context = user_service.getMyDetailInfo(request.COOKIES.get('user_id'))
+        return render(request, 'DiningServer/userInfoPage.html', context)
 
 
 """
@@ -133,7 +171,8 @@ def gotoOrderPage(request):
     """
     
 
-    user = user_service.getMyDetailInfo('abc')
+    # user = user_service.getMyDetailInfo('abc')
+    user = user_service.getMyDetailInfo(request.COOKIES.get('user_id'))
     meals = meal_service.getMealsAndCount(request.POST)
     count = 0
     sum = 0
@@ -157,7 +196,8 @@ def createOrder(request):
     :param request:
     :return:
     """
-    
+    bill = order_service.createOrder(request)
+    time_now = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
     meals = meal_service.getMealsAndCount(request.POST)
     count = 0
     sum = 0
@@ -169,7 +209,17 @@ def createOrder(request):
         count += int(meal['buy_count'])
         sum += int(meal['buy_count']) * float(meal['meal_price'])
 
-    (bill,bill_meal) = order_service.createOrder(request)
+        # 保存订单中的商品
+        bill_meal = TblBillMeal()
+        bill_meal.id = uuid4()
+        bill_meal.bill_id = bill.id
+        bill_meal.house_id = bill.house_id
+
+        bill_meal.add_time = time_now
+        bill_meal.buy_count = int(meal['buy_count'])
+        bill_meal.meal_price = float(meal['meal_price'])
+        bill_meal.save()
+    
     print("count:",count)
     print("sum:",sum)
     print("order Done!!!")
@@ -221,36 +271,40 @@ def payOrder(request,bill_id):
     try:
         bill = TblBill.objects.get(id=bill_id)
     except ObjectDoesNotExist:
-        pass
-    
-    pay_result = weixin_service.callQueryPayResult(out_trade_no)
-    order_service.payOrder(request,bill_id,pay_result)
-    return HttpResponseRedirect("/DiningServer/getOrders/")
+        return False
+    else:
+        pay_result = weixin_service.callQueryPayResult(out_trade_no)
+        order_service.payOrder(request,bill_id,pay_result)
+        return HttpResponseRedirect("/DiningServer/getOrders/")
 
 
-def getOrders(request,user_id):
+def getOrders(request):
     """
     获取用户订单页面
     :param request:
     :return: 返回”我的订单页面“
     """
+    user_id = request.COOKIES.get('user_id')
+    user_id = '499a2418-5bd3-4785-ab14-bd7d679ee57d'
     context = order_service.getOrders(user_id, orderType = 0)
-    return render(request, 'DiningServer/myOrder.html', context)
+    print(type(context))
+    # return render(request, 'DiningServer/myOrder.html', context)
+    return render_to_response("DiningServer/myOrder.html", {'bills':context},context_instance=RequestContext(request))
 
-def ensureSend(request):
+def ensureSend(request,bill_id):
     """
     确认送达 接口
     :param request:
     :return:
     """
-    if order_service.ensureSend('1'):
-        return HttpResponse('success')
+    if order_service.ensureSend(bill_id):
+        return json_response('评价成功')
     else:
-        return HttpResponse('error')
+        return json_response('评价失败')
 
 @csrf_exempt
 @require_POST
-def getOrdersByType(request):
+def getOrdersByType(request,user_id):
     """
     获取用户订单
     :param request: httprequest
@@ -258,28 +312,27 @@ def getOrdersByType(request):
     """
     
     print(request.POST)
-    if '0' in request.POST['type']:
-        context = order_service.getOrders('abc')
+    orderType = request.POST.get('type','0')
+
+    if int(orderType) == 0:
+        context = order_service.getOrders(user_id)
     else:
-        context = order_service.getOrders('abc', request.POST['type'])
-    print(context)
+        context = order_service.getOrders(user_id, int(orderType))
+
     return render(request, 'DiningServer/orders.html', context)
 
 
 from DiningServer.common.wechat_sdk.basic import WechatBasic
+from django.http.response import HttpResponseBadRequest
+from DiningServer.common.wechat_sdk.exceptions import ParseError
+from DiningServer.common.wechat_sdk.messages import LocationMessage
+from DiningServer.common.wechat_sdk.context.framework.django import DatabaseContextStore
+
 @csrf_exempt
 def getToken(request):
     token = 'szjiajia'
-    wechat = WechatBasic(token=token)
-
-    
+    wechat = WechatBasic(token=token)  
     print('request.GET:',request.GET)
-    # print('request.body:',request.body)
-    # wechat.parse_data(request.body)
-    # message = wechat.get_message()
-    # print('message:',message)
-    # rsp = wechat.response_text(u'消息类型: {}'.format(message.type))
-    # print('rsp:',rsp)
 
     if wechat.check_signature(signature=request.GET.get('signature',''),
                               timestamp=request.GET.get('timestamp',''),
@@ -289,21 +342,33 @@ def getToken(request):
             rsp = request.GET.get('echostr', 'error')
         else:
             print('request.body:',request.body)
-            xml2dict = wechat.parse_data(request.body)
-            message = wechat.get_message()
-            print('type(message):',type(message))
+            try:
+                xml2dict = wechat.parse_data(request.body)
+            except ParseError:
+                return HttpResponseBadRequest('Invalid XML Data')
 
-            if xml2dict['event'] == LOCATION:
-                user = TblUser.objects.filter(id=request.user.id).update(
-                latitude=message.latitude,
-                longitude =message.longitude,
-                )
+            for k,v in xml2dict.items():
+                print(k,v)
 
-            rsp = wechat.response_text(u'消息类型: {}'.format(message.type))
-            print('rsp:',rsp)
+            if xml2dict['Event'] == 'LOCATION':
+                user = TblUser.objects.create(
+                    id=uuid4(),
+                    latitude=xml2dict['Latitude'],
+                    longitude=xml2dict['Longitude'],
+                    )
     else:
-        rsp = wechat.response_text('check error')
-    return HttpResponse(rsp)
+        return HttpResponseBadRequest('Verify Failed')
+
+    response = HttpResponseRedirect('/DiningServer/index/')
+
+    try:
+        response.set_cookie('user_id', user.id)
+        response.set_cookie('latitude',user.latitude)
+        response.set_cookie('longitude', user.longitude)
+    except:
+        return HttpResponse('获取用户地理位置信息失败')
+
+    return response
 
 
 @csrf_exempt

@@ -24,28 +24,26 @@
             <li class="data-area pd20">
                 <div class="area-text">性别</div>
                 <div class="area-change">
-                    <!--1男2女0保密-->
-                    {% if sex == 1 %}
+                    <!-- 1男2女> -->
+                    {% if sex %}
+                        {% if sex == 1 %}
                         <input name="pop" type="radio" value="man" checked="true"/>&nbsp;男&nbsp;&nbsp;
                         <input name="pop" type="radio" value="woman" />&nbsp;女&nbsp;&nbsp;
-                        <input name="pop" type="radio" value="unKnown" />&nbsp;保密
-                    {% else %}
-                        {% if sex == 2 %}
+                        {% elif sex == 2 %}
                         <input name="pop" type="radio" value="man"/>&nbsp;男&nbsp;&nbsp;
                         <input name="pop" type="radio" value="woman"  checked="true"  />&nbsp;女&nbsp;&nbsp;
-                        <input name="pop" type="radio" value="unKnown" />&nbsp;保密
-
-                        {% else %}
-                        <input name="pop" type="radio" value="man" />&nbsp;男&nbsp;&nbsp;
-                        <input name="pop" type="radio" value="woman" />&nbsp;女&nbsp;&nbsp;
-                        <input name="pop" type="radio" value="unKnown"  checked="true"  />&nbsp;保密
                         {% endif %}
+                    {% else %}
+                        <select name="sex" id="sex">
+                            <option value="1">男</option>
+                            <option value="2">女</option>
+                        </select>
                     {% endif %}
                 </div>
             </li>
             <li class="data-area pd20">
                 <div class="area-text">出生年月</div>
-                <input name="time" class="mt20 laydate-icon area-change" onClick="laydate()">0
+                <input id="birthday" name="birthday" class="mt20 laydate-icon area-change" onClick="laydate({elem: '#birthday'})">0
             </li>
             <li class="data-area pd20">
                 <div class="area-text">联系电话</div>
@@ -68,6 +66,7 @@
 <!--用户信息界面，在该界面用户可以修改信息并保存，保存成功后依然跳转回该界面-->
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'DiningServer/js/laydate.js' %}"></script>
 <script>
     var oName = document.getElementsByName('username').val();
     var oTime = document.getElementsByName('time').val();
@@ -112,7 +111,7 @@
         }
         else{
             $('#form').submit();
-        }
+        
     });
 
 </script>

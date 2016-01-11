@@ -24,8 +24,10 @@ class CategoryAndMeal():
         ]
         # 分店内容  字典表示
         house : {
+            'house_id': '分店id'
             'name': '分店名字',
             'location': '分店位置'
+            'phone': '分店电话'
         }
         # 分类及菜品 数组
         categorys: [
@@ -84,7 +86,8 @@ class CategoryAndMeal():
         self._context['categorys'] = self._category_and_meal
         self._context['meals'] = self._meals
 
-    def set_house(self, name='', location='', phone=''):
+    def set_house(self, house_id='', name='', location='', phone=''):
+        self._house['house_id'] = house_id
         self._house['name'] = name
         self._house['location'] = location
         self._house['phone'] = phone

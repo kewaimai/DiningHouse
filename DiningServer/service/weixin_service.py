@@ -10,6 +10,8 @@ from DiningServer.common.weixin_pay.weixin_pay import UnifiedOrderPay
 from DiningServer.common.weixin_pay.weixin_pay import JsAPIOrderPay
 from DiningServer.common.weixin_pay.weixin_pay import OrderQuery
 
+import http.client, urllib
+
 body='body'
 out_trade_no='out_trade_no'
 total_fee=100
@@ -80,3 +82,41 @@ def callQueryPayResult(out_trade_no):
         else:
             return False
             #处理支付未完成的情况，trade_state的枚举值参见微信官方文档说明
+
+
+def sendRequest(host, path, method, port=443, **params):
+    client = http.client.HTTPSConnection(host, port)
+
+    path = '?'.join([path, "&".join(['%s=%s'%(k, v) for k,v in params.items()])])
+    client.request(method, path)
+ 
+    res = client.getresponse()
+    conn.close()
+    if not res.status == 200:
+        return False, res.status
+    return True, json.loads(res.read())
+
+    # httpRequest = ""
+    # conn = http.client.HTTPConnection("localhost",8080)
+    # conn.request("GET","/file.html",httpRequest)
+    # response = conn.getresponse()
+    # print(response.status,response.reason)
+    # conn.close()
+    
+def getAccessToken():
+    params = {
+        'grant_type': 'client_credential',
+        'appid': WC_PAY_APPID,
+        'secret': WC_PAY_APPSECRET
+    }
+    host = 'api.weixin.qq.com'
+    path = '/cgi-bin/token'
+    method = 'GET'
+ 
+    res = sendRequest(host, path, method, params=params)
+    print('res:',res)
+    if not res[0]:
+        return False
+    if res[1].get('errcode'):
+        return False
+    return res[1]

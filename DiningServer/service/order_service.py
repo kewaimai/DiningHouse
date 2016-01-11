@@ -1,9 +1,10 @@
-__author__ = '祥祥'
+from django.core.exceptions import ObjectDoesNotExist
 
 from DiningServer.models import TblBill
 from DiningServer.models import TblBillMeal
 from DiningServer.models import TblUser
 from DiningServer.interface import MyBill
+from DiningServer.service import meal_service
 
 from DiningServer.common.time_format_util import SERVER_TIME_FORMAT_WITHOUT_SECOND
 from DiningServer.common.time_format_util import SERVER_TIME_FORMAT
@@ -42,39 +43,39 @@ bill_state = [
 
 
 def createOrder(request):
-    # 保存新用户信息
-    # username = request.POST.get('username','').strip()
-    # phone    = request.POST.get('phone','').strip()
-    # location = request.POST.get('location','').strip()
-    # user = TblUser.objects.filter(id=user_id).update(username=username,phone=phone,location=location)
+    # 更改用户信息
+    user_id = request.COOKIES.get('user_id')
+    username = request.POST.get('username','').strip()
+    phone    = request.POST.get('phone','').strip()
+    location = request.POST.get('location','').strip()
+    user = TblUser.objects.filter(id=user_id).update(username=username,phone=phone,user_location=location)
+
+    time_now = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
+    meals = meal_service.getMealsAndCount(request.POST)
+    # count = 0
+    sum = 0
+
+    buy_meals = meals['meal_list']
+
+    # 获取sum和count
+    for meal in buy_meals:
+        # count += int(meal['buy_count'])
+        sum += int(meal['buy_count']) * float(meal['meal_price'])
 
     # 创建订单
-    time_now = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
     bill = TblBill()
     bill.id = uuid4()
-    # bill.user_id = user_id
-    # userlocation——id不再使用  用户表里存入用户的location
-    # bill.user_location_id
-    # bill.bill_totalling =
+    bill.house_id = request.COOKIES.get('house_id','e55ce56e-fcc3-4d55-8da8-73720e569652')
+    bill.user_id = request.COOKIES.get('user_id','abc')
+    bill.user_location = location
+    bill.bill_totalling = sum
     bill.add_time = time_now
     bill.bill_state = BILL_STATE_UNPAY
     bill.bill_content = request.POST.get('remarks','')
-    import logging
-    logger = logging.getLogger('django')
     print('request.POST:',request.POST)
     bill.save()
-
-    # 保存订单中的商品
-    bill_meal = TblBillMeal()
-    bill_meal.id = uuid4()
-    bill_meal.add_time = time_now
-    bill_meal.bill_id = bill.id
-    # bill_meal.meal_in_house_id =
-    # bill_meal.buy_count =
-    bill_meal.meal_price = 1.0
-    bill_meal.save()
     
-    return(bill,bill_meal)
+    return bill
 
 """
 如果支付成功 则返回非None 如果失败 返回None
@@ -95,7 +96,7 @@ def payOrder(request,bill_id,pay_result):
     else: return None
 
 """
-获取用户订单，根据用户输入的用户id和订单类型（未付款，派送中，待评价）返回用户订单列表
+获取用户订单，根据用户输入的用户id和订单状态（未付款，派送中，待评价）返回用户订单列表
 """
 def getOrders(user_id, orderType = 0):
     import logging
@@ -105,47 +106,48 @@ def getOrders(user_id, orderType = 0):
         myOrder = TblBill.objects.filter(user_id=user_id,bill_state=orderType)
     else:
         myOrder = TblBill.objects.filter(user_id=user_id)
-    myBill = MyBill()
-    for item in myOrder:
-        add_time = ''
-        pay_time = ''
-        ensure_send_time = ''
-        if item.add_time:
-            add_time = item.add_time.strftime(SERVER_TIME_FORMAT_WITHOUT_SECOND)
-        if item.pay_time:
-            pay_time = item.pay_time.strftime(SERVER_TIME_FORMAT_WITHOUT_SECOND)
-        if item .ensure_send_time:
-            ensure_send_time = item.ensure_send_time.strftime(SERVER_TIME_FORMAT_WITHOUT_SECOND)
-        myBillIndex = myBill.createBill(
-            item.id,
-            item.user_id,
-            item.user_location,
-            item.bill_totalling,
-            add_time,
-            pay_time,
-            bill_state[item.bill_state],
-            item.bill_content,
-            ensure_send_time
-        )
-        myMeals = TblBillMeal.objects.filter(bill_id=item.id)
-        for meal in myMeals:
-            myBill.addMeal(myBillIndex, meal.meal_in_house_id, meal.meal_name, meal.meal_url, meal.buy_count, meal.meal_price)
-    return myBill.toDict()
-
+    # myBill = MyBill()
+    # for item in myOrder:
+    #     if item.add_time:
+    #         add_time = item.add_time.strftime(SERVER_TIME_FORMAT_WITHOUT_SECOND)
+    #     if item.pay_time:
+    #         pay_time = item.pay_time.strftime(SERVER_TIME_FORMAT_WITHOUT_SECOND)
+    #     if item .ensure_send_time:
+    #         ensure_send_time = item.ensure_send_time.strftime(SERVER_TIME_FORMAT_WITHOUT_SECOND)
+    #     myBillIndex = myBill.createBill(
+    #         item.id,
+    #         item.user_id,
+    #         item.user_location,
+    #         item.bill_totalling,
+    #         add_time,
+    #         pay_time,
+    #         bill_state[item.bill_state],
+    #         item.bill_content,
+    #         ensure_send_time
+    #     )
+    #     myMeals = TblBillMeal.objects.filter(bill_id=item.id)
+    #     for meal in myMeals:
+    #         myBill.addMeal(myBillIndex, meal.house_id, meal.meal_name, meal.meal_url, meal.buy_count, meal.meal_price)
+    # return myBill.toDict()
+    return myOrder
+    
 # 确认送达 可有商户或者用户两方调用
 def ensureSend(bill_id):
     import logging
     logger = logging.getLogger('django')
-    bill = TblBill.objects.filter(id=bill_id)
-    for item in bill:
-        # 如果不是正在派送的状态，则返回失败
-        if item.bill_state != BILL_STATE_SENDING:
-            return None
-        # 更改状态为待评价
-        item.bill_state = BILL_STATE_JUDGE
-        item.ensure_send_time = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
-        item.save()
-        break
+
+    # 如果不是正在派送的状态，则返回失败
+    if bill.bill_state != BILL_STATE_SENDING:
+        return False
+
+    try:
+        bill = TblBill.objects.get(id=bill_id)
+    except ObjectDoesNotExist:
+        return False
     else:
-        return None
-    return 'success'
+        # 更改状态为待评价
+        bill.bill_state = BILL_STATE_JUDGE
+        bill.ensure_send_time = time.strftime(SERVER_TIME_FORMAT, time.localtime(time.time()))
+        bill.save()
+        return True
+    return None

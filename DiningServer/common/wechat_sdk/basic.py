@@ -125,12 +125,11 @@ class WechatBasic(object):
         result = xml.xml2dict
         result['raw'] = data
         result['type'] = result.pop('MsgType').lower()
-        for k,v in result.items:
-            print(k,v)
 
-        message_type = MESSAGE_TYPES.get(result['type'], UnknownMessage)
-        self.__message = message_type(result)
-        self.__is_parse = True
+        # message_type = MESSAGE_TYPES.get(result['type'], UnknownMessage)
+        # self.__message = message_type(result)
+        # self.__is_parse = True
+
         return result
 
     @property

@@ -34,15 +34,16 @@ urlpatterns = [
     # 创建订单接口      返回创建订单成功并提示去支付  的界面
     url(r'^createOrder/$', views.createOrder, name='createOrder'),
 
-    # 获取我的订单页面 未付款 配送中 待评价
     # 支付订单接口
     url(r'^getToken/$', views.getToken, name='getToken'),
     url(r'^pay/notify/url/$', views.getPrepayid, name='getPrepayid'),
 
-    url(r'^payOrderTest/(?P<bill_id>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})/$', views.payOrder, name='payOrder'),
+    url(r'^payOrder/(?P<bill_id>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})/$', views.payOrder, name='payOrder'),
     url(r'^getOrders/$', views.getOrders, name='getOrder'),
-    url(r'^ensureSend/$', views.ensureSend),
-    url(r'^getOrdersByType', views.getOrdersByType, name='ordersByType'),
+    url(r'^ensureSend/(?P<bill_id>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})/$', views.ensureSend),
+    
+    # 获取我的订单页面 未付款 配送中 待评价
+    url(r'^getOrdersByType/(?P<user_id>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})/$', views.getOrdersByType, name='ordersByType'),
 
     # 测试修改
     # 支付接口
