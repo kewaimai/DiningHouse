@@ -3,8 +3,8 @@
 from django.db import IntegrityError, transaction, router
 from django.utils import timezone
 
-from wechat_sdk.context.framework.django.backends.base import ContextBase, CreateError
-from wechat_sdk.context.framework.django.exceptions import SuspiciousOpenID
+from DiningServer.common.wechat_sdk.context.framework.django.backends.base import ContextBase, CreateError
+from DiningServer.common.wechat_sdk.context.framework.django.exceptions import SuspiciousOpenID
 
 
 class ContextStore(ContextBase):
