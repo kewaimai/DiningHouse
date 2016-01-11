@@ -14,7 +14,7 @@ try:
 except ImportError:
     from django.utils.module_loading import import_by_path as import_by_string  # For Django 1.6
 
-from wechat_sdk.context.framework.django.exceptions import SuspiciousOpenID
+from DiningServer.common.wechat_sdk.context.framework.django.exceptions import SuspiciousOpenID
 
 DEFAULT_WECHAT_CONTEXT_SERIALIZER = 'wechat_sdk.context.framework.django.serializers.JSONSerializer'  # 默认微信上下文对话序列化类
 DEFAULT_WECHAT_CONTEXT_AGE = 7200  # 默认微信上下文对话有效时间 (单位: s)

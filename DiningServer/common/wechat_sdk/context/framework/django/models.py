@@ -31,4 +31,4 @@ class Context(models.Model):
         return ContextStore(self.openid).decode(self.context_data)
 
 
-from wechat_sdk.context.framework.django.backends.db import ContextStore
+from DiningServer.common.wechat_sdk.context.framework.django.backends.db import ContextStore

@@ -7,9 +7,9 @@ from django.test import TestCase
 from django.utils import six
 from django.utils import timezone
 
-from wechat_sdk.context.framework.django.backends.db import ContextStore as DatabaseContext
-from wechat_sdk.context.framework.django.backends.base import DEFAULT_WECHAT_CONTEXT_AGE
-from wechat_sdk.context.framework.django.models import Context
+from DiningServer.common.wechat_sdk.context.framework.django.backends.db import ContextStore as DatabaseContext
+from DiningServer.common.wechat_sdk.context.framework.django.backends.base import DEFAULT_WECHAT_CONTEXT_AGE
+from DiningServer.common.wechat_sdk.context.framework.django.models import Context
 
 
 class ContextTestsMixin(object):

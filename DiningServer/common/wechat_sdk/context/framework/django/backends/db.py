@@ -63,4 +63,4 @@ class ContextStore(ContextBase):
         Context.objects.filter(expire_date__lt=timezone.now()).delete()
 
 
-from wechat_sdk.context.framework.django.models import Context
+from DiningServer.common.wechat_sdk.context.framework.django.models import Context

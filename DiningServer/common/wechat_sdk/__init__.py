@@ -3,7 +3,7 @@
 __all__ = ['WechatBasic', 'WechatExt']
 
 try:
-    from wechat_sdk.basic import WechatBasic
-    from wechat_sdk.ext import WechatExt
+    from DiningServer.common.wechat_sdk.basic import WechatBasic
+    from DiningServer.common.wechat_sdk.ext import WechatExt
 except ImportError:
     pass
