@@ -6,7 +6,7 @@ urlpatterns = [
     #for test
     url(r'^indextest/$', views.indextest , name='indextest'),
     url(r'^generatorMeals/$', views.generatorMeals),
-    url(r'^index/(?P<urls>[\s\S][^\/]*)/$', views.welcome, name='welcome'),
+    url(r'^[\s\S][^\/]/$', views.welcome, name='welcome'),
 
     # index  首页 url
     url(r'^index/$', views.index, name='index'),

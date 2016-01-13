@@ -21,7 +21,7 @@ import datetime,time
 """
 # Create your views here.
 def welcome(request, urls):
-    return render(request, 'ClubManage/'+urls)
+    return render(request, 'DiningServer/'+urls+'.html')
 
 def generatorMeals(request):
     """
