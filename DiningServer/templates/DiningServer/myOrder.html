@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    {% load staticfiles %}
+{% load staticfiles %}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,52 +19,102 @@
 
 <!--订单信息-->
         <ul class="box-order" id="order">
-          <!--全部-->
-            <li class="on">全部<i></i></li>
-            <!--未付款-->
-            <li>未付款<i></i></li>
+          <!--未付款-->
+            <li class="on">未付款</li>
             <!--配送中-->
-            <li>配送中<i></i></li>
-            <!--待评价-->
-            <li>待评价<i></i></li>
+            <li>配送中</li>
+            <!--已完成-->
+            <li>已完成</li>
         </ul>
 
 
 <!--详细 信息-->
         <dl class="dom-order" id="dom">
-
+            <!--未付款-->
             <li class="active dom-one">
-                {% for bill in bills %}
-                    <div class="dom-tm" id="{{ bill.meal_id }}">
-                        <img src="{{ bill.meals.0.meal_url }}" class="dom-img">
-                        <div class="dom-dt">
-                            <p>下单时间：<span>{{ bill.add_time }}</span></p>
-                            <p>总价<span>￥{{ bill.bill_totalling }}</span></p>
-                            <p id="dom-color"><span>{{ bill.bill_state }}</span></p>
-                        </div>
-                    </div>
+            {% for bill in bills %}
+               <div class="dom-tlt">
+                   <p>未付款</p>
+                   <p>2016/1/5 11:36</p>
+               </div>
+
+               <div class="dom-img">
+                   <img src="{% static 'DiningServer/images/index/1.jpg' %}">
+                   <p>营养双拼套餐</p>
+                   <p>￥16</p>
+                   <p>x1</p>
+               </div>
+               <div class="dom-img">
+                   <img src="{% static 'DiningServer/images/index/2.jpg' %}">
+                   <p>什锦沙拉套餐</p>
+                   <p>￥16</p>
+                   <p>x1</p>
+               </div>
+
+                <div class="dom-total">
+                    <p>总价：<i>￥32</i></p>
+                    <p>去付款</p>
+                </div>
+                
+            </li>
+
+    
 
 
-                    <div class="dom-ma">
-                        {% for item in bill.meals %}
-                        <p>{{ item.meal_name }}<span>￥{{ item.meal_price }}</span><span>{{ item.meal_count }}</span></p>
-                        {% endfor %}
-                        <div class="dom-mad">合计<p class="dom-map">￥{{ bill.bill_totalling }}</p></div>
-                    </div>
-                    <em class="dom-bg"></em>
-                {% empty %}
-                    <p style="font-size:0.1875rem; text-align: center; padding-bottom:15px;">抱歉，无可订单显示</p>
+
+            <!--配送中-->
+            <li class="dom-one">
+                <div class="dom-tlt">
+                   <p>配送中</p>
+                   <p>2016/1/5 11:36</p>
+               </div>
+
+               <div class="dom-img">
+                   <img src="{% static 'DiningServer/images/index/1.jpg' %}">
+                   <p>营养双拼套餐</p>
+                   <p>￥16</p>
+                   <p>x1</p>
+               </div>
+               <div class="dom-img">
+                   <img src="{% static 'DiningServer/images/index/2.jpg' %}">
+                   <p>什锦沙拉套餐</p>
+                   <p>￥16</p>
+                   <p>x1</p>
+               </div>
+
+                <div class="dom-total">
+                    <p>总价：<i>￥32</i></p>
+                    <p>配送中</p>
+                </div>
+            </li>
+
+
+
+            <!--已完成-->
+            <li class="dom-one">
+                <div class="dom-tlt">
+                   <p>已完成</p>
+                   <p>2016/1/5 11:36</p>
+               </div>
+
+               <div class="dom-img">
+                   <img src="{% static 'DiningServer/images/index/1.jpg' %}">
+                   <p>营养双拼套餐</p>
+                   <p>￥16</p>
+                   <p>x1</p>
+               </div>
+               <div class="dom-img">
+                   <img src="{% static 'DiningServer/images/index/2.jpg' %}">
+                   <p>什锦沙拉套餐</p>
+                   <p>￥16</p>
+                   <p>x1</p>
+               </div>
+
+                <div class="dom-total">
+                    <p>总价：<i>￥32</i></p>
+                    <p>已完成</p>
+                </div>
                 {% endfor %}
-
-            </li>
-
-            <li class="dom-one">
-            </li>
-
-            <li class="dom-one">
-            </li>
-
-            <li class="dom-one">
             </li>
 
  
@@ -72,7 +122,6 @@
         </dl>
 
     </div>
-
 
 <script type="text/javascript" src="{% static 'DiningServer/js/Adaptive.js' %}"></script>
 <script type="text/javascript" src="{% static 'DiningServer/js/jquery-1.7.1.min.js' %}"></script>
@@ -99,7 +148,6 @@
             }, 'html');
         }
 
-{#getData(0);#}
     });
 </script>
 </body>

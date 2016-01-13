@@ -20,6 +20,8 @@ import datetime,time
 在这里郑重声明   order = bill =  订单
 """
 # Create your views here.
+def welcome(request, urls):
+    return render(request, 'ClubManage/'+urls)
 
 def generatorMeals(request):
     """
@@ -50,9 +52,8 @@ def index(request):
     context = meal_service.getCategoryAndList(request)
     for k,v in context.items():
         print(k,v)
+    request.session['house_id'] = context['house']['house_id']
     response = render(request, 'DiningServer/index.html', context)
-    response.set_cookie('house_id', context['house']['house_id']) 
-    
     return response
 
 def getMealDetail(request,meal_id):
@@ -113,7 +114,7 @@ def getMyDetailInfoPage(request):
     # 使用ensure_ascii = False   否则的话中文会只显示编码 不显示汉字
     # context = user_service.getMyDetailInfo('abc')
 
-    context = user_service.getMyDetailInfo(request.COOKIES.get('user_id'))
+    context = user_service.getMyDetailInfo(request.session.get('user_id','abc'))
     print(context)
     return render(request, 'DiningServer/userInfoPage.html', context)
 
@@ -128,7 +129,7 @@ def modifyMyDetailInfo(request):
 
     if request.method == 'POST':
         # user_id  = uuid4()
-        user_id = request.COOKIES.get('user_id')
+        user_id = request.session.get('user_id','abc')
         print('user_id:',user_id)
         username = request.POST.get('username','').strip()
         print('username:',username) 
@@ -148,12 +149,11 @@ def modifyMyDetailInfo(request):
         longitude = '453'
         user_service.modifyMyDetailInfo(user_id,username,sex,birthday,phone,email,add_time,location,latitude,longitude)
         response = HttpResponseRedirect('/DiningServer/index/')
-        response.set_cookie('user_id', user_id) 
         return response
 
     else:
         # context = user_service.getMyDetailInfo('abc')
-        context = user_service.getMyDetailInfo(request.COOKIES.get('user_id'))
+        context = user_service.getMyDetailInfo(request.session.get('user_id','abc'))
         return render(request, 'DiningServer/userInfoPage.html', context)
 
 
@@ -172,7 +172,7 @@ def gotoOrderPage(request):
     
 
     # user = user_service.getMyDetailInfo('abc')
-    user = user_service.getMyDetailInfo(request.COOKIES.get('user_id','abc'))
+    user = user_service.getMyDetailInfo(request.session.get('user_id','abc'))
     meals = meal_service.getMealsAndCount(request.POST)
     count = 0
     sum = 0
@@ -284,8 +284,7 @@ def getOrders(request):
     :param request:
     :return: 返回”我的订单页面“
     """
-    user_id = request.COOKIES.get('user_id')
-    user_id = '499a2418-5bd3-4785-ab14-bd7d679ee57d'
+    user_id = request.session.get('user_id','abc')
     context = order_service.getOrders(user_id, orderType = 0)
     print(type(context))
     # return render(request, 'DiningServer/myOrder.html', context)
@@ -356,19 +355,14 @@ def getToken(request):
                     latitude=xml2dict['Latitude'],
                     longitude=xml2dict['Longitude'],
                     )
+                request.session['user_id'] = user.id
+                request.session['latitude'] = user.latitude
+                request.session['longitude'] = user.longitude
+            response = wechat.response_text(content=u'成功获取用户地理位置')
     else:
         return HttpResponseBadRequest('Verify Failed')
 
-    response = HttpResponseRedirect('/DiningServer/index/')
-
-    try:
-        response.set_cookie('user_id', user.id)
-        response.set_cookie('latitude',user.latitude)
-        response.set_cookie('longitude', user.longitude)
-    except:
-        return HttpResponse('获取用户地理位置信息失败')
-
-    return response
+    return HttpResponse(response)
 
 
 @csrf_exempt

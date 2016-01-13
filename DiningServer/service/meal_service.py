@@ -17,8 +17,6 @@ _in_use_ = 1
 
 
 def getCategoryAndList(request):
-    import logging
-    logger = logging.getLogger('django')
     # 需要返回的数据  商店 banner 分类 第一个分类的餐品
     category_and_meal = interface.CategoryAndMeal()
     #获取菜品分类列表
@@ -59,8 +57,8 @@ def getCategoryAndList(request):
             server_cache.cache_banner.append(item)
 
     #判断得出需要获取的最近分店
-    print('user_id:',request.COOKIES.get('user_id'))
-    user  = TblUser.objects.get(id=request.COOKIES.get('user_id','abc'))
+    print('user_id:',request.session.get('user_id','abc'))
+    user  = TblUser.objects.get(id=request.session.get('user_id','abc'))
 
     sql = '''select p.* from tbl_house p ORDER BY POW(%s - p.latitude, 2) + POW(%s - p.longitude, 2) ASC;'''%(user.latitude, user.longitude)
     house_list = TblHouse.objects.raw(sql)

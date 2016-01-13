@@ -99,13 +99,10 @@ def payOrder(request,bill_id,pay_result):
 获取用户订单，根据用户输入的用户id和订单状态（未付款，派送中，待评价）返回用户订单列表
 """
 def getOrders(user_id, orderType = 0):
-    import logging
-    logger = logging.getLogger('django')
 
-    if orderType != 0:
-        myOrder = TblBill.objects.filter(user_id=user_id,bill_state=orderType)
-    else:
-        myOrder = TblBill.objects.filter(user_id=user_id)
+    myOrder = TblBill.objects.filter(user_id=user_id,bill_state=orderType)
+    return myOrder
+
     # myBill = MyBill()
     # for item in myOrder:
     #     if item.add_time:
@@ -129,7 +126,7 @@ def getOrders(user_id, orderType = 0):
     #     for meal in myMeals:
     #         myBill.addMeal(myBillIndex, meal.house_id, meal.meal_name, meal.meal_url, meal.buy_count, meal.meal_price)
     # return myBill.toDict()
-    return myOrder
+    
     
 # 确认送达 可有商户或者用户两方调用
 def ensureSend(bill_id):

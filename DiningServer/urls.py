@@ -6,6 +6,7 @@ urlpatterns = [
     #for test
     url(r'^indextest/$', views.indextest , name='indextest'),
     url(r'^generatorMeals/$', views.generatorMeals),
+    url(r'^index/(?P<urls>[\s\S][^\/]*)/$', views.welcome, name='welcome'),
 
     # index  首页 url
     url(r'^index/$', views.index, name='index'),
@@ -39,7 +40,7 @@ urlpatterns = [
     url(r'^pay/notify/url/$', views.getPrepayid, name='getPrepayid'),
 
     url(r'^payOrder/(?P<bill_id>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})/$', views.payOrder, name='payOrder'),
-    url(r'^getOrders/$', views.getOrders, name='getOrder'),
+    url(r'^getOrders/(?P<orderType>\d+)/$', views.getOrders, name='getOrder'),
     url(r'^ensureSend/(?P<bill_id>[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})/$', views.ensureSend),
     
     # 获取我的订单页面 未付款 配送中 待评价
